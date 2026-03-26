@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Last War 1784 紅星策略助手</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                padding: 15px;
+                background: #f0f2f5;
+                line-height: 1.6;
+                color: #333;
+            }
+            .box {
+                margin-bottom: 20px;
+                padding: 18px;
+                background: #fff;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            }
+            h3 {
+                font-size: 1.25em;
+                margin-top: 0;
+                margin-bottom: 12px;
+                color: #1a73e8;
+                border-left: 4px solid #1a73e8;
+                padding-left: 10px;
+            }
+            #zone, #strategy {
+                font-size: 1.05em;
+                word-break: break-all;
+            }
+            .red {
+                color: #d93025;
+                font-weight: bold;
+            }
+            .green {
+                color: #188038;
+                font-weight: bold;
+            }
+            .today-row {
+                background-color: #fff9c4;
+                display: block;
+                padding: 5px 8px;
+                border-radius: 5px;
+                border: 1px solid #fbc02d;
+                margin: 5px 0;
+            }
+            hr {
+                border: 0;
+                border-top: 1px solid #eee;
+                margin: 10px 0;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="box">
+            <h3>🔴 紅星戰區資訊 (當前)</h3>
+            <div id="zone">載入中...</div>
+        </div>
+
+        <div class="box">
+            <h3>📅 1784 近七日策略</h3>
+            <div id="strategy">載入中...</div>
+        </div>
+
+        <script>
+            window.onload = function() {
+                const weekNames = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+                const now = new Date();
+                
+                // 取得今日零點基準 (避免時分秒干擾計算)
+                const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+                // --- 區塊1：紅星戰區輪替 ---
+                // 使用明確數值避免 Safari 解析字串失敗
+                const baseRotation = new Date(2026, 2, 21, 10, 0, 0); // 2026/3/21 10:00
+                const zones = [
+                    ["1791"],
+                    ["1787"],
+                    ["1796"],
+                    ["1784","1785","1765","1770","1771","1777","1778","1779"],
+                    ["1786","1788","1792","1793","1794","1795","1768","1781","1780","1783","1790","1789"]
+                ];
+
+                // 計算天數差 (使用 getTime 毫秒數最準確)
+                let diffMs = now.getTime() - baseRotation.getTime();
+                let diffDays = Math.floor(diffMs / (24 * 60 * 60 * 1000));
+                let zoneIndex = diffDays % 5;
+                if (zoneIndex < 0) {
+                    zoneIndex += 5;
+                }
+
+                // 計算顯示的時間區段
+                let displayStart = new Date(todayZero);
+                displayStart.setHours(10, 0, 0);
+                if (now.getHours() < 10) {
+                    displayStart.setTime(displayStart.getTime() - 24 * 60 * 60 * 1000);
+                }
+                let displayEnd = new Date(displayStart.getTime() + 24 * 60 * 60 * 1000);
+
+                document.getElementById("zone").innerHTML = 
+                    `<strong>時段：</strong>${displayStart.getMonth() + 1}/${displayStart.getDate()} 10:00 ~ ${displayEnd.getMonth() + 1}/${displayEnd.getDate()} 10:00<br>` +
+                    `<strong>戰區：</strong>${zones[zoneIndex].join(", ")}`;
+
+                // --- 區塊2：1784 紅星任務策略 ---
+                const baseRed = new Date(2026, 2, 24, 10, 0, 0); // 2026/3/24 10:00
+                const cycleMs = 72 * 60 * 60 * 1000; // 72小時一循環
+
+                function checkHasRed(targetDate) {
+                    const dayStart = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate(), 0, 0, 0).getTime();
+                    const dayEnd = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate(), 23, 59, 59).getTime();
+                    
+                    // 從基準點開始推算，檢查是否有紅星點落在該日內
+                    let checkT = baseRed.getTime();
+                    // 往前找一點點確保涵蓋範圍
+                    while(checkT < dayStart) {
+                        checkT += cycleMs;
+                    }
+                    return (checkT >= dayStart && checkT <= dayEnd);
+                }
+
+                function checkShouldSave(targetDate) {
+                    // 往後推3天，看是否有週二(2)或週六(6)
+                    for(let i = 0; i <= 3; i++) {
+                        let d = new Date(targetDate.getTime() + i * 24 * 60 * 60 * 1000);
+                        if (d.getDay() === 2 || d.getDay() === 6) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                let strategyHtml = "";
+                for(let i = 0; i < 7; i++) {
+                    let loopDate = new Date(todayZero.getTime() + i * 24 * 60 * 60 * 1000);
+                    let isToday = (i === 0);
+                    let hasRed = checkHasRed(loopDate);
+                    let isSpecialDay = (loopDate.getDay() === 2 || loopDate.getDay() === 6);
+
+                    let label = `${loopDate.getMonth()+1}月${loopDate.getDate()}號 (${weekNames[loopDate.getDay()]})`;
+                    if(hasRed) label += " <small>(10點後)</small>";
+
+                    let content = "";
+                    if(hasRed) {
+                        content += "<span class='red'>有紅星UR任務</span>";
+                        if(checkShouldSave(loopDate)) {
+                            content += " / <span class='red'>建議保留</span>";
+                        }
+                    } else {
+                        content += "沒有紅星任務";
+                    }
+
+                    if(isSpecialDay) {
+                        content += hasRed ? " / <span class='green'>建議派出(當日的)</span>" : " / <span class='green'>建議派出(先前保留的)</span>";
+                    }
+
+                    let row = `${label}：${content}`;
+                    if(isToday) {
+                        row = `<span class="today-row">${row}</span>`;
+                    }
+                    strategyHtml += row + (i < 6 ? "<hr>" : "");
+                }
+
+                document.getElementById("strategy").innerHTML = strategyHtml;
+            };
+        </script>
+
+    </body>
+</html>
