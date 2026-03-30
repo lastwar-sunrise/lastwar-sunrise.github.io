@@ -86,9 +86,9 @@
                 // 計算天數差 (使用 getTime 毫秒數最準確)
                 let diffMs = now.getTime() - baseRotation.getTime();
                 let diffDays = Math.floor(diffMs / (24 * 60 * 60 * 1000));
-                let zoneIndex = diffDays % 5;
+                let zoneIndex = diffDays % 3;
                 if (zoneIndex < 0) {
-                    zoneIndex += 5;
+                    zoneIndex += 3;
                 }
 
                 // 計算顯示的時間區段
