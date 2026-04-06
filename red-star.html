@@ -39,6 +39,14 @@
                 color: #188038;
                 font-weight: bold;
             }
+            .gold {
+                color: #d4af37;
+                font-weight: bold;
+            }
+            .purple {
+                color: #a333c8;
+                font-weight: bold;
+            }
             .today-row {
                 background-color: #fff9c4;
                 display: block;
@@ -67,35 +75,27 @@
         </div>
 		
 		<div style="text-align: center; font-size: 12px; color: #aaa; margin-bottom: 20px;">
-        最後部署日期：2026/04/06 17:01
+            最後部署日期：2026/04/06 17:01
 		</div>
 
         <script>
             window.onload = function() {
                 const weekNames = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
                 const now = new Date();
-                
-                // 取得今日零點基準 (避免時分秒干擾計算)
                 const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-                // --- 區塊1：紅星戰區輪替 ---
-                // 使用明確數值避免 Safari 解析字串失敗
-                const baseRotation = new Date(2026, 2, 20, 10, 0, 0); // 2026/3/20 10:00
+                const baseRotation = new Date(2026, 2, 20, 10, 0, 0); 
                 const zones = [
                     ["1769","1772","1775","1776","1783","1789","1790","1793","1796"], 
                     ["1765","1770","1771","1777","1778","1779","1784","1785","1791","1797"], 
                     ["1766","1767","1768","1773","1774","1780","1781","1782","1786","1787","1788","1792","1794","1795"] 
                 ];
-				
-                // 計算天數差 (使用 getTime 毫秒數最準確)
+
                 let diffMs = now.getTime() - baseRotation.getTime();
                 let diffDays = Math.floor(diffMs / (24 * 60 * 60 * 1000));
                 let zoneIndex = diffDays % 3;
-                if (zoneIndex < 0) {
-                    zoneIndex += 3;
-                }
+                if (zoneIndex < 0) { zoneIndex += 3; }
 
-                // 計算顯示的時間區段
                 let displayStart = new Date(todayZero);
                 displayStart.setHours(10, 0, 0);
                 if (now.getHours() < 10) {
@@ -107,30 +107,21 @@
                     `<strong>時段：</strong>${displayStart.getMonth() + 1}/${displayStart.getDate()} 10:00 ~ ${displayEnd.getMonth() + 1}/${displayEnd.getDate()} 10:00<br>` +
                     `<strong>戰區：</strong>${zones[zoneIndex].join(", ")}`;
 
-                // --- 區塊2：1784 紅星任務策略 ---
-                const baseRed = new Date(2026, 2, 24, 10, 0, 0); // 2026/3/24 10:00
-                const cycleMs = 72 * 60 * 60 * 1000; // 72小時一循環
+                const baseRed = new Date(2026, 2, 24, 10, 0, 0); 
+                const cycleMs = 72 * 60 * 60 * 1000; 
 
                 function checkHasRed(targetDate) {
                     const dayStart = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate(), 0, 0, 0).getTime();
                     const dayEnd = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate(), 23, 59, 59).getTime();
-                    
-                    // 從基準點開始推算，檢查是否有紅星點落在該日內
                     let checkT = baseRed.getTime();
-                    // 往前找一點點確保涵蓋範圍
-                    while(checkT < dayStart) {
-                        checkT += cycleMs;
-                    }
+                    while(checkT < dayStart) { checkT += cycleMs; }
                     return (checkT >= dayStart && checkT <= dayEnd);
                 }
 
                 function checkShouldSave(targetDate) {
-                    // 往後推3天，看是否有週二(2)或週六(6)
                     for(let i = 0; i <= 3; i++) {
                         let d = new Date(targetDate.getTime() + i * 24 * 60 * 60 * 1000);
-                        if (d.getDay() === 2 || d.getDay() === 6) {
-                            return true;
-                        }
+                        if (d.getDay() === 2 || d.getDay() === 6) { return true; }
                     }
                     return false;
                 }
@@ -138,11 +129,12 @@
                 let strategyHtml = "";
                 for(let i = 0; i < 7; i++) {
                     let loopDate = new Date(todayZero.getTime() + i * 24 * 60 * 60 * 1000);
+                    let dayOfWeek = loopDate.getDay();
                     let isToday = (i === 0);
                     let hasRed = checkHasRed(loopDate);
-                    let isSpecialDay = (loopDate.getDay() === 2 || loopDate.getDay() === 6);
+                    let isSpecialDay = (dayOfWeek === 2 || dayOfWeek === 6);
 
-                    let label = `${loopDate.getMonth()+1}月${loopDate.getDate()}號 (${weekNames[loopDate.getDay()]})`;
+                    let label = `${loopDate.getMonth()+1}月${loopDate.getDate()}號 (${weekNames[dayOfWeek]})`;
                     if(hasRed) label += " <small>(10點後)</small>";
 
                     let content = "";
@@ -159,7 +151,15 @@
                         content += hasRed ? " / <span class='green'>建議派出(當日的)</span>" : " / <span class='green'>建議派出(先前保留的)</span>";
                     }
 
-                    let row = `${label}：${content}`;
+                    // --- 新增貨車派遣規則邏輯 ---
+                    let truckAdvice = "";
+                    if(dayOfWeek === 2 || dayOfWeek === 6) {
+                        truckAdvice = `<br>└ 🚚 貨車：只能派 <span class="gold">UR金色</span>`;
+                    } else {
+                        truckAdvice = `<br>└ 🚚 貨車：優先派 <span class="purple">SSR紫色</span> (無SSR再派 <span class="gold">UR金色</span>)`;
+                    }
+
+                    let row = `${label}：${content}${truckAdvice}`;
                     if(isToday) {
                         row = `<span class="today-row">${row}</span>`;
                     }
