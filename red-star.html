@@ -59,6 +59,7 @@
             .purple { color: #a333c8; font-weight: bold; }
             .event-text { color: #e67e22; font-weight: bold; }
             .drill-text { color: #9b59b6; font-weight: bold; }
+            .note-text { color: #666; }
             .today-row {
                 background-color: #fff9c4;
                 display: block;
@@ -103,7 +104,7 @@
         </div>
 		
 		<div id="footer-date" style="text-align: center; font-size: 11px; color: #aaa; margin-bottom: 15px;">
-            最後部署日期：2026/04/06 19:15
+            最後部署日期：2026/04/06 19:30
 		</div>
 
         <script>
@@ -116,7 +117,7 @@
                     iosMsg: "iOS 使用者請點擊瀏覽器下方的『分享』按鈕，然後選擇『加入主螢幕』。",
                     titleZone: "🔴 紅星戰區資訊 (當前)",
                     titleStrategy: "📅 近七日策略",
-                    footer: "最後部署日期：2026/04/06 19:15",
+                    footer: "最後部署日期：2026/04/06 19:30",
                     timePeriod: "時段",
                     zone: "戰區",
                     weeks: ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
@@ -140,14 +141,17 @@
                     },
                     drill: " / <span class='drill-text'>⚔️ 聯盟軍演</span>",
                     shieldOn: "護盾 ON (GMT+8 10:00)",
-                    shieldOff: "護盾 OFF (GMT+8 10:00)"
+                    shieldOff: "護盾 OFF (GMT+8 10:00)",
+                    note: "📝 備註",
+                    noteExpedition: "需要打完遠征",
+                    noteShop: "購買商店物品"
                 },
                 en: {
                     install: "📲 Install",
                     iosMsg: "iOS: Tap 'Share' and 'Add to Home Screen'.",
                     titleZone: "🔴 Red Star Zone Info",
                     titleStrategy: "📅 7-Day Strategy",
-                    footer: "Last Update: 2026/04/06 19:15",
+                    footer: "Last Update: 2026/04/06 19:30",
                     timePeriod: "Period",
                     zone: "Zones",
                     weeks: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
@@ -171,7 +175,10 @@
                     },
                     drill: " / <span class='drill-text'>⚔️ Drill</span>",
                     shieldOn: "Shield ON (10:00 AM)",
-                    shieldOff: "Shield OFF (10:00 AM)"
+                    shieldOff: "Shield OFF (10:00 AM)",
+                    note: "📝 Note",
+                    noteExpedition: "Complete Campaign",
+                    noteShop: "Purchase Shop Items"
                 }
             };
 
@@ -279,7 +286,15 @@
                         ? `<span class="event-text">${mainEvent}</span>${drillText}` 
                         : `<span class="event-text">${t.events.none}</span>`;
 
-                    let row = `${label}<br>└ ${t.redStar}：${redContent}<br>└ ${t.truck}：${isSpecialDay?t.truckUR:t.truckSSR}<br>└ ${t.event}：${eventDisplay}`;
+                    // 備註邏輯
+                    let noteRow = "";
+                    if (dayOfWeek === 1 || dayOfWeek === 3 || dayOfWeek === 5) {
+                        noteRow = `<br>└ ${t.note}：<span class="note-text">${t.noteExpedition}</span>`;
+                    } else if (dayOfWeek === 0) {
+                        noteRow = `<br>└ ${t.note}：<span class="note-text">${t.noteShop}</span>`;
+                    }
+
+                    let row = `${label}<br>└ ${t.redStar}：${redContent}<br>└ ${t.truck}：${isSpecialDay?t.truckUR:t.truckSSR}<br>└ ${t.event}：${eventDisplay}${noteRow}`;
                     
                     if (dayOfWeek === 6) row += `<br>└ 🛡️ <span class="shield-alert">${t.shieldOn}</span>`;
                     else if (dayOfWeek === 0) row += `<br>└ 🛡️ <span class="shield-alert">${t.shieldOff}</span>`;
