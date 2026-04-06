@@ -1,6 +1,6 @@
 {
-  "short_name": "LastWar1784",
-  "name": "Last War 1784 紅星策略助手",
+  "short_name": "LW1784",
+  "name": "Last War 1784 Strategy",
   "icons": [
     {
       "src": "custom-icon.png",
@@ -13,8 +13,8 @@
       "type": "image/png"
     }
   ],
-  "start_url": ".",
+  "start_url": "red-star.html",
   "display": "standalone",
-  "theme_color": "#1a73e8",
-  "background_color": "#f0f2f5"
+  "background_color": "#f0f2f5",
+  "theme_color": "#1a73e8"
 }
