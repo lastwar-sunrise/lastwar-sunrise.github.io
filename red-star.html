@@ -4,9 +4,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>The Sunrisers - Strategy Assistant</title>
+        <title>The Sunrisers</title>
         <link rel="manifest" href="manifest.json">
-		<link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <style>
             body {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -35,7 +35,7 @@
                 font-weight: bold;
                 font-size: 13px;
             }
-            #install-btn { background: #34a853; display: none; } /* 預設隱藏，準備好才顯示 */
+            #install-btn { background: #34a853; display: none; }
             
             .box {
                 margin-bottom: 20px;
@@ -84,7 +84,7 @@
     <body>
 
         <div class="header-row">
-            <h2 style="margin:0; font-size: 1.1em;">The Sunrisers - Strategy Assistant</h2>
+            <h2 style="margin:0; font-size: 1.1em;">The Sunrisers</h2>
             <div class="btn-group">
                 <button id="install-btn" class="action-btn" onclick="handleInstall()">📲 Install</button>
                 <button id="lang-btn" class="action-btn" onclick="toggleLang()">EN / 中文</button>
@@ -130,7 +130,13 @@
                     truckUR: "只能派 <span class='gold'> UR </span>",
                     truckSSR: "優先派 <span class='purple'> SSR </span> 再派 <span class='gold'> UR </span>",
                     event: "✨ 事件",
-                    noEvent: "無特殊大型活動",
+                    events: {
+                        zombie: "🧟 殭屍入侵",
+                        boss: "👹 狂暴首領(國會周圍)",
+                        vanguard: "👨‍🏫 先鋒教官",
+                        doomsday: "🌋 末日降臨(打3隻阿胖)",
+                        none: "無特殊大型活動"
+                    },
                     drill: " / <span class='drill-text'>⚔️ 聯盟軍演</span>",
                     shieldOn: "重要：開啟護盾 GMT+8 10:00 AM",
                     shieldOff: "重要：結束護盾 GMT+8 10:00 AM"
@@ -155,14 +161,20 @@
                     truckUR: "Dispatch <span class='gold'> UR </span> only",
                     truckSSR: "Priority <span class='purple'> SSR </span> then <span class='gold'> UR </span>",
                     event: "✨ Event",
-                    noEvent: "No major event",
+                    events: {
+                        zombie: "🧟 Zombie Invasion",
+                        boss: "👹 Rampage Boss (around the capitol)",
+                        vanguard: "👨‍🏫 Vanguard",
+                        doomsday: "🌋 Doomsday (defeat 3 fatty)",
+                        none: "No major event"
+                    },
                     drill: " / <span class='drill-text'>⚔️ Alliance Drill</span>",
                     shieldOn: "IMPORTANT: Shield ON (GMT+8 10:00 AM)",
                     shieldOff: "IMPORTANT: Shield OFF (GMT+8 10:00 AM)"
                 }
             };
 
-            // --- PWA 安裝邏輯 ---
+									   
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('sw.js');
             }
@@ -173,7 +185,7 @@
                 document.getElementById('install-btn').style.display = 'block';
             });
 
-            // 針對 iOS 顯示安裝按鈕（因為 iOS 沒辦法偵測 beforeinstallprompt）
+																								
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
             if (isIOS) {
                 document.getElementById('install-btn').style.display = 'block';
@@ -212,7 +224,7 @@
                 const now = new Date();
                 const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-                // Zone Info Logic
+                // Zone Info
                 const baseRotation = new Date(2026, 2, 20, 10, 0, 0); 
                 const zones = [
                     ["1769","1772","1775","1776","1783","1789","1790","1793","1796"], 
@@ -231,7 +243,7 @@
                     `<strong>${t.timePeriod}：</strong>${displayStart.getMonth() + 1}/${displayStart.getDate()} 10:00 ~ ${displayEnd.getMonth() + 1}/${displayEnd.getDate()} 10:00<br>` +
                     `<strong>${t.zone}：</strong>${zones[zoneIndex].join(", ")}`;
 
-                // Strategy Logic
+                // Strategy
                 const baseRed = new Date(2026, 2, 24, 10, 0, 0); 
                 const baseEventWeek = new Date(2026, 3, 6); 
                 let strategyHtml = "";
@@ -259,17 +271,24 @@
                     } else if (isSpecialDay) {
                         redContent += ` / <span class='green'>${t.suggestSendSaved}</span>`;
                     }
-                    
-                    let mainEvent = t.noEvent;
+
+                    // --- Event Logic ---
+                    let mainEvent = ""; 
                     if (isWeekOne) {
-                        if (dayOfWeek >= 3 && dayOfWeek <= 5) mainEvent = "🧟 Zombie Invasion";
-                        else if (dayOfWeek === 0) mainEvent = "👹 Rampage Boss";
+                        if (dayOfWeek >= 3 && dayOfWeek <= 5) mainEvent = t.events.zombie;
+                        else if (dayOfWeek === 0) mainEvent = t.events.boss;
                     } else {
-                        if (dayOfWeek >= 3 && dayOfWeek <= 5) mainEvent = "👨‍🏫 Vanguard";
-                        else if (dayOfWeek === 0) mainEvent = "🌋 Doomsday";
+                        if (dayOfWeek >= 3 && dayOfWeek <= 5) mainEvent = t.events.vanguard;
+                        else if (dayOfWeek === 0) mainEvent = t.events.doomsday;
                     }
 
-                    let row = `${label}<br>└ ${t.redStar}：${redContent}<br>└ ${t.truck}：${isSpecialDay?t.truckUR:t.truckSSR}<br>└ ${t.event}：<span class="event-text">${mainEvent}</span>${hasDrill?t.drill:""}`;
+                    let drillText = hasDrill ? t.drill : "";
+                    let eventDisplay = (mainEvent !== "" || hasDrill) 
+                        ? `<span class="event-text">${mainEvent}</span>${drillText}` 
+                        : `<span class="event-text">${t.events.none}</span>`;
+
+                    let row = `${label}<br>└ ${t.redStar}：${redContent}<br>└ ${t.truck}：${isSpecialDay?t.truckUR:t.truckSSR}<br>└ ${t.event}：${eventDisplay}`;
+                    
                     if (dayOfWeek === 6) row += `<br>└ 🛡️ <span class="shield-alert">${t.shieldOn}</span>`;
                     else if (dayOfWeek === 0) row += `<br>└ 🛡️ <span class="shield-alert">${t.shieldOff}</span>`;
 
