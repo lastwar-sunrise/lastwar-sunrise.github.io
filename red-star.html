@@ -52,6 +52,10 @@
                 color: #e67e22;
                 font-weight: bold;
             }
+            .drill-text {
+                color: #9b59b6;
+                font-weight: bold;
+            }
             .today-row {
                 background-color: #fff9c4;
                 display: block;
@@ -93,7 +97,7 @@
         </div>
 		
 		<div style="text-align: center; font-size: 12px; color: #aaa; margin-bottom: 20px;">
-            最後部署日期：2026/04/06 17:40
+            最後部署日期：2026/04/06 18:20
 		</div>
 
         <script>
@@ -127,7 +131,7 @@
 
                 const baseRed = new Date(2026, 2, 24, 10, 0, 0); 
                 const cycleMs = 72 * 60 * 60 * 1000; 
-                const baseEventWeek = new Date(2026, 3, 6); 
+                const baseEventWeek = new Date(2026, 3, 6); // 4/6 週一
 
                 function checkHasRed(targetDate) {
                     const dayStart = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate(), 0, 0, 0).getTime();
@@ -157,7 +161,10 @@
                     let weeksDiff = Math.floor((loopDate.getTime() - baseEventWeek.getTime()) / (7 * 24 * 60 * 60 * 1000));
                     let isWeekOne = (weeksDiff % 2 === 0);
 
-                    // 日期標籤 (如果是週末且不是紅星當天，不加時段提示)
+                    // 聯盟軍演邏輯：2026/4/6 (週一) 為 0，偶數天沒有，奇數天有
+                    let drillDiffDays = Math.floor((loopDate.getTime() - baseEventWeek.getTime()) / (24 * 60 * 60 * 1000));
+                    let hasDrill = (drillDiffDays % 2 !== 0);
+
                     let label = `<strong>${loopDate.getMonth()+1}月${loopDate.getDate()}號 (${weekNames[dayOfWeek]})</strong>`;
                     if(hasRed && !isWeekend) label += " <small>(10點後)</small>";
 
@@ -188,15 +195,17 @@
                     }
 
                     // 3. 特殊事件建議
-                    let eventName = "無特殊大型活動";
+                    let mainEvent = "無特殊大型活動";
                     if (isWeekOne) {
-                        if (dayOfWeek >= 3 && dayOfWeek <= 5) eventName = "🧟 小殭屍活動 (Zombie Invasion)";
-                        else if (dayOfWeek === 0) eventName = "👹 狂暴首領（Rampage Boss）";
+                        if (dayOfWeek >= 3 && dayOfWeek <= 5) mainEvent = "🧟 小殭屍活動 (Zombie Invasion)";
+                        else if (dayOfWeek === 0) mainEvent = "👹 狂暴首領（Rampage Boss）";
                     } else {
-                        if (dayOfWeek >= 3 && dayOfWeek <= 5) eventName = "👨‍🏫 教官任務 (Vanguard)";
-                        else if (dayOfWeek === 0) eventName = "🌋 末日來臨（Doomsday）";
+                        if (dayOfWeek >= 3 && dayOfWeek <= 5) mainEvent = "👨‍🏫 教官任務 (Vanguard)";
+                        else if (dayOfWeek === 0) mainEvent = "🌋 末日來臨（Doomsday）";
                     }
-                    let eventAdvice = `<br>└ ✨ 事件：<span class="event-text">${eventName}</span>`;
+                    
+                    let drillText = hasDrill ? " / <span class='drill-text'>⚔️ 聯盟軍演</span>" : "";
+                    let eventAdvice = `<br>└ ✨ 事件：<span class="event-text">${mainEvent}</span>${drillText}`;
 
                     // 4. 護盾提醒
                     let shieldAdvice = "";
