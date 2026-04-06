@@ -104,7 +104,7 @@
         </div>
 		
 		<div id="footer-date" style="text-align: center; font-size: 11px; color: #aaa; margin-bottom: 15px;">
-            最後部署日期：2026/04/06 19:55
+            最後部署日期：2026/04/06 20:00
 		</div>
 
         <script>
@@ -117,7 +117,7 @@
                     iosMsg: "iOS 使用者請點擊瀏覽器下方的『分享』按鈕，然後選擇『加入主螢幕』。",
                     titleZone: "🔴 紅星戰區資訊 (當前)",
                     titleStrategy: "📅 近七日策略",
-                    footer: "最後部署日期：2026/04/06 19:55",
+                    footer: "最後部署日期：2026/04/06 20:00",
                     timePeriod: "時段",
                     zone: "戰區",
                     weeks: ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
@@ -139,7 +139,7 @@
                         doomsday: "🌋 末日降臨(打3隻阿胖)",
                         none: "無特殊大型活動"
                     },
-                    drill: " / <span class='drill-text'>⚔️ 聯盟軍演</span>",
+                    drill: "⚔️ 聯盟軍演",
                     shieldOn: "護盾 ON (GMT+8 10:00)",
                     shieldOff: "護盾 OFF (GMT+8 10:00)",
                     note: "📝 備註",
@@ -151,7 +151,7 @@
                     iosMsg: "iOS: Tap 'Share' and 'Add to Home Screen'.",
                     titleZone: "🔴 Red Star Zone Info",
                     titleStrategy: "📅 7-Day Strategy",
-                    footer: "Last Update: 2026/04/06 19:55",
+                    footer: "Last Update: 2026/04/06 20:00",
                     timePeriod: "Period",
                     zone: "Zones",
                     weeks: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
@@ -173,7 +173,7 @@
                         doomsday: "🌋 Doomsday (defeat 3 fatty)",
                         none: "No major event"
                     },
-                    drill: " / <span class='drill-text'>⚔️ Drill</span>",
+                    drill: "⚔️ Drill",
                     shieldOn: "Shield ON (10:00 AM)",
                     shieldOff: "Shield OFF (10:00 AM)",
                     note: "📝 Note",
@@ -240,7 +240,6 @@
                 if (now.getHours() < 10) displayStart.setTime(displayStart.getTime() - 86400000);
                 let displayEnd = new Date(displayStart.getTime() + 86400000);
 
-                // 更新時段顯示邏輯：加入 10:00 AM 和 GMT+8
                 document.getElementById("zone").innerHTML = 
                     `<strong>${t.timePeriod}：</strong>${displayStart.getMonth() + 1}/${displayStart.getDate()} 10:00 AM ~ ${displayEnd.getMonth() + 1}/${displayEnd.getDate()} 10:00 AM (GMT+8)<br>` +
                     `<strong>${t.zone}：</strong>${zones[zoneIndex].join(", ")}`;
@@ -282,12 +281,19 @@
                         else if (dayOfWeek === 0) mainEvent = t.events.doomsday;
                     }
 
-                    let drillText = hasDrill ? t.drill : "";
-                    let eventDisplay = (mainEvent !== "" || hasDrill) 
-                        ? `<span class="event-text">${mainEvent}</span>${drillText}` 
-                        : `<span class="event-text">${t.events.none}</span>`;
+                    // 修正斜線顯示邏輯
+                    let eventDisplay = "";
+                    if (mainEvent !== "") {
+                        eventDisplay = `<span class="event-text">${mainEvent}</span>`;
+                        if (hasDrill) {
+                            eventDisplay += ` / <span class="drill-text">${t.drill}</span>`;
+                        }
+                    } else if (hasDrill) {
+                        eventDisplay = `<span class="drill-text">${t.drill}</span>`;
+                    } else {
+                        eventDisplay = `<span class="event-text">${t.events.none}</span>`;
+                    }
 
-								   
                     let noteRow = "";
                     if (dayOfWeek === 1 || dayOfWeek === 3 || dayOfWeek === 5) {
                         noteRow = `<br>└ ${t.note}：<span class="note-text">${t.noteExpedition}</span>`;
