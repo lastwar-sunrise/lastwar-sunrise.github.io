@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Last War 1784 Strategy Assistant</title>
+        <link rel="manifest" href="manifest.json">
+        <link rel="apple-touch-icon" href="custom-icon.png">
         <style>
             body {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -18,16 +20,22 @@
                 align-items: center;
                 margin-bottom: 10px;
             }
-            #lang-btn {
+            .btn-group {
+                display: flex;
+                gap: 8px;
+            }
+            .action-btn {
                 background: #1a73e8;
                 color: white;
                 border: none;
-                padding: 5px 12px;
+                padding: 6px 12px;
                 border-radius: 20px;
                 cursor: pointer;
                 font-weight: bold;
-                font-size: 14px;
+                font-size: 13px;
             }
+            #install-btn { background: #34a853; display: none; } /* 預設隱藏，準備好才顯示 */
+            
             .box {
                 margin-bottom: 20px;
                 padding: 18px;
@@ -43,10 +51,7 @@
                 border-left: 4px solid #1a73e8;
                 padding-left: 10px;
             }
-            #zone, #strategy {
-                font-size: 1.05em;
-                word-break: break-all;
-            }
+            #zone, #strategy { font-size: 1.05em; word-break: break-all; }
             .red { color: #d93025; font-weight: bold; }
             .green { color: #188038; font-weight: bold; }
             .gold { color: #d4af37; font-weight: bold; }
@@ -78,8 +83,11 @@
     <body>
 
         <div class="header-row">
-            <h2 style="margin:0; font-size: 1.2em;">Last War 1784</h2>
-            <button id="lang-btn" onclick="toggleLang()">EN / 中文</button>
+            <h2 style="margin:0; font-size: 1.1em;">Last War 1784</h2>
+            <div class="btn-group">
+                <button id="install-btn" class="action-btn" onclick="handleInstall()">📲 Install</button>
+                <button id="lang-btn" class="action-btn" onclick="toggleLang()">EN / 中文</button>
+            </div>
         </div>
 
         <div class="box">
@@ -98,9 +106,12 @@
 
         <script>
             let currentLang = localStorage.getItem('lang') || 'zh';
+            let deferredPrompt;
 
             const i18n = {
                 zh: {
+                    install: "📲 安裝到桌面",
+                    iosMsg: "iOS 使用者請點擊瀏覽器下方的『分享』按鈕，然後選擇『加入主螢幕』。",
                     titleZone: "🔴 紅星戰區資訊 (當前)",
                     titleStrategy: "📅 1784 近七日策略",
                     footer: "最後部署日期：2026/04/06 18:40",
@@ -124,6 +135,8 @@
                     shieldOff: "重要：結束護盾 GMT+8 10:00 AM"
                 },
                 en: {
+                    install: "📲 Install App",
+                    iosMsg: "iOS users: Tap 'Share' icon and select 'Add to Home Screen'.",
                     titleZone: "🔴 Red Star Zone Info (Current)",
                     titleStrategy: "📅 1784 7-Day Strategy",
                     footer: "Last Update: 2026/04/06 18:40",
@@ -135,7 +148,7 @@
                     hasTask: "Task Available",
                     noTask: "No Task",
                     suggestSendToday: "Dispatch (Today's)",
-                    suggestSendSaved: "Dispatch (Previously Saved)",
+                    suggestSendSaved: "Dispatch (Saved)",
                     suggestSave: "SAVE for later",
                     truck: "🚚 Truck",
                     truckUR: "Dispatch <span class='gold'> UR </span> only",
@@ -148,6 +161,40 @@
                 }
             };
 
+            // --- PWA 安裝邏輯 ---
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js');
+            }
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                document.getElementById('install-btn').style.display = 'block';
+            });
+
+            // 針對 iOS 顯示安裝按鈕（因為 iOS 沒辦法偵測 beforeinstallprompt）
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (isIOS) {
+                document.getElementById('install-btn').style.display = 'block';
+            }
+
+            function handleInstall() {
+                const t = i18n[currentLang];
+                if (isIOS) {
+                    alert(t.iosMsg);
+                } else if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choice) => {
+                        if (choice.outcome === 'accepted') {
+                            document.getElementById('install-btn').style.display = 'none';
+                        }
+                        deferredPrompt = null;
+                    });
+                } else {
+                    alert("Your browser/device may not support direct installation.");
+                }
+            }
+
             function toggleLang() {
                 currentLang = currentLang === 'zh' ? 'en' : 'zh';
                 localStorage.setItem('lang', currentLang);
@@ -159,20 +206,20 @@
                 document.getElementById('title-zone').innerText = t.titleZone;
                 document.getElementById('title-strategy').innerText = t.titleStrategy;
                 document.getElementById('footer-date').innerText = t.footer;
+                document.getElementById('install-btn').innerText = t.install;
 
                 const now = new Date();
                 const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-                // --- Zone Info ---
+                // Zone Info Logic
                 const baseRotation = new Date(2026, 2, 20, 10, 0, 0); 
                 const zones = [
                     ["1769","1772","1775","1776","1783","1789","1790","1793","1796"], 
                     ["1765","1770","1771","1777","1778","1779","1784","1785","1791","1797"], 
                     ["1766","1767","1768","1773","1774","1780","1781","1782","1786","1787","1788","1792","1794","1795"] 
                 ];
-                let diffDays = Math.floor((now.getTime() - baseRotation.getTime()) / (24 * 60 * 60 * 1000));
-                let zoneIndex = diffDays % 3;
-                if (zoneIndex < 0) zoneIndex += 3;
+                let diffDays = Math.floor((now.getTime() - baseRotation.getTime()) / 86400000);
+                let zoneIndex = diffDays % 3; if (zoneIndex < 0) zoneIndex += 3;
 
                 let displayStart = new Date(todayZero);
                 displayStart.setHours(10, 0, 0);
@@ -183,7 +230,7 @@
                     `<strong>${t.timePeriod}：</strong>${displayStart.getMonth() + 1}/${displayStart.getDate()} 10:00 ~ ${displayEnd.getMonth() + 1}/${displayEnd.getDate()} 10:00<br>` +
                     `<strong>${t.zone}：</strong>${zones[zoneIndex].join(", ")}`;
 
-                // --- Strategy ---
+                // Strategy Logic
                 const baseRed = new Date(2026, 2, 24, 10, 0, 0); 
                 const baseEventWeek = new Date(2026, 3, 6); 
                 let strategyHtml = "";
@@ -194,36 +241,24 @@
                     let hasRed = (Math.floor((loopDate.getTime() - baseRed.getTime() + 36000000) / 86400000) % 3 === 0);
                     let isSpecialDay = (dayOfWeek === 2 || dayOfWeek === 6);
                     let isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
-
-                    let weeksDiff = Math.floor((loopDate.getTime() - baseEventWeek.getTime()) / (7 * 86400000));
-                    let isWeekOne = (weeksDiff % 2 === 0);
+                    let isWeekOne = (Math.floor((loopDate.getTime() - baseEventWeek.getTime()) / (7 * 86400000)) % 2 === 0);
                     let hasDrill = (Math.floor((loopDate.getTime() - baseEventWeek.getTime()) / 86400000) % 2 !== 0);
 
                     let label = `<strong>${loopDate.getMonth()+1}/${loopDate.getDate()} (${t.weeks[dayOfWeek]})</strong>`;
                     if(hasRed && !isWeekend) label += ` <small>${t.after10}</small>`;
 
-                    // Red Star Logic
                     let redContent = hasRed ? `<span class='red'>${t.hasTask}</span> / ` : `${t.noTask}`;
                     if(hasRed) {
                         if (isSpecialDay) redContent += `<span class='green'>${t.suggestSendToday}</span>`;
                         else {
-                            // Check if next 2 days have special days
                             let willSave = false;
-                            for(let j=1; j<=2; j++){
-                                if(new Date(loopDate.getTime()+j*86400000).getDay() % 4 === 2) willSave = true; 
-                            }
+                            for(let j=1; j<=2; j++) if(new Date(loopDate.getTime()+j*86400000).getDay() % 4 === 2) willSave = true;
                             redContent += willSave ? `<span class='red'>${t.suggestSave}</span>` : `<span class='green'>${t.suggestSendToday}</span>`;
                         }
                     } else if (isSpecialDay) {
                         redContent += ` / <span class='green'>${t.suggestSendSaved}</span>`;
                     }
-                    let redAdvice = `<br>└ ${t.redStar}：${redContent}`;
-
-                    // Truck Logic
-                    let truckText = isSpecialDay ? t.truckUR : t.truckSSR;
-                    let truckAdvice = `<br>└ ${t.truck}：${truckText}`;
-
-                    // Event Logic
+                    
                     let mainEvent = t.noEvent;
                     if (isWeekOne) {
                         if (dayOfWeek >= 3 && dayOfWeek <= 5) mainEvent = "🧟 Zombie Invasion";
@@ -232,21 +267,16 @@
                         if (dayOfWeek >= 3 && dayOfWeek <= 5) mainEvent = "👨‍🏫 Vanguard";
                         else if (dayOfWeek === 0) mainEvent = "🌋 Doomsday";
                     }
-                    let drillText = hasDrill ? t.drill : "";
-                    let eventAdvice = `<br>└ ${t.event}：<span class="event-text">${mainEvent}</span>${drillText}`;
 
-                    // Shield Logic
-                    let shieldAdvice = "";
-                    if (dayOfWeek === 6) shieldAdvice = `<br>└ 🛡️ <span class="shield-alert">${t.shieldOn}</span>`;
-                    else if (dayOfWeek === 0) shieldAdvice = `<br>└ 🛡️ <span class="shield-alert">${t.shieldOff}</span>`;
+                    let row = `${label}<br>└ ${t.redStar}：${redContent}<br>└ ${t.truck}：${isSpecialDay?t.truckUR:t.truckSSR}<br>└ ${t.event}：<span class="event-text">${mainEvent}</span>${hasDrill?t.drill:""}`;
+                    if (dayOfWeek === 6) row += `<br>└ 🛡️ <span class="shield-alert">${t.shieldOn}</span>`;
+                    else if (dayOfWeek === 0) row += `<br>└ 🛡️ <span class="shield-alert">${t.shieldOff}</span>`;
 
-                    let row = `${label}${redAdvice}${truckAdvice}${eventAdvice}${shieldAdvice}`;
                     if(i === 0) row = `<span class="today-row">${row}</span>`;
                     strategyHtml += row + (i < 6 ? "<hr>" : "");
                 }
                 document.getElementById("strategy").innerHTML = strategyHtml;
             }
-
             window.onload = render;
         </script>
     </body>
