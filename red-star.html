@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Last War 1784 紅星策略助手</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔴</text></svg>">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌞</text></svg>">
         <style>
             body {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -60,7 +60,6 @@
                 border: 1px solid #fbc02d;
                 margin: 5px 0;
             }
-            /* 護盾提醒樣式 */
             .shield-alert {
                 background-color: #d93025;
                 color: white;
@@ -103,7 +102,6 @@
                 const now = new Date();
                 const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-                // --- 區塊1：紅星戰區輪替 ---
                 const baseRotation = new Date(2026, 2, 20, 10, 0, 0); 
                 const zones = [
                     ["1769","1772","1775","1776","1783","1789","1790","1793","1796"], 
@@ -127,12 +125,9 @@
                     `<strong>時段：</strong>${displayStart.getMonth() + 1}/${displayStart.getDate()} 10:00 ~ ${displayEnd.getMonth() + 1}/${displayEnd.getDate()} 10:00<br>` +
                     `<strong>戰區：</strong>${zones[zoneIndex].join(", ")}`;
 
-                // --- 區塊2：紅星任務與特殊事件 ---
                 const baseRed = new Date(2026, 2, 24, 10, 0, 0); 
                 const cycleMs = 72 * 60 * 60 * 1000; 
-
-                // 以 2026/04/06 (週一) 作為第 1 週 (小殭屍週) 的起點
-                const baseEventWeek = new Date(2026, 3, 6); // 4月6日
+                const baseEventWeek = new Date(2026, 3, 6); 
 
                 function checkHasRed(targetDate) {
                     const dayStart = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate(), 0, 0, 0).getTime();
@@ -157,32 +152,34 @@
                     let isToday = (i === 0);
                     let hasRed = checkHasRed(loopDate);
                     let isSpecialDay = (dayOfWeek === 2 || dayOfWeek === 6);
+                    let isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
 
-                    // 計算當前是第幾週 (兩週一循環)
                     let weeksDiff = Math.floor((loopDate.getTime() - baseEventWeek.getTime()) / (7 * 24 * 60 * 60 * 1000));
                     let isWeekOne = (weeksDiff % 2 === 0);
 
-                    let label = `${loopDate.getMonth()+1}月${loopDate.getDate()}號 (${weekNames[dayOfWeek]})`;
-                    if(hasRed) label += " <small>(10點後)</small>";
+                    // 日期標籤 (如果是週末且不是紅星當天，不加時段提示)
+                    let label = `<strong>${loopDate.getMonth()+1}月${loopDate.getDate()}號 (${weekNames[dayOfWeek]})</strong>`;
+                    if(hasRed && !isWeekend) label += " <small>(10點後)</small>";
 
-                    let content = "";
+                    // 1. 紅星任務建議
+                    let redAdvice = "";
                     if(hasRed) {
-                        content += "<span class='red'>有紅星UR任務</span>";
+                        redAdvice = `<br>└ 🔴 紅星：<span class='red'>有任務</span> / `;
                         if (isSpecialDay) {
-                            content += " / <span class='green'>建議派出(當日的)</span>";
+                            redAdvice += "<span class='green'>建議派出(當日的)</span>";
                         } else if (checkShouldSave(loopDate)) {
-                            content += " / <span class='red'>建議保留</span>";
+                            redAdvice += "<span class='red'>建議保留</span>";
                         } else {
-                            content += " / <span class='green'>建議派出(當日的)</span>";
+                            redAdvice += "<span class='green'>建議派出(當日的)</span>";
                         }
                     } else {
-                        content += "沒有紅星任務";
+                        redAdvice = `<br>└ 🔴 紅星：沒有任務`;
                         if (isSpecialDay) {
-                            content += " / <span class='green'>建議派出(先前保留的)</span>";
+                            redAdvice += " / <span class='green'>建議派出(先前保留的)</span>";
                         }
                     }
 
-                    // 貨車派遣建議
+                    // 2. 貨車派遣建議
                     let truckAdvice = "";
                     if(dayOfWeek === 2 || dayOfWeek === 6) {
                         truckAdvice = `<br>└ 🚚 貨車：只能派 <span class="gold"> UR </span>`;
@@ -190,8 +187,7 @@
                         truckAdvice = `<br>└ 🚚 貨車：優先派 <span class="purple"> SSR </span> 再派 <span class="gold"> UR </span>`;
                     }
 
-                    // 特殊事件建議
-                    let eventAdvice = "";
+                    // 3. 特殊事件建議
                     let eventName = "無特殊大型活動";
                     if (isWeekOne) {
                         if (dayOfWeek >= 3 && dayOfWeek <= 5) eventName = "🧟 小殭屍活動 (Zombie Invasion)";
@@ -200,9 +196,9 @@
                         if (dayOfWeek >= 3 && dayOfWeek <= 5) eventName = "👨‍🏫 教官任務 (Vanguard)";
                         else if (dayOfWeek === 0) eventName = "🌋 末日來臨（Doomsday）";
                     }
-                    eventAdvice = `<br>└ ✨ 事件：<span class="event-text">${eventName}</span>`;
+                    let eventAdvice = `<br>└ ✨ 事件：<span class="event-text">${eventName}</span>`;
 
-                    // --- 新增：護盾提醒 ---
+                    // 4. 護盾提醒
                     let shieldAdvice = "";
                     if (dayOfWeek === 6) {
                         shieldAdvice = `<br>└ 🛡️ <span class="shield-alert">重要：開啟護盾 GMT+8 10:00 AM</span>`;
@@ -210,7 +206,7 @@
                         shieldAdvice = `<br>└ 🛡️ <span class="shield-alert">重要：結束護盾 GMT+8 10:00 AM</span>`;
                     }
 
-                    let row = `${label}：${content}${truckAdvice}${eventAdvice}${shieldAdvice}`;
+                    let row = `${label}${redAdvice}${truckAdvice}${eventAdvice}${shieldAdvice}`;
                     if(isToday) {
                         row = `<span class="today-row">${row}</span>`;
                     }
