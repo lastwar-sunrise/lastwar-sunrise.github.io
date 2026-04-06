@@ -104,7 +104,7 @@
         </div>
 		
 		<div id="footer-date" style="text-align: center; font-size: 11px; color: #aaa; margin-bottom: 15px;">
-            最後部署日期：2026/04/06 20:15
+            最後部署日期：2026/04/06 20:30
 		</div>
 
         <script>
@@ -117,11 +117,10 @@
                     iosMsg: "iOS 使用者請點擊瀏覽器下方的『分享』按鈕，然後選擇『加入主螢幕』。",
                     titleZone: "🔴 紅星戰區資訊 (當前)",
                     titleStrategy: "📅 近七日策略",
-                    footer: "最後部署日期：2026/04/06 20:15",
+                    footer: "最後部署日期：2026/04/06 20:30",
                     timePeriod: "時段",
                     zone: "戰區",
                     weeks: ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
-										  
                     redStar: "🔴 紅星",
                     hasTask: "有任務",
                     noTask: "無任務",
@@ -151,11 +150,10 @@
                     iosMsg: "iOS: Tap 'Share' and 'Add to Home Screen'.",
                     titleZone: "🔴 Red Star Zone Info",
                     titleStrategy: "📅 7-Day Strategy",
-                    footer: "Last Update: 2026/04/06 20:15",
+                    footer: "Last Update: 2026/04/06 20:30",
                     timePeriod: "Period",
                     zone: "Zones",
                     weeks: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
-										
                     redStar: "🔴 Red Star",
                     hasTask: "Available",
                     noTask: "None",
@@ -164,7 +162,7 @@
                     suggestSave: "SAVE",
                     truck: "🚚 Truck",
                     truckUR: "<span class='gold'> UR </span> only",
-                    truckSSR: "<span class='purple'> SSR </span> > <span class='gold'> UR </span>",
+                    truckSSR: "<span class='purple'> SSR </span> first, then <span class='gold'> UR </span>",
                     event: "✨ Event",
                     events: {
                         zombie: "🧟 Zombie Invasion",
@@ -253,13 +251,11 @@
                     let dayOfWeek = loopDate.getDay();
                     let hasRed = (Math.floor((loopDate.getTime() - baseRed.getTime() + 36000000) / 86400000) % 3 === 0);
                     let isSpecialDay = (dayOfWeek === 2 || dayOfWeek === 6);
-																		 
                     let isWeekOne = (Math.floor((loopDate.getTime() - baseEventWeek.getTime()) / (7 * 86400000)) % 2 === 0);
                     let hasDrill = (Math.floor((loopDate.getTime() - baseEventWeek.getTime()) / 86400000) % 2 !== 0);
 
-                    // 標籤處已完全移除 (10點後) 邏輯
+																 
                     let label = `<strong>${loopDate.getMonth()+1}/${loopDate.getDate()} (${t.weeks[dayOfWeek]})</strong>`;
-																					 
 
                     let redContent = hasRed ? `<span class='red'>${t.hasTask}</span> / ` : `${t.noTask}`;
                     if(hasRed) {
@@ -282,13 +278,10 @@
                         else if (dayOfWeek === 0) mainEvent = t.events.doomsday;
                     }
 
-											   
                     let eventDisplay = "";
                     if (mainEvent !== "") {
                         eventDisplay = `<span class="event-text">${mainEvent}</span>`;
-									   
                         if (hasDrill) eventDisplay += ` / <span class="drill-text">${t.drill}</span>`;
-						 
                     } else if (hasDrill) {
                         eventDisplay = `<span class="drill-text">${t.drill}</span>`;
                     } else {
