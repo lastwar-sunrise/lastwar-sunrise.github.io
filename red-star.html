@@ -1,58 +1,58 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <title>The Sunrisers</title>
         <link rel="manifest" href="manifest.json">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <style>
             body {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-                padding: 15px;
+                padding: 8px; /* 縮減外邊距 */
                 background: #f0f2f5;
-                line-height: 1.6;
+                line-height: 1.5; /* 稍微縮小行高 */
                 color: #333;
             }
             .header-row {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 10px;
+                margin-bottom: 8px;
+                padding: 0 4px;
             }
             .btn-group {
                 display: flex;
-                gap: 8px;
+                gap: 5px;
             }
             .action-btn {
                 background: #1a73e8;
                 color: white;
                 border: none;
-                padding: 6px 12px;
-                border-radius: 20px;
+                padding: 5px 10px;
+                border-radius: 15px;
                 cursor: pointer;
                 font-weight: bold;
-                font-size: 13px;
+                font-size: 12px;
             }
             #install-btn { background: #34a853; display: none; }
             
             .box {
-                margin-bottom: 20px;
-                padding: 18px;
+                margin-bottom: 12px; /* 縮小方塊間距 */
+                padding: 12px; /* 縮小內部填充 */
                 background: #fff;
-                border-radius: 12px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                border-radius: 10px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             }
             h3 {
-                font-size: 1.25em;
+                font-size: 1.1em;
                 margin-top: 0;
-                margin-bottom: 12px;
+                margin-bottom: 8px;
                 color: #1a73e8;
                 border-left: 4px solid #1a73e8;
-                padding-left: 10px;
+                padding-left: 8px;
             }
-            #zone, #strategy { font-size: 1.05em; word-break: break-all; }
+            #zone, #strategy { font-size: 0.95em; word-break: break-all; }
             .red { color: #d93025; font-weight: bold; }
             .green { color: #188038; font-weight: bold; }
             .gold { color: #d4af37; font-weight: bold; }
@@ -62,31 +62,32 @@
             .today-row {
                 background-color: #fff9c4;
                 display: block;
-                padding: 5px 8px;
+                padding: 4px 6px;
                 border-radius: 5px;
                 border: 1px solid #fbc02d;
-                margin: 5px 0;
+                margin: 4px 0;
             }
             .shield-alert {
                 background-color: #d93025;
                 color: white;
-                padding: 2px 8px;
-                border-radius: 4px;
+                padding: 1px 6px;
+                border-radius: 3px;
                 font-weight: bold;
                 display: inline-block;
-                margin-top: 4px;
+                margin-top: 2px;
+                font-size: 0.9em;
                 animation: blink 1s infinite;
             }
             @keyframes blink { 50% { opacity: 0.7; } }
-            hr { border: 0; border-top: 1px solid #eee; margin: 10px 0; }
+            hr { border: 0; border-top: 1px solid #eee; margin: 8px 0; }
         </style>
     </head>
     <body>
 
         <div class="header-row">
-            <h2 style="margin:0; font-size: 1.1em;">The Sunrisers</h2>
+            <h2 style="margin:0; font-size: 1.0em;">The Sunrisers</h2>
             <div class="btn-group">
-                <button id="install-btn" class="action-btn" onclick="handleInstall()">📲 Install</button>
+                <button id="install-btn" class="action-btn">📲 Install</button>
                 <button id="lang-btn" class="action-btn" onclick="toggleLang()">EN / 中文</button>
             </div>
         </div>
@@ -101,8 +102,8 @@
             <div id="strategy">Loading...</div>
         </div>
 		
-		<div id="footer-date" style="text-align: center; font-size: 12px; color: #aaa; margin-bottom: 20px;">
-            最後部署日期：2026/04/06 18:40
+		<div id="footer-date" style="text-align: center; font-size: 11px; color: #aaa; margin-bottom: 15px;">
+            最後部署日期：2026/04/06 19:15
 		</div>
 
         <script>
@@ -115,20 +116,20 @@
                     iosMsg: "iOS 使用者請點擊瀏覽器下方的『分享』按鈕，然後選擇『加入主螢幕』。",
                     titleZone: "🔴 紅星戰區資訊 (當前)",
                     titleStrategy: "📅 近七日策略",
-                    footer: "最後部署日期：2026/04/06 18:40",
+                    footer: "最後部署日期：2026/04/06 19:15",
                     timePeriod: "時段",
                     zone: "戰區",
                     weeks: ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
                     after10: "(10點後)",
                     redStar: "🔴 紅星",
                     hasTask: "有任務",
-                    noTask: "沒有任務",
+                    noTask: "無任務",
                     suggestSendToday: "建議派出(當日的)",
                     suggestSendSaved: "建議派出(先前保留的)",
                     suggestSave: "建議保留",
                     truck: "🚚 貨車",
-                    truckUR: "只能派 <span class='gold'> UR </span>",
-                    truckSSR: "優先派 <span class='purple'> SSR </span> 再派 <span class='gold'> UR </span>",
+                    truckUR: "限 <span class='gold'> UR </span>",
+                    truckSSR: "優先 <span class='purple'> SSR </span> 再 <span class='gold'> UR </span>",
                     event: "✨ 事件",
                     events: {
                         zombie: "🧟 殭屍入侵",
@@ -138,28 +139,28 @@
                         none: "無特殊大型活動"
                     },
                     drill: " / <span class='drill-text'>⚔️ 聯盟軍演</span>",
-                    shieldOn: "重要：開啟護盾 GMT+8 10:00 AM",
-                    shieldOff: "重要：結束護盾 GMT+8 10:00 AM"
+                    shieldOn: "護盾 ON (GMT+8 10:00)",
+                    shieldOff: "護盾 OFF (GMT+8 10:00)"
                 },
                 en: {
-                    install: "📲 Install App",
-                    iosMsg: "iOS users: Tap 'Share' icon and select 'Add to Home Screen'.",
-                    titleZone: "🔴 Red Star Zone Info (Current)",
+                    install: "📲 Install",
+                    iosMsg: "iOS: Tap 'Share' and 'Add to Home Screen'.",
+                    titleZone: "🔴 Red Star Zone Info",
                     titleStrategy: "📅 7-Day Strategy",
-                    footer: "Last Update: 2026/04/06 18:40",
+                    footer: "Last Update: 2026/04/06 19:15",
                     timePeriod: "Period",
                     zone: "Zones",
                     weeks: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
-                    after10: "(After 10:00)",
+                    after10: "(>10:00)",
                     redStar: "🔴 Red Star",
-                    hasTask: "Task Available",
-                    noTask: "No Task",
-                    suggestSendToday: "Dispatch (Today's)",
+                    hasTask: "Available",
+                    noTask: "None",
+                    suggestSendToday: "Dispatch (Today)",
                     suggestSendSaved: "Dispatch (Saved)",
-                    suggestSave: "SAVE for later",
+                    suggestSave: "SAVE",
                     truck: "🚚 Truck",
-                    truckUR: "Dispatch <span class='gold'> UR </span> only",
-                    truckSSR: "Priority <span class='purple'> SSR </span> then <span class='gold'> UR </span>",
+                    truckUR: "<span class='gold'> UR </span> only",
+                    truckSSR: "<span class='purple'> SSR </span> > <span class='gold'> UR </span>",
                     event: "✨ Event",
                     events: {
                         zombie: "🧟 Zombie Invasion",
@@ -168,13 +169,12 @@
                         doomsday: "🌋 Doomsday (defeat 3 fatty)",
                         none: "No major event"
                     },
-                    drill: " / <span class='drill-text'>⚔️ Alliance Drill</span>",
-                    shieldOn: "IMPORTANT: Shield ON (GMT+8 10:00 AM)",
-                    shieldOff: "IMPORTANT: Shield OFF (GMT+8 10:00 AM)"
+                    drill: " / <span class='drill-text'>⚔️ Drill</span>",
+                    shieldOn: "Shield ON (10:00 AM)",
+                    shieldOff: "Shield OFF (10:00 AM)"
                 }
             };
 
-									   
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('sw.js');
             }
@@ -185,28 +185,23 @@
                 document.getElementById('install-btn').style.display = 'block';
             });
 
-																								
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
             if (isIOS) {
                 document.getElementById('install-btn').style.display = 'block';
             }
 
-            function handleInstall() {
+            document.getElementById('install-btn').addEventListener('click', () => {
                 const t = i18n[currentLang];
                 if (isIOS) {
                     alert(t.iosMsg);
                 } else if (deferredPrompt) {
                     deferredPrompt.prompt();
-                    deferredPrompt.userChoice.then((choice) => {
-                        if (choice.outcome === 'accepted') {
-                            document.getElementById('install-btn').style.display = 'none';
-                        }
+                    deferredPrompt.userChoice.then(() => {
+                        document.getElementById('install-btn').style.display = 'none';
                         deferredPrompt = null;
                     });
-                } else {
-                    alert("Your browser/device may not support direct installation.");
                 }
-            }
+            });
 
             function toggleLang() {
                 currentLang = currentLang === 'zh' ? 'en' : 'zh';
@@ -224,7 +219,6 @@
                 const now = new Date();
                 const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-                // Zone Info
                 const baseRotation = new Date(2026, 2, 20, 10, 0, 0); 
                 const zones = [
                     ["1769","1772","1775","1776","1783","1789","1790","1793","1796"], 
@@ -240,10 +234,9 @@
                 let displayEnd = new Date(displayStart.getTime() + 86400000);
 
                 document.getElementById("zone").innerHTML = 
-                    `<strong>${t.timePeriod}：</strong>${displayStart.getMonth() + 1}/${displayStart.getDate()} 10:00 ~ ${displayEnd.getMonth() + 1}/${displayEnd.getDate()} 10:00<br>` +
+                    `<strong>${t.timePeriod}：</strong>${displayStart.getMonth() + 1}/${displayStart.getDate()} ~ ${displayEnd.getMonth() + 1}/${displayEnd.getDate()}<br>` +
                     `<strong>${t.zone}：</strong>${zones[zoneIndex].join(", ")}`;
 
-                // Strategy
                 const baseRed = new Date(2026, 2, 24, 10, 0, 0); 
                 const baseEventWeek = new Date(2026, 3, 6); 
                 let strategyHtml = "";
@@ -272,7 +265,6 @@
                         redContent += ` / <span class='green'>${t.suggestSendSaved}</span>`;
                     }
 
-                    // --- Event Logic ---
                     let mainEvent = ""; 
                     if (isWeekOne) {
                         if (dayOfWeek >= 3 && dayOfWeek <= 5) mainEvent = t.events.zombie;
