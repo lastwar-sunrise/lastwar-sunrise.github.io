@@ -1,0 +1,20 @@
+{
+  "short_name": "LastWar1784",
+  "name": "Last War 1784 紅星策略助手",
+  "icons": [
+    {
+      "src": "custom-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "custom-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#1a73e8",
+  "background_color": "#f0f2f5"
+}
