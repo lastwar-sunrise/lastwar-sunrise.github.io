@@ -7,51 +7,64 @@
         <link rel="manifest" href="manifest.json">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <style>
+            /* --- 啟動畫面遮罩樣式 --- */
+            #custom-splash {
+                position: fixed;
+                top: 0; left: 0; width: 100%; height: 100%;
+                background-color: #f0f2f5;
+                display: flex; flex-direction: column; justify-content: center; align-items: center;
+                z-index: 9999;
+                transition: opacity 0.5s ease-out;
+            }
+            .splash-icon { width: 120px; height: 120px; border-radius: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+            .splash-loader { width: 30px; height: 30px; border: 3px solid #ccc; border-top: 3px solid #1a73e8; border-radius: 50%; animation: spin 1s linear infinite; }
+            @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
             body {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-                padding: 8px;
-                background: #f0f2f5;
-                line-height: 1.5;
-                color: #333;
+                padding: 8px; background: #f0f2f5; line-height: 1.5; color: #333; overflow: hidden; 
+									
+								 
+							
             }
-            .header-row {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 8px;
-                padding: 0 4px;
-            }
-            .btn-group {
-                display: flex;
-                gap: 5px;
-            }
-            .action-btn {
-                background: #1a73e8;
-                color: white;
-                border: none;
-                padding: 5px 10px;
-                border-radius: 15px;
-                cursor: pointer;
-                font-weight: bold;
-                font-size: 12px;
-            }
+            .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 0 4px; }
+							  
+											   
+									
+								   
+							   
+			 
+						
+            .btn-group { display: flex; gap: 5px; }
+            .action-btn { background: #1a73e8; color: white; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 12px; }
+			 
+						 
+									
+							 
+							 
+								  
+									
+								
+								  
+								
+			 
             #install-btn { background: #34a853; display: none; }
             
-            .box {
-                margin-bottom: 12px;
-                padding: 12px;
-                background: #fff;
-                border-radius: 10px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            }
-            h3 {
-                font-size: 1.1em;
-                margin-top: 0;
-                margin-bottom: 8px;
-                color: #1a73e8;
-                border-left: 4px solid #1a73e8;
-                padding-left: 8px;
-            }
+            .box { margin-bottom: 12px; padding: 12px; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+            h3 { font-size: 1.1em; margin-top: 0; margin-bottom: 8px; color: #1a73e8; border-left: 4px solid #1a73e8; padding-left: 8px; }
+							  
+								 
+									
+													   
+			 
+				
+								 
+							  
+								   
+							   
+											   
+								  
+			 
             #zone, #strategy { font-size: 0.95em; word-break: break-all; }
             .red { color: #d93025; font-weight: bold; }
             .green { color: #188038; font-weight: bold; }
@@ -60,33 +73,39 @@
             .event-text { color: #e67e22; font-weight: bold; }
             .drill-text { color: #9b59b6; font-weight: bold; }
             .note-text { color: #666; font-weight: bold; }
-            .today-row {
-                background-color: #fff9c4;
-                display: block;
-                padding: 4px 6px;
-                border-radius: 5px;
-                border: 1px solid #fbc02d;
-                margin: 4px 0;
-            }
-            .shield-alert {
-                background-color: #d93025;
-                color: white;
-                padding: 1px 6px;
-                border-radius: 3px;
-                font-weight: bold;
-                display: inline-block;
-                margin-top: 2px;
-                font-size: 0.9em;
-                animation: blink 1s infinite;
-            }
+            .today-row { background-color: #fff9c4; display: block; padding: 4px 6px; border-radius: 5px; border: 1px solid #fbc02d; margin: 4px 0; }
+            .shield-alert { background-color: #d93025; color: white; padding: 1px 6px; border-radius: 3px; font-weight: bold; display: inline-block; margin-top: 2px; font-size: 0.9em; animation: blink 1s infinite; }
+							   
+								 
+								   
+										  
+							  
+			 
+						   
+										  
+							 
+								 
+								   
+								  
+									  
+								
+								 
+											 
+			 
             @keyframes blink { 50% { opacity: 0.7; } }
             hr { border: 0; border-top: 1px solid #eee; margin: 8px 0; }
         </style>
     </head>
     <body>
 
+        <div id="custom-splash">
+            <img src="apple-touch-icon.png" class="splash-icon" alt="App Icon">
+            <div class="splash-loader"></div>
+            <p style="margin-top: 15px; color: #666; font-weight: bold;">Loading Strategy...</p>
+        </div>
+
         <div class="header-row">
-            <h2 style="margin:0; font-size: 1.0em;">This Page for Sunrisers only. </h2>
+            <h2 style="margin:0; font-size: 1.0em;">This Page for Sunrisers only.</h2>
             <div class="btn-group">
                 <button id="install-btn" class="action-btn">📲 Install</button>
                 <button id="lang-btn" class="action-btn" onclick="toggleLang()">EN / 中文</button>
@@ -104,12 +123,22 @@
         </div>
 		
 		<div id="footer-date" style="text-align: center; font-size: 11px; color: #aaa; margin-bottom: 15px;">
-            最後部署日期：2026/04/06 20:30
+            最後部署日期：2026/04/07 10:15
 		</div>
 
         <script>
             let currentLang = localStorage.getItem('lang') || 'zh';
             let deferredPrompt;
+
+            // 啟動畫面控制
+            window.addEventListener('load', () => {
+                const splash = document.getElementById('custom-splash');
+                setTimeout(() => {
+                    splash.style.opacity = '0';
+                    document.body.style.overflow = 'auto'; 
+                    setTimeout(() => { splash.style.display = 'none'; }, 500);
+                }, 3000); 
+            });
 
             const i18n = {
                 zh: {
@@ -117,7 +146,7 @@
                     iosMsg: "iOS 使用者請點擊瀏覽器下方的『分享』按鈕，然後選擇『加入主螢幕』。",
                     titleZone: "🔴 紅星戰區資訊 (當前)",
                     titleStrategy: "📅 近七日策略",
-                    footer: "最後部署日期：2026/04/06 20:30",
+                    footer: "最後部署日期：2026/04/07 10:15",
                     timePeriod: "時段",
                     zone: "戰區",
                     weeks: ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
@@ -150,7 +179,7 @@
                     iosMsg: "iOS: Tap 'Share' and 'Add to Home Screen'.",
                     titleZone: "🔴 Red Star Zone Info",
                     titleStrategy: "📅 7-Day Strategy",
-                    footer: "Last Update: 2026/04/06 20:30",
+                    footer: "Last Update: 2026/04/07 10:15",
                     timePeriod: "Period",
                     zone: "Zones",
                     weeks: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
@@ -180,26 +209,26 @@
                 }
             };
 
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('sw.js');
-            }
+											   
+            if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+			 
 
             window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
+                e.preventDefault(); deferredPrompt = e;
+								   
                 document.getElementById('install-btn').style.display = 'block';
             });
 
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            if (isIOS) {
-                document.getElementById('install-btn').style.display = 'block';
-            }
+						
+            if (isIOS) { document.getElementById('install-btn').style.display = 'block'; }
+			 
 
             document.getElementById('install-btn').addEventListener('click', () => {
                 const t = i18n[currentLang];
-                if (isIOS) {
-                    alert(t.iosMsg);
-                } else if (deferredPrompt) {
+							
+                if (isIOS) { alert(t.iosMsg); } 
+                else if (deferredPrompt) {
                     deferredPrompt.prompt();
                     deferredPrompt.userChoice.then(() => {
                         document.getElementById('install-btn').style.display = 'none';
@@ -222,39 +251,50 @@
                 document.getElementById('install-btn').innerText = t.install;
 
                 const now = new Date();
-                const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                
+                // --- 遊戲日期校準：若未滿 10 點，視為前一天 ---
+                let logicToday = new Date(now);
+                if (now.getHours() < 10) {
+                    logicToday.setDate(logicToday.getDate() - 1);
+                }
+                const logicZero = new Date(logicToday.getFullYear(), logicToday.getMonth(), logicToday.getDate());
 
-                const baseRotation = new Date(2026, 2, 20, 10, 0, 0); 
+                // 戰區計算
+                const baseRotation = new Date(2026, 2, 20); 
                 const zones = [
                     ["1769","1772","1775","1776","1783","1789","1790","1793","1796"], 
                     ["1765","1770","1771","1777","1778","1779","1784","1785","1791","1797"], 
                     ["1766","1767","1768","1773","1774","1780","1781","1782","1786","1787","1788","1792","1794","1795"] 
                 ];
-                let diffDays = Math.floor((now.getTime() - baseRotation.getTime()) / 86400000);
+                
+                let diffDays = Math.floor((logicZero.getTime() - baseRotation.getTime()) / 86400000);
                 let zoneIndex = diffDays % 3; if (zoneIndex < 0) zoneIndex += 3;
 
-                let displayStart = new Date(todayZero);
+                let displayStart = new Date(logicZero);
                 displayStart.setHours(10, 0, 0);
-                if (now.getHours() < 10) displayStart.setTime(displayStart.getTime() - 86400000);
+																								 
                 let displayEnd = new Date(displayStart.getTime() + 86400000);
 
                 document.getElementById("zone").innerHTML = 
                     `<strong>${t.timePeriod}：</strong>${displayStart.getMonth() + 1}/${displayStart.getDate()} 10:00 AM ~ ${displayEnd.getMonth() + 1}/${displayEnd.getDate()} 10:00 AM (GMT+8)<br>` +
                     `<strong>${t.zone}：</strong>${zones[zoneIndex].join(", ")}`;
 
-                const baseRed = new Date(2026, 2, 24, 10, 0, 0); 
-                const baseEventWeek = new Date(2026, 3, 6); 
+																 
+															
                 let strategyHtml = "";
 
                 for(let i = 0; i < 7; i++) {
-                    let loopDate = new Date(todayZero.getTime() + i * 86400000);
+                    let loopDate = new Date(logicZero.getTime() + i * 86400000);
                     let dayOfWeek = loopDate.getDay();
-                    let hasRed = (Math.floor((loopDate.getTime() - baseRed.getTime() + 36000000) / 86400000) % 3 === 0);
+                    
+                    // 紅星週期：2026/3/24 為基準日
+                    let hasRed = (Math.floor((loopDate.getTime() - new Date(2026, 2, 24).getTime()) / 86400000) % 3 === 0);
                     let isSpecialDay = (dayOfWeek === 2 || dayOfWeek === 6);
-                    let isWeekOne = (Math.floor((loopDate.getTime() - baseEventWeek.getTime()) / (7 * 86400000)) % 2 === 0);
-                    let hasDrill = (Math.floor((loopDate.getTime() - baseEventWeek.getTime()) / 86400000) % 2 !== 0);
+                    
+                    // 事件週期：2026/4/6 為第一週基準
+                    let isWeekOne = (Math.floor((loopDate.getTime() - new Date(2026, 3, 6).getTime()) / (7 * 86400000)) % 2 === 0);
+                    let hasDrill = (Math.floor((loopDate.getTime() - new Date(2026, 3, 6).getTime()) / 86400000) % 2 !== 0);
 
-																 
                     let label = `<strong>${loopDate.getMonth()+1}/${loopDate.getDate()} (${t.weeks[dayOfWeek]})</strong>`;
 
                     let redContent = hasRed ? `<span class='red'>${t.hasTask}</span> / ` : `${t.noTask}`;
@@ -262,7 +302,9 @@
                         if (isSpecialDay) redContent += `<span class='green'>${t.suggestSendToday}</span>`;
                         else {
                             let willSave = false;
-                            for(let j=1; j<=2; j++) if(new Date(loopDate.getTime()+j*86400000).getDay() % 4 === 2) willSave = true;
+                            for(let j=1; j<=2; j++) {
+                                if(new Date(loopDate.getTime()+j*86400000).getDay() % 4 === 2) willSave = true;
+                            }
                             redContent += willSave ? `<span class='red'>${t.suggestSave}</span>` : `<span class='green'>${t.suggestSendToday}</span>`;
                         }
                     } else if (isSpecialDay) {
