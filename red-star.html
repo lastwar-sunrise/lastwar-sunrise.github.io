@@ -57,7 +57,7 @@
             <h2 style="margin:0; font-size: 1.0em;">This Page for Sunrisers only.</h2>
             <div class="btn-group">
                 <button id="install-btn" class="action-btn">📲 Install</button>
-                <button id="lang-btn" class="action-btn" onclick="toggleLang()">EN / 中文</button>
+                <button id="lang-btn" class="action-btn" onclick="toggleLang()">ZH / EN / VI</button>
             </div>
         </div>
 
@@ -79,7 +79,7 @@
             let currentLang = localStorage.getItem('lang') || 'zh';
             let deferredPrompt;
 
-            // 啟動畫面控制
+								 
             window.addEventListener('load', () => {
                 const splash = document.getElementById('custom-splash');
                 setTimeout(() => {
@@ -123,7 +123,8 @@
                     noteExpedition: "需要打完遠征",
                     noteShop: "購買商店物品",
                     noteRadar: "存雷達",
-                    noteMining: "晚上挖礦到隔天10點(不能離開礦點)"
+                    noteMining: "晚上挖礦到隔天10點(不能離開礦點)",
+                    displayTZ: "(GMT+8)"
                 },
                 en: {
                     install: "📲 Install",
@@ -158,7 +159,44 @@
                     noteExpedition: "Complete Campaign",
                     noteShop: "Purchase Shop Items",
                     noteRadar: "Save Radar tasks",
-                    noteMining: "Mine at night until 10 AM (Stay at node)"
+                    noteMining: "Mine at night until 10 AM (Stay at node)",
+                    displayTZ: "(GMT+8)"
+                },
+                vi: {
+                    install: "📲 Cài đặt",
+                    iosMsg: "iOS: Nhấn 'Chia sẻ' và 'Thêm vào màn hình chính'.",
+                    titleZone: "🔴 Thông tin Chiến khu",
+                    titleStrategy: "📅 Chiến thuật 7 ngày",
+                    footer: "Cập nhật mới nhất: 2026/04/07 10:15",
+                    timePeriod: "Thời gian",
+                    zone: "Chiến khu",
+                    weeks: ["Chủ Nhật","Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7"],
+                    redStar: "🔴 Sao Đỏ",
+                    hasTask: "Có nhiệm vụ",
+                    noTask: "Không có",
+                    suggestSendToday: "Gửi đi (Hôm nay)",
+                    suggestSendSaved: "Gửi đi (Đã lưu)",
+                    suggestSave: "LƯU LẠI",
+                    truck: "🚚 Xe tải",
+                    truckUR: "Chỉ <span class='gold'> UR </span>",
+                    truckSSR: "Ưu tiên <span class='purple'> SSR </span> rồi đến <span class='gold'> UR </span>",
+                    event: "✨ Sự kiện",
+                    events: {
+                        zombie: "🧟 Thây ma xâm chiếm",
+                        boss: "👹 Boss cuồng bạo (Quanh quốc hội)",
+                        vanguard: "👨‍🏫 Huấn luyện viên tiên phong",
+                        doomsday: "🌋 Ngày tận thế (Đánh 3 béo)",
+                        none: "Không có sự kiện lớn"
+                    },
+                    drill: "⚔️ Diễn tập liên minh",
+                    shieldOn: "Bật Khiên (09:00 AM ICT)",
+                    shieldOff: "Tắt Khiên (09:00 AM ICT)",
+                    note: "📝 Ghi chú",
+                    noteExpedition: "Hoàn thành Viễn chinh",
+                    noteShop: "Mua đồ trong Shop",
+                    noteRadar: "Lưu nhiệm vụ Radar",
+                    noteMining: "Đào mỏ qua đêm đến 9h sáng (Không rời mỏ)",
+                    displayTZ: "(GMT+7)"
                 }
             };
 
@@ -185,7 +223,10 @@
             });
 
             function toggleLang() {
-                currentLang = currentLang === 'zh' ? 'en' : 'zh';
+                if (currentLang === 'zh') currentLang = 'en';
+                else if (currentLang === 'en') currentLang = 'vi';
+                else currentLang = 'zh';
+                
                 localStorage.setItem('lang', currentLang);
                 render();
             }
@@ -197,14 +238,17 @@
                 document.getElementById('footer-date').innerText = t.footer;
                 document.getElementById('install-btn').innerText = t.install;
 
+                // --- 核心改動：強制校準為伺服器時間 (GMT+8) ---
                 const now = new Date();
+                const serverTime = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (8 * 3600000));
                 
-                let logicToday = new Date(now);
-                if (now.getHours() < 10) {
+                let logicToday = new Date(serverTime);
+                if (serverTime.getHours() < 10) {
                     logicToday.setDate(logicToday.getDate() - 1);
                 }
                 const logicZero = new Date(logicToday.getFullYear(), logicToday.getMonth(), logicToday.getDate());
 
+                // 戰區計算
                 const baseRotation = new Date(2026, 2, 20); 
                 const zones = [
                     ["1769","1772","1775","1776","1783","1789","1790","1793","1796"], 
@@ -215,12 +259,14 @@
                 let diffDays = Math.floor((logicZero.getTime() - baseRotation.getTime()) / 86400000);
                 let zoneIndex = diffDays % 3; if (zoneIndex < 0) zoneIndex += 3;
 
+                // 顯示時段轉換
+                let hStart = currentLang === 'vi' ? 9 : 10;
                 let displayStart = new Date(logicZero);
-                displayStart.setHours(10, 0, 0);
+												
                 let displayEnd = new Date(displayStart.getTime() + 86400000);
 
                 document.getElementById("zone").innerHTML = 
-                    `<strong>${t.timePeriod}：</strong>${displayStart.getMonth() + 1}/${displayStart.getDate()} 10:00 AM ~ ${displayEnd.getMonth() + 1}/${displayEnd.getDate()} 10:00 AM (GMT+8)<br>` +
+                    `<strong>${t.timePeriod}：</strong>${displayStart.getMonth() + 1}/${displayStart.getDate()} ${hStart}:00 AM ~ ${displayEnd.getMonth() + 1}/${displayEnd.getDate()} ${hStart}:00 AM ${t.displayTZ}<br>` +
                     `<strong>${t.zone}：</strong>${zones[zoneIndex].join(", ")}`;
 
                 let strategyHtml = "";
@@ -270,15 +316,15 @@
                         eventDisplay = `<span class="event-text">${t.events.none}</span>`;
                     }
 
-                    // 備註邏輯處理
+										 
                     let notes = [];
                     if (dayOfWeek === 1 || dayOfWeek === 3 || dayOfWeek === 5) notes.push(t.noteExpedition);
                     if (dayOfWeek === 0) notes.push(t.noteShop);
-                    
-                    // 新增要求：日、二、四 存雷達
+					
+															   
                     if (dayOfWeek === 0 || dayOfWeek === 2 || dayOfWeek === 4) notes.push(t.noteRadar);
-                    
-                    // 新增要求：星期日 挖礦
+					
+													  
                     if (dayOfWeek === 0) notes.push(t.noteMining);
 
                     let noteRow = notes.length > 0 ? `<br>└ ${t.note}：<span class="note-text">${notes.join(" / ")}</span>` : "";
