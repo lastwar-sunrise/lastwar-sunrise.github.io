@@ -23,48 +23,14 @@
             body {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
                 padding: 8px; background: #f0f2f5; line-height: 1.5; color: #333; overflow: hidden; 
-									
-								 
-							
             }
             .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 0 4px; }
-							  
-											   
-									
-								   
-							   
-			 
-						
             .btn-group { display: flex; gap: 5px; }
             .action-btn { background: #1a73e8; color: white; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 12px; }
-			 
-						 
-									
-							 
-							 
-								  
-									
-								
-								  
-								
-			 
             #install-btn { background: #34a853; display: none; }
             
             .box { margin-bottom: 12px; padding: 12px; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
             h3 { font-size: 1.1em; margin-top: 0; margin-bottom: 8px; color: #1a73e8; border-left: 4px solid #1a73e8; padding-left: 8px; }
-							  
-								 
-									
-													   
-			 
-				
-								 
-							  
-								   
-							   
-											   
-								  
-			 
             #zone, #strategy { font-size: 0.95em; word-break: break-all; }
             .red { color: #d93025; font-weight: bold; }
             .green { color: #188038; font-weight: bold; }
@@ -75,23 +41,6 @@
             .note-text { color: #666; font-weight: bold; }
             .today-row { background-color: #fff9c4; display: block; padding: 4px 6px; border-radius: 5px; border: 1px solid #fbc02d; margin: 4px 0; }
             .shield-alert { background-color: #d93025; color: white; padding: 1px 6px; border-radius: 3px; font-weight: bold; display: inline-block; margin-top: 2px; font-size: 0.9em; animation: blink 1s infinite; }
-							   
-								 
-								   
-										  
-							  
-			 
-						   
-										  
-							 
-								 
-								   
-								  
-									  
-								
-								 
-											 
-			 
             @keyframes blink { 50% { opacity: 0.7; } }
             hr { border: 0; border-top: 1px solid #eee; margin: 8px 0; }
         </style>
@@ -121,10 +70,10 @@
             <h3 id="title-strategy">📅 近七日策略</h3>
             <div id="strategy">Loading...</div>
         </div>
-		
-		<div id="footer-date" style="text-align: center; font-size: 11px; color: #aaa; margin-bottom: 15px;">
+        
+        <div id="footer-date" style="text-align: center; font-size: 11px; color: #aaa; margin-bottom: 15px;">
             最後部署日期：2026/04/07 10:15
-		</div>
+        </div>
 
         <script>
             let currentLang = localStorage.getItem('lang') || 'zh';
@@ -172,7 +121,9 @@
                     shieldOff: "護盾 OFF (GMT+8 10:00)",
                     note: "📝 備註",
                     noteExpedition: "需要打完遠征",
-                    noteShop: "購買商店物品"
+                    noteShop: "購買商店物品",
+                    noteRadar: "存雷達",
+                    noteMining: "晚上挖礦到隔天10點(不能離開礦點)"
                 },
                 en: {
                     install: "📲 Install",
@@ -205,28 +156,24 @@
                     shieldOff: "Shield OFF (10:00 AM)",
                     note: "📝 Note",
                     noteExpedition: "Complete Campaign",
-                    noteShop: "Purchase Shop Items"
+                    noteShop: "Purchase Shop Items",
+                    noteRadar: "Save Radar tasks",
+                    noteMining: "Mine at night until 10 AM (Stay at node)"
                 }
             };
 
-											   
             if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
-			 
 
             window.addEventListener('beforeinstallprompt', (e) => {
                 e.preventDefault(); deferredPrompt = e;
-								   
                 document.getElementById('install-btn').style.display = 'block';
             });
 
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-						
             if (isIOS) { document.getElementById('install-btn').style.display = 'block'; }
-			 
 
             document.getElementById('install-btn').addEventListener('click', () => {
                 const t = i18n[currentLang];
-							
                 if (isIOS) { alert(t.iosMsg); } 
                 else if (deferredPrompt) {
                     deferredPrompt.prompt();
@@ -252,14 +199,12 @@
 
                 const now = new Date();
                 
-                // --- 遊戲日期校準：若未滿 10 點，視為前一天 ---
                 let logicToday = new Date(now);
                 if (now.getHours() < 10) {
                     logicToday.setDate(logicToday.getDate() - 1);
                 }
                 const logicZero = new Date(logicToday.getFullYear(), logicToday.getMonth(), logicToday.getDate());
 
-                // 戰區計算
                 const baseRotation = new Date(2026, 2, 20); 
                 const zones = [
                     ["1769","1772","1775","1776","1783","1789","1790","1793","1796"], 
@@ -272,26 +217,21 @@
 
                 let displayStart = new Date(logicZero);
                 displayStart.setHours(10, 0, 0);
-																								 
                 let displayEnd = new Date(displayStart.getTime() + 86400000);
 
                 document.getElementById("zone").innerHTML = 
                     `<strong>${t.timePeriod}：</strong>${displayStart.getMonth() + 1}/${displayStart.getDate()} 10:00 AM ~ ${displayEnd.getMonth() + 1}/${displayEnd.getDate()} 10:00 AM (GMT+8)<br>` +
                     `<strong>${t.zone}：</strong>${zones[zoneIndex].join(", ")}`;
 
-																 
-															
                 let strategyHtml = "";
 
                 for(let i = 0; i < 7; i++) {
                     let loopDate = new Date(logicZero.getTime() + i * 86400000);
                     let dayOfWeek = loopDate.getDay();
                     
-                    // 紅星週期：2026/3/24 為基準日
                     let hasRed = (Math.floor((loopDate.getTime() - new Date(2026, 2, 24).getTime()) / 86400000) % 3 === 0);
                     let isSpecialDay = (dayOfWeek === 2 || dayOfWeek === 6);
                     
-                    // 事件週期：2026/4/6 為第一週基準
                     let isWeekOne = (Math.floor((loopDate.getTime() - new Date(2026, 3, 6).getTime()) / (7 * 86400000)) % 2 === 0);
                     let hasDrill = (Math.floor((loopDate.getTime() - new Date(2026, 3, 6).getTime()) / 86400000) % 2 !== 0);
 
@@ -330,12 +270,18 @@
                         eventDisplay = `<span class="event-text">${t.events.none}</span>`;
                     }
 
-                    let noteRow = "";
-                    if (dayOfWeek === 1 || dayOfWeek === 3 || dayOfWeek === 5) {
-                        noteRow = `<br>└ ${t.note}：<span class="note-text">${t.noteExpedition}</span>`;
-                    } else if (dayOfWeek === 0) {
-                        noteRow = `<br>└ ${t.note}：<span class="note-text">${t.noteShop}</span>`;
-                    }
+                    // 備註邏輯處理
+                    let notes = [];
+                    if (dayOfWeek === 1 || dayOfWeek === 3 || dayOfWeek === 5) notes.push(t.noteExpedition);
+                    if (dayOfWeek === 0) notes.push(t.noteShop);
+                    
+                    // 新增要求：日、二、四 存雷達
+                    if (dayOfWeek === 0 || dayOfWeek === 2 || dayOfWeek === 4) notes.push(t.noteRadar);
+                    
+                    // 新增要求：星期日 挖礦
+                    if (dayOfWeek === 0) notes.push(t.noteMining);
+
+                    let noteRow = notes.length > 0 ? `<br>└ ${t.note}：<span class="note-text">${notes.join(" / ")}</span>` : "";
 
                     let row = `${label}<br>└ ${t.redStar}：${redContent}<br>└ ${t.truck}：${isSpecialDay?t.truckUR:t.truckSSR}<br>└ ${t.event}：${eventDisplay}${noteRow}`;
                     
