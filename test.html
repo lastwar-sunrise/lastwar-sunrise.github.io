@@ -254,27 +254,49 @@
                 }, 1500); 
             });
 
-			// 讀取外部文字檔邏輯 (已加入自動分隔功能)
 			function fetchInternalData() {
 				const timestamp = new Date().getTime();
-				const separator = " 、 "; // 設定你喜歡的分隔符號
+				
+				// 1. 取得伺服器時間 (GMT+8)
+				const now = new Date();
+				const serverTime = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (8 * 3600000));
+				
+				// 2. 應用與策略一致的 Time Shift (早上 10:00 換日)
+				let logicToday = new Date(serverTime);
+				if (serverTime.getHours() < 10) {
+					logicToday.setDate(logicToday.getDate() - 1);
+				}
+				
+				// 3. 取得邏輯上的「星期幾」來對應 train.txt
+				// JS getDay(): 0(日), 1(一), 2(二), 3(三), 4(四), 5(五), 6(六)
+				// 對應到你的 7 行規格 (1-7行)：
+				let dayOfWeek = logicToday.getDay(); 
+				let targetIndex = (dayOfWeek === 0) ? 6 : dayOfWeek - 1; // 轉換為：週一=0, ..., 週日=6
 
-				// 讀取值日生
+				// 讀取值日生 (顯示全部)
 				fetch('duty.txt?t=' + timestamp)
 					.then(res => res.ok ? res.text() : '暫無資訊')
 					.then(data => {
-						// 將換行符號替換為分隔符號，並過濾掉多餘的空白
-						const cleanedData = data.split(/\r?\n/).filter(line => line.trim() !== "").join(separator);
+						const cleanedData = data.split(/\r?\n/).filter(line => line.trim() !== "").join(" 、 ");
 						document.getElementById('duty-list').textContent = cleanedData || '暫無資訊';
 					})
 					.catch(() => document.getElementById('duty-list').textContent = '讀取失敗');
 
-				// 讀取火車駕駛
+				// 讀取火車駕駛 (同步 Time Shift)
 				fetch('train.txt?t=' + timestamp)
 					.then(res => res.ok ? res.text() : '暫無資訊')
 					.then(data => {
-						const cleanedData = data.split(/\r?\n/).filter(line => line.trim() !== "").join(separator);
-						document.getElementById('train-driver').textContent = cleanedData || '暫無資訊';
+						// 排除空行並轉為陣列
+						const lines = data.split(/\r?\n/).map(line => line.trim()).filter(line => line !== "");
+						
+						if (lines.length >= 7) {
+							// 根據同步後的 targetIndex 抓取駕駛員
+							document.getElementById('train-driver').textContent = lines[targetIndex];
+						} else if (lines.length > 0) {
+							document.getElementById('train-driver').textContent = lines[0] + " (名單不滿7行)";
+						} else {
+							document.getElementById('train-driver').textContent = '暫無名單';
+						}
 					})
 					.catch(() => document.getElementById('train-driver').textContent = '讀取失敗');
 			}
