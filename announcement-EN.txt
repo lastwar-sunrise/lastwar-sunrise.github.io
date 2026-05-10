@@ -1,1 +1,17 @@
-announcement-EN.txt
+【notice】 train eligibility requirements
+
+to qualify for train participation, please meet the following requirements:
+
+【requirements】
+
+【① vs total score】
+✓ must be 43.2m or higher
+→ achieved by participating in alliance duel weekly ranking
+
+【② coal donation】
+✓ must be 0.7m or higher
+→ achieved through season contribution mutual aid donations
+
+【notes】
+✗ failing any requirement will result in ineligibility for train
+✓ weekly ranking data is used for final evaluation
