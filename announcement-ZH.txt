@@ -1,4 +1,17 @@
-announcement-ZH.txt
-on saturday night, check the total vs score. anyone below 43.2m should be marked.
-for coal donation, check the season contribution under mutual aid weekly ranking. anyone with less than 0.7m coal should be marked.
-each donation is 1000 coal. 1 coal equals 10 points, so you need at least 70 donations per week, totaling 0.7m points.
+【公告】火車資格取得說明
+
+為確保能取得火車參與資格，請達成以下條件：
+
+【資格條件】
+
+【① VS總分達標】
+✓ 需達 43.2M（含）以上
+→ 取得方式：參與聯盟對決並累積週排行分數
+
+【② 煤炭捐贈達標】
+✓ 需達 0.7M（含）以上
+→ 取得方式：透過賽季貢獻 → 互助捐贈累積
+
+【注意事項】
+✗ 未達任一條件者，視為不具火車資格
+✓ 每週數據以週排行結算為準
