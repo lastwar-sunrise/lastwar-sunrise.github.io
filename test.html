@@ -46,16 +46,16 @@
 
             /* --- 內務樣式 --- */
             .inner-duty { background-color: #f8f9fa; padding: 10px; border-radius: 8px; border-left: 5px solid #ffc107; margin-top: 5px; }
-            .inner-duty p { margin: 5px 0; font-size: 0.95em; }
+            .inner-duty p { margin: 6px 0; font-size: 0.95em; display: flex; align-items: center; justify-content: space-between; }
             #duty-list, #train-driver { color: #d63384; font-weight: bold; }
             
-            /* 備註按鈕 */
-            .btn-note { background: #6c757d; color: white; border: none; padding: 2px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; margin-left: 5px; vertical-align: middle; }
+            /* 備註與規則按鈕 */
+            .btn-view { background: #6c757d; color: white; border: none; padding: 3px 12px; border-radius: 12px; font-size: 11px; cursor: pointer; }
 
             /* --- 彈出視窗樣式 --- */
-            .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
-            .modal-content { background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 15px; width: 85%; max-width: 400px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); position: relative; }
-            #modal-text { white-space: pre-wrap; font-size: 0.95em; line-height: 1.6; color: #444; margin: 15px 0; }
+            .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); }
+            .modal-content { background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 15px; width: 85%; max-width: 400px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); position: relative; }
+            .modal-body { white-space: pre-wrap; font-size: 0.95em; line-height: 1.6; color: #444; margin: 15px 0; max-height: 300px; overflow-y: auto; }
             .close-modal { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; margin-top: -10px; }
             .close-modal:hover { color: #000; }
         </style>
@@ -81,9 +81,16 @@
         <div class="box">
             <h3 id="title-inner">🏠 Sunrise 內務</h3>
             <div class="inner-duty">
-                <p><strong id="label-duty">值日生：</strong> <span id="duty-list">載入中...</span></p>
-                <p><strong id="label-train">駕駛火車：</strong> <span id="train-driver">載入中...</span></p>
-                <p><strong>公告備註：</strong> <button id="btn-note-text" class="btn-note" onclick="openModal()">點擊查看</button></p>
+                <p><span><strong id="label-duty">值日生：</strong> <span id="duty-list">載入中...</span></span></p>
+                <p><span><strong id="label-train">駕駛火車：</strong> <span id="train-driver">載入中...</span></span></p>
+                <p>
+                    <strong id="label-note">公告備註：</strong> 
+                    <button class="btn-view" onclick="openModal('announcement')">點擊查看</button>
+                </p>
+                <p>
+                    <strong id="label-rules">R4/R5 內務規則：</strong> 
+                    <button class="btn-view" onclick="openModal('rules')">點擊查看</button>
+                </p>
             </div>
         </div>
 
@@ -102,11 +109,11 @@
         </div>
 
         <!-- 彈出視窗 -->
-        <div id="announcementModal" class="modal">
+        <div id="customModal" class="modal">
             <div class="modal-content">
                 <span class="close-modal" onclick="closeModal()">&times;</span>
-                <h3 style="border-left: 4px solid #ffc107; color: #333; margin-bottom: 10px;">📢 盟內重要公告</h3>
-                <div id="modal-text">載入中...</div>
+                <h3 id="modal-title" style="border-left: 4px solid #ffc107; color: #333; margin-bottom: 10px;">📢 標題</h3>
+                <div id="modal-body" class="modal-body">載入中...</div>
                 <button class="action-btn" style="width:100%; margin-top:10px; background:#6c757d;" onclick="closeModal()">關閉 Close</button>
             </div>
         </div>
@@ -124,7 +131,11 @@
                     titleInner: "🏠 Sunrise 內務",
                     labelDuty: "值日生：",
                     labelTrain: "駕駛火車：",
-                    btnNote: "點擊查看",
+                    labelNote: "公告備註：",
+                    labelRules: "R4/R5 內務規則：",
+                    btnView: "點擊查看",
+                    modalTitleAnn: "📢 盟內重要公告",
+                    modalTitleRules: "📜 R4/R5 內務規則",
                     footer: "最後部署日期：2026/04/07 10:15",
                     timePeriod: "時段",
                     zone: "戰區",
@@ -164,7 +175,11 @@
                     titleInner: "🏠 Sunrise Internal",
                     labelDuty: "On Duty:",
                     labelTrain: "Train Driver:",
-                    btnNote: "View Note",
+                    labelNote: "Notice:",
+                    labelRules: "R4/R5 Rules:",
+                    btnView: "View",
+                    modalTitleAnn: "📢 Alliance Notice",
+                    modalTitleRules: "📜 R4/R5 Internal Rules",
                     footer: "Last Update: 2026/04/07 10:15",
                     timePeriod: "Period",
                     zone: "Zones",
@@ -204,7 +219,11 @@
                     titleInner: "🏠 Nội vụ Sunrise",
                     labelDuty: "Trực nhật:",
                     labelTrain: "Lái tàu:",
-                    btnNote: "Xem ghi chú",
+                    labelNote: "Ghi chú:",
+                    labelRules: "Quy tắc R4/R5:",
+                    btnView: "Xem",
+                    modalTitleAnn: "📢 Thông báo Liên minh",
+                    modalTitleRules: "📜 Quy tắc nội bộ R4/R5",
                     footer: "Cập nhật mới nhất: 2026/04/07 10:15",
                     timePeriod: "Thời gian",
                     zone: "Chiến khu",
@@ -272,35 +291,41 @@
                     .then(res => res.ok ? res.text() : '暫無資訊')
                     .then(data => {
                         const lines = data.split(/\r?\n/).map(line => line.trim()).filter(line => line !== "");
-                        if (lines.length >= 7) {
-                            document.getElementById('train-driver').textContent = lines[targetIndex];
-                        } else if (lines.length > 0) {
-                            document.getElementById('train-driver').textContent = lines[0];
-                        } else {
-                            document.getElementById('train-driver').textContent = '暫無名單';
-                        }
+                        if (lines.length >= 7) document.getElementById('train-driver').textContent = lines[targetIndex];
+                        else if (lines.length > 0) document.getElementById('train-driver').textContent = lines[0];
                     }).catch(() => document.getElementById('train-driver').textContent = '讀取失敗');
-
-                // 3. 讀取公告備註
-                fetch('announcement.txt?t=' + timestamp)
-                    .then(res => res.ok ? res.text() : '目前沒有公告備註。')
-                    .then(data => {
-                        document.getElementById('modal-text').innerText = data;
-                    }).catch(() => document.getElementById('modal-text').innerText = '讀取失敗');
             }
 
-            function openModal() {
-                document.getElementById('announcementModal').style.display = "block";
+            // 彈出視窗：動態讀取多語言檔案
+            function openModal(type) {
+                const timestamp = new Date().getTime();
+                const langSuffix = currentLang.toUpperCase();
+                const t = i18n[currentLang];
+                
+                let fileName = (type === 'announcement') ? `announcement-${langSuffix}.txt` : `rules-${langSuffix}.txt`;
+                let title = (type === 'announcement') ? t.modalTitleAnn : t.modalTitleRules;
+
+                document.getElementById('modal-title').innerText = title;
+                document.getElementById('modal-body').innerText = "Loading...";
+                document.getElementById('customModal').style.display = "block";
                 document.body.style.overflow = "hidden";
+
+                fetch(fileName + '?t=' + timestamp)
+                    .then(res => res.ok ? res.text() : '暫無詳細內容。 (File Not Found)')
+                    .then(data => {
+                        document.getElementById('modal-body').innerText = data;
+                    }).catch(() => {
+                        document.getElementById('modal-body').innerText = "讀取檔案失敗。";
+                    });
             }
 
             function closeModal() {
-                document.getElementById('announcementModal').style.display = "none";
+                document.getElementById('customModal').style.display = "none";
                 document.body.style.overflow = "auto";
             }
 
             window.onclick = function(event) {
-                const modal = document.getElementById('announcementModal');
+                const modal = document.getElementById('customModal');
                 if (event.target == modal) { closeModal(); }
             }
 
@@ -319,7 +344,12 @@
                 document.getElementById('title-inner').innerText = t.titleInner;
                 document.getElementById('label-duty').innerText = t.labelDuty;
                 document.getElementById('label-train').innerText = t.labelTrain;
-                document.getElementById('btn-note-text').innerText = t.btnNote;
+                document.getElementById('label-note').innerText = t.labelNote;
+                document.getElementById('label-rules').innerText = t.labelRules;
+                
+                // 更新所有按鈕文字
+                document.querySelectorAll('.btn-view').forEach(btn => btn.innerText = t.btnView);
+                
                 document.getElementById('footer-date').innerText = t.footer;
                 document.getElementById('install-btn').innerText = t.install;
 
