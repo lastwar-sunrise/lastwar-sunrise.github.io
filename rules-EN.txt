@@ -3,7 +3,7 @@ please complete EXCEL maintenance before 10:00 every sunday
 EXCEL link can be found in r4 / r5 in game announcements
 
 【EXCEL SETTING】
-✓ only tick column e (ineligible)
+✓ only tick column 'E' (ineligible)
 
 【CRITERIA】
 
