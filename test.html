@@ -254,25 +254,30 @@
                 }, 1500); 
             });
 
-            // 讀取外部文字檔邏輯
-            function fetchInternalData() {
-                const timestamp = new Date().getTime();
-                // 讀取值日生
-                fetch('duty.txt?t=' + timestamp)
-                    .then(res => res.ok ? res.text() : '暫無資訊')
-                    .then(data => document.getElementById('duty-list').textContent = data.trim())
-                    .catch(() => document.getElementById('duty-list').textContent = '讀取失敗');
+			// 讀取外部文字檔邏輯 (已加入自動分隔功能)
+			function fetchInternalData() {
+				const timestamp = new Date().getTime();
+				const separator = " 、 "; // 設定你喜歡的分隔符號
 
-                // 讀取火車駕駛
-                fetch('train.txt?t=' + timestamp)
-                    .then(res => res.ok ? res.text() : '暫無資訊')
-                    .then(data => document.getElementById('train-driver').textContent = data.trim())
-                    .catch(() => document.getElementById('train-driver').textContent = '讀取失敗');
-														  
-																					  
-											  
-					   
-            }
+				// 讀取值日生
+				fetch('duty.txt?t=' + timestamp)
+					.then(res => res.ok ? res.text() : '暫無資訊')
+					.then(data => {
+						// 將換行符號替換為分隔符號，並過濾掉多餘的空白
+						const cleanedData = data.split(/\r?\n/).filter(line => line.trim() !== "").join(separator);
+						document.getElementById('duty-list').textContent = cleanedData || '暫無資訊';
+					})
+					.catch(() => document.getElementById('duty-list').textContent = '讀取失敗');
+
+				// 讀取火車駕駛
+				fetch('train.txt?t=' + timestamp)
+					.then(res => res.ok ? res.text() : '暫無資訊')
+					.then(data => {
+						const cleanedData = data.split(/\r?\n/).filter(line => line.trim() !== "").join(separator);
+						document.getElementById('train-driver').textContent = cleanedData || '暫無資訊';
+					})
+					.catch(() => document.getElementById('train-driver').textContent = '讀取失敗');
+			}
 			   
 
             function toggleLang() {
