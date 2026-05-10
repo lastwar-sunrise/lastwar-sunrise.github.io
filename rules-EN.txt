@@ -7,10 +7,10 @@ excel link can be found in r4 / r5 in game announcements
 
 【CRITERIA】
 
-【① VS TOTAL SCORE】
+① vs total score
 ✗ below 43.2m = ineligible
 → check method: alliance duel weekly ranking
 
-【② COAL DONATION】
+② coal donation
 ✗ below 0.7m = ineligible
 → check method: season contribution mutual aid weekly ranking
