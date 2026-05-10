@@ -1,16 +1,16 @@
 【NOTICE】
-please complete EXCEL maintenance before 10:00 every sunday
-EXCEL link can be found in r4 / r5 in game announcements
+Please complete EXCEL maintenance before 10:00 every sunday.
+EXCEL link can be found in r4 / r5 in game announcements.
 
 【EXCEL SETTING】
-✓ only tick column 'E' (ineligible)
+✓ Only tick column 'E' (ineligible)
 
 【CRITERIA】
 
-① vs total score
-✗ below 43.2m = ineligible
-→ check method: alliance duel weekly ranking
+① VS total score
+✗ Below 43.2M = ineligible
+→ Check method: alliance duel weekly ranking
 
-② coal donation
-✗ below 0.7m = ineligible
-→ check method: season contribution mutual aid weekly ranking
+② Coal donation
+✗ Below 0.7M = ineligible
+→ Check method: season contribution mutual aid weekly ranking
