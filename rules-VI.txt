@@ -1,2 +1,15 @@
-R4/R5
-公告測試 VI
+vui lòng hoàn thành cập nhật excel trước 10:00 chủ nhật hàng tuần
+link excel xem trong thông báo trong game r4 / r5
+
+[cài đặt excel]
+✓ chỉ đánh dấu cột e (không đủ điều kiện)
+
+[tiêu chí]
+
+① tổng điểm vs
+✗ dưới 43.2m = không đủ điều kiện
+→ cách kiểm tra: đấu trường liên minh bảng xếp hạng tuần
+
+② đóng góp than
+✗ dưới 0.7m = không đủ điều kiện
+→ cách kiểm tra: đóng góp mùa giải hỗ trợ bảng xếp hạng tuần
