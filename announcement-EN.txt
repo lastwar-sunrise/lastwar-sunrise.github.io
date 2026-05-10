@@ -1,17 +1,17 @@
-【notice】 train eligibility requirements
-
+【notice】
+train eligibility requirements
 to qualify for train participation, please meet the following requirements:
 
-【requirements】
+【REQUIREMENTS】
 
-【① vs total score】
+【① VS TOTAL SCORE】
 ✓ must be 43.2m or higher
 → achieved by participating in alliance duel weekly ranking
 
-【② coal donation】
+【② COAL DONATION】
 ✓ must be 0.7m or higher
 → achieved through season contribution mutual aid donations
 
-【notes】
+【NOTES】
 ✗ failing any requirement will result in ineligibility for train
 ✓ weekly ranking data is used for final evaluation
