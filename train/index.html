@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sunrise 火車資格抽選</title>
+
+    <link rel="stylesheet" href="train.css">
+</head>
+
+<body>
+    <header class="page-header">
+        <div>
+            <h1>🚂 Sunrise 火車資格抽選</h1>
+            <p>由當週值日 R4 勾選合格成員並進行抽選</p>
+        </div>
+
+        <div id="loginStatus" class="login-status">
+            尚未登入
+        </div>
+    </header>
+
+    <main class="page-content">
+        <section class="card">
+            <div class="section-title">
+                <h2>R4 登入</h2>
+            </div>
+
+            <div id="loginForm" class="login-form">
+                <label>
+                    Email
+                    <input
+                        id="emailInput"
+                        type="email"
+                        autocomplete="username"
+                        placeholder="請輸入 R4 Email"
+                    >
+                </label>
+
+                <label>
+                    密碼
+                    <input
+                        id="passwordInput"
+                        type="password"
+                        autocomplete="current-password"
+                        placeholder="請輸入密碼"
+                    >
+                </label>
+
+                <button id="loginButton" type="button">
+                    登入
+                </button>
+            </div>
+
+            <div id="logoutArea" class="hidden">
+                <button id="logoutButton" type="button" class="secondary-button">
+                    登出
+                </button>
+            </div>
+
+            <p id="loginMessage" class="message"></p>
+        </section>
+
+        <section class="card">
+            <div class="section-title">
+                <div>
+                    <h2>本週合格成員</h2>
+                    <p>請根據本週資格條件勾選合格成員</p>
+                </div>
+
+                <button id="reloadButton" type="button" class="secondary-button">
+                    重新載入
+                </button>
+            </div>
+
+            <div class="toolbar">
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="搜尋成員名稱"
+                >
+
+                <button id="selectAllButton" type="button">
+                    全選
+                </button>
+
+                <button id="clearAllButton" type="button" class="secondary-button">
+                    全部取消
+                </button>
+            </div>
+
+            <div class="summary">
+                聯盟成員：
+                <strong id="memberCount">0</strong>
+                人
+
+                <span class="separator">｜</span>
+
+                已選合格：
+                <strong id="eligibleCount">0</strong>
+                人
+            </div>
+
+            <div id="loadingMessage" class="loading-message">
+                正在讀取成員名單……
+            </div>
+
+            <div id="memberList" class="member-list"></div>
+        </section>
+
+        <section class="card">
+            <div class="section-title">
+                <div>
+                    <h2>執行抽選</h2>
+                    <p>只會從目前勾選的合格成員中抽選</p>
+                </div>
+            </div>
+
+            <div class="draw-controls">
+                <label>
+                    抽選人數
+                    <input
+                        id="drawCountInput"
+                        type="number"
+                        min="1"
+                        value="1"
+                    >
+                </label>
+
+                <button id="drawButton" type="button" class="draw-button">
+                    開始抽選
+                </button>
+            </div>
+
+            <p id="drawMessage" class="message"></p>
+
+            <div id="resultArea" class="result-area hidden">
+                <h3>🎉 本次抽選結果</h3>
+
+                <ol id="resultList"></ol>
+
+                <p id="drawTime" class="draw-time"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Sunrise Alliance
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="train.js"></script>
+</body>
+</html>
