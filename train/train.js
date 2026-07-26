@@ -119,11 +119,13 @@ async function Login() {
             false
         );
     } catch (error) {
-        ShowMessage(
-            LoginMessage,
-            "登入失敗，請確認帳號及密碼。",
-            true
-        );
+            console.error("Login error:", error);
+        
+            ShowMessage(
+                LoginMessage,
+                "登入失敗：" + GetErrorMessage(error),
+                true
+            );
     } finally {
         LoginButton.disabled = false;
         LoginButton.textContent = "登入";
