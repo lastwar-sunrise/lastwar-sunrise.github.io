@@ -762,7 +762,7 @@ async function DrawMembers() {
             throw result.error;
         }
 
-        ShowDrawResult(result.data || []);
+        await LoadDrawResults();
 
         CurrentTrainWeek.status =
             "completed";
