@@ -761,7 +761,7 @@ async function DrawMembers() {
                         CurrentTrainWeek.id
                 }
             );
-
+console.log(result.data);
         if (result.error) {
             throw result.error;
         }
