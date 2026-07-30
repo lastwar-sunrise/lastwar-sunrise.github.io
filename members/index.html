@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sunrise 成員管理</title>
+
+    <link
+        rel="stylesheet"
+        href="members.css"
+    >
+</head>
+
+<body>
+    <header class="page-header">
+        <div>
+            <a
+                class="back-link"
+                href="../"
+            >
+                ← 返回管理中心
+            </a>
+
+            <h1>👥 Sunrise 成員管理</h1>
+
+            <p>
+                新增、修改、啟用或停用聯盟成員
+            </p>
+        </div>
+
+        <div
+            id="loginStatus"
+            class="login-status"
+        >
+            尚未登入
+        </div>
+    </header>
+
+    <main class="page-content">
+        <section class="card">
+            <div class="section-title">
+                <div>
+                    <h2>管理員登入</h2>
+
+                    <p>
+                        只有 admin 可以修改成員資料
+                    </p>
+                </div>
+            </div>
+
+            <div
+                id="loginForm"
+                class="login-form"
+            >
+                <label>
+                    Email
+
+                    <input
+                        id="emailInput"
+                        type="email"
+                        autocomplete="username"
+                        placeholder="請輸入 Email"
+                    >
+                </label>
+
+                <label>
+                    密碼
+
+                    <input
+                        id="passwordInput"
+                        type="password"
+                        autocomplete="current-password"
+                        placeholder="請輸入密碼"
+                    >
+                </label>
+
+                <button
+                    id="loginButton"
+                    type="button"
+                >
+                    登入
+                </button>
+            </div>
+
+            <div
+                id="logoutArea"
+                class="hidden"
+            >
+                <button
+                    id="logoutButton"
+                    type="button"
+                    class="secondary-button"
+                >
+                    登出
+                </button>
+            </div>
+
+            <p
+                id="loginMessage"
+                class="message"
+            ></p>
+        </section>
+
+        <section class="card">
+            <div class="section-title">
+                <div>
+                    <h2>聯盟成員</h2>
+
+                    <p>
+                        停用後不會出現在火車抽選名單
+                    </p>
+                </div>
+
+                <button
+                    id="addMemberButton"
+                    type="button"
+                >
+                    ＋ 新增成員
+                </button>
+            </div>
+
+            <div class="toolbar">
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="搜尋成員名稱"
+                >
+
+                <select id="statusFilter">
+                    <option value="all">
+                        全部狀態
+                    </option>
+
+                    <option value="active">
+                        僅顯示啟用
+                    </option>
+
+                    <option value="inactive">
+                        僅顯示停用
+                    </option>
+                </select>
+
+                <button
+                    id="reloadButton"
+                    type="button"
+                    class="secondary-button"
+                >
+                    重新載入
+                </button>
+            </div>
+
+            <div class="summary">
+                全部：
+                <strong id="totalCount">0</strong>
+
+                <span>｜</span>
+
+                啟用：
+                <strong id="activeCount">0</strong>
+
+                <span>｜</span>
+
+                停用：
+                <strong id="inactiveCount">0</strong>
+            </div>
+
+            <p
+                id="memberMessage"
+                class="message"
+            ></p>
+
+            <div
+                id="loadingMessage"
+                class="loading-message"
+            >
+                正在讀取成員……
+            </div>
+
+            <div
+                id="memberList"
+                class="member-list"
+            ></div>
+        </section>
+    </main>
+
+    <div
+        id="editorOverlay"
+        class="overlay hidden"
+    >
+        <section class="editor-dialog">
+            <div class="dialog-header">
+                <h2 id="editorTitle">
+                    編輯成員
+                </h2>
+
+                <button
+                    id="closeEditorButton"
+                    type="button"
+                    class="icon-button"
+                >
+                    ×
+                </button>
+            </div>
+
+            <input
+                id="memberIdInput"
+                type="hidden"
+            >
+
+            <label>
+                成員名稱
+
+                <input
+                    id="gameNameInput"
+                    type="text"
+                    maxlength="100"
+                    placeholder="請輸入遊戲名稱"
+                >
+            </label>
+
+            <label>
+                排序
+
+                <input
+                    id="sortOrderInput"
+                    type="number"
+                    min="1"
+                    step="1"
+                >
+            </label>
+
+            <label class="checkbox-label">
+                <input
+                    id="isActiveInput"
+                    type="checkbox"
+                    checked
+                >
+
+                啟用此成員
+            </label>
+
+            <p
+                id="editorMessage"
+                class="message"
+            ></p>
+
+            <div class="dialog-actions">
+                <button
+                    id="cancelEditorButton"
+                    type="button"
+                    class="secondary-button"
+                >
+                    取消
+                </button>
+
+                <button
+                    id="saveMemberButton"
+                    type="button"
+                >
+                    儲存
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        Sunrise Alliance
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="../train/config.js"></script>
+
+    <script src="members.js"></script>
+</body>
+</html>
