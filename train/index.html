@@ -13,7 +13,7 @@
     <header class="page-header">
         <div>
             <h1>🚂 Sunrise 火車資格抽選</h1>
-            <p>由當週值日 R4 勾選合格成員並進行抽選</p>
+            <p>由當週值日 R4 勾選合格成員並進行正式抽選</p>
         </div>
 
         <div id="loginStatus" class="login-status">
@@ -22,6 +22,7 @@
     </header>
 
     <main class="page-content">
+        <!-- R4 登入 -->
         <section class="card">
             <div class="section-title">
                 <h2>R4 登入</h2>
@@ -48,13 +49,20 @@
                     >
                 </label>
 
-                <button id="loginButton" type="button">
+                <button
+                    id="loginButton"
+                    type="button"
+                >
                     登入
                 </button>
             </div>
 
             <div id="logoutArea" class="hidden">
-                <button id="logoutButton" type="button" class="secondary-button">
+                <button
+                    id="logoutButton"
+                    type="button"
+                    class="secondary-button"
+                >
                     登出
                 </button>
             </div>
@@ -62,6 +70,68 @@
             <p id="loginMessage" class="message"></p>
         </section>
 
+        <!-- 本週抽選設定 -->
+        <section class="card">
+            <div class="section-title">
+                <div>
+                    <h2>本週抽選設定</h2>
+                    <p>建立或載入指定週次的火車抽選</p>
+                </div>
+            </div>
+
+            <div class="draw-controls">
+                <label>
+                    週次開始日
+                    <input
+                        id="weekStartInput"
+                        type="date"
+                    >
+                </label>
+
+                <label>
+                    抽選名額
+                    <input
+                        id="weekDrawCountInput"
+                        type="number"
+                        min="1"
+                        value="1"
+                    >
+                </label>
+
+                <button
+                    id="loadWeekButton"
+                    type="button"
+                >
+                    載入週次
+                </button>
+
+                <button
+                    id="saveWeekButton"
+                    type="button"
+                    class="secondary-button"
+                >
+                    儲存本週資格
+                </button>
+            </div>
+
+            <p id="weekMessage" class="message"></p>
+
+            <div class="summary">
+                目前週次：
+                <strong id="currentWeekText">
+                    尚未載入
+                </strong>
+
+                <span class="separator">｜</span>
+
+                狀態：
+                <strong id="currentWeekStatus">
+                    －
+                </strong>
+            </div>
+        </section>
+
+        <!-- 合格成員名單 -->
         <section class="card">
             <div class="section-title">
                 <div>
@@ -69,8 +139,12 @@
                     <p>請根據本週資格條件勾選合格成員</p>
                 </div>
 
-                <button id="reloadButton" type="button" class="secondary-button">
-                    重新載入
+                <button
+                    id="reloadButton"
+                    type="button"
+                    class="secondary-button"
+                >
+                    重新載入成員
                 </button>
             </div>
 
@@ -81,66 +155,86 @@
                     placeholder="搜尋成員名稱"
                 >
 
-                <button id="selectAllButton" type="button">
+                <button
+                    id="selectAllButton"
+                    type="button"
+                >
                     全選
                 </button>
 
-                <button id="clearAllButton" type="button" class="secondary-button">
+                <button
+                    id="clearAllButton"
+                    type="button"
+                    class="secondary-button"
+                >
                     全部取消
                 </button>
             </div>
 
             <div class="summary">
                 聯盟成員：
-                <strong id="memberCount">0</strong>
+                <strong id="memberCount">
+                    0
+                </strong>
                 人
 
                 <span class="separator">｜</span>
 
                 已選合格：
-                <strong id="eligibleCount">0</strong>
+                <strong id="eligibleCount">
+                    0
+                </strong>
                 人
             </div>
 
-            <div id="loadingMessage" class="loading-message">
+            <div
+                id="loadingMessage"
+                class="loading-message"
+            >
                 正在讀取成員名單……
             </div>
 
-            <div id="memberList" class="member-list"></div>
+            <div
+                id="memberList"
+                class="member-list"
+            ></div>
         </section>
 
+        <!-- 正式抽選 -->
         <section class="card">
             <div class="section-title">
                 <div>
-                    <h2>執行抽選</h2>
-                    <p>只會從目前勾選的合格成員中抽選</p>
+                    <h2>正式抽選</h2>
+                    <p>
+                        只會從已儲存的合格成員中抽選，完成後不能重抽
+                    </p>
                 </div>
             </div>
 
             <div class="draw-controls">
-                <label>
-                    抽選人數
-                    <input
-                        id="drawCountInput"
-                        type="number"
-                        min="1"
-                        value="1"
-                    >
-                </label>
-
-                <button id="drawButton" type="button" class="draw-button">
-                    開始抽選
+                <button
+                    id="drawButton"
+                    type="button"
+                    class="draw-button"
+                >
+                    正式抽選
                 </button>
             </div>
 
             <p id="drawMessage" class="message"></p>
 
-            <div id="resultArea" class="result-area hidden">
-                <h3>🎉 本次抽選結果</h3>
+            <div
+                id="resultArea"
+                class="result-area hidden"
+            >
+                <h3>🎉 本週抽選結果</h3>
 
                 <ol id="resultList"></ol>
 
-                <p id="drawTime" class="draw-time"></p>
+                <p
+                    id="drawTime"
+                    class="draw-time"
+                ></p>
             </div>
         </section>
     </main>
