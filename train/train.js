@@ -442,7 +442,11 @@ async function LoadTrainWeek() {
             CurrentTrainWeek.status ===
             "completed"
         ) {
-            await LoadDrawResults();
+            await new Promise(function (resolve) {
+    setTimeout(resolve, 500);
+});
+
+await LoadDrawResults();
         }
 
         ShowMessage(
