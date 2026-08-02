@@ -133,8 +133,13 @@ function FormatDateInput(date) {
 }
 
 async function Login() {
-    const email = EmailInput.value.trim();
-    const password = PasswordInput.value;
+const email =
+    NormalizeSunriseAccount(
+        EmailInput.value
+    );
+
+const password =
+    PasswordInput.value;
 
     ClearMessage(LoginMessage);
 
@@ -237,9 +242,12 @@ function UpdateLoginDisplay() {
         !isLoggedIn
     );
 
-    LoginStatus.textContent = isLoggedIn
-        ? "已登入：" + CurrentUser.email
-        : "尚未登入";
+LoginStatus.textContent = isLoggedIn
+    ? "已登入：" +
+      GetSunriseAccountDisplay(
+          CurrentUser.email
+      )
+    : "尚未登入";
 
     UpdateManagementEnabled();
 }
