@@ -34,14 +34,16 @@
 
             <div id="loginForm" class="login-form">
                 <label>
-                    Email
-                    <input
-                        id="emailInput"
-                        type="email"
-                        autocomplete="username"
-                        placeholder="請輸入 R4 Email"
-                    >
-                </label>
+    帳號
+    <input
+        id="emailInput"
+        type="text"
+        autocomplete="username"
+        autocapitalize="none"
+        spellcheck="false"
+        placeholder="例如：kindsun"
+    >
+</label>
 
                 <label>
                     密碼
@@ -309,9 +311,10 @@
         Sunrise Alliance
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="config.js"></script>
-    <script src="train.js"></script>
-    <script src="preview.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="../shared/auth-helper.js"></script>
+<script src="train.js"></script>
+<script src="preview.js"></script>
 </body>
 </html>
