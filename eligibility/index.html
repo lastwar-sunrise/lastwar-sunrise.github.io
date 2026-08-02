@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sunrise 火車資格查詢</title>
+
+    <link
+        rel="stylesheet"
+        href="eligibility.css"
+    >
+</head>
+
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <a
+                class="back-link"
+                href="../"
+            >
+                ← 返回管理中心
+            </a>
+
+            <h1>🔍 火車資格查詢</h1>
+
+            <p>
+                搜尋自己的遊戲名稱，查看本週資格與冷卻狀態
+            </p>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <section class="card">
+            <div class="search-area">
+                <label>
+                    成員名稱
+
+                    <input
+                        id="searchInput"
+                        type="search"
+                        placeholder="請輸入完整或部分名稱"
+                        autocomplete="off"
+                    >
+                </label>
+
+                <button
+                    id="searchButton"
+                    type="button"
+                >
+                    查詢資格
+                </button>
+            </div>
+
+            <p class="search-help">
+                可輸入部分名稱，例如輸入「sun」搜尋 Kind sun。
+            </p>
+
+            <p
+                id="message"
+                class="message"
+            ></p>
+
+            <div
+                id="loadingMessage"
+                class="loading-message hidden"
+            >
+                正在查詢……
+            </div>
+
+            <div
+                id="weekInformation"
+                class="week-information hidden"
+            >
+                本週週次：
+                <strong id="weekStartText"></strong>
+
+                <span>｜</span>
+
+                狀態：
+                <strong id="weekStatusText"></strong>
+            </div>
+
+            <div
+                id="resultList"
+                class="result-list"
+            ></div>
+        </section>
+
+        <section class="card rule-card">
+            <h2>抽選規則</h2>
+
+            <div class="rule-list">
+                <div>
+                    <strong>1. 本週資格</strong>
+
+                    <p>
+                        由 R4 根據當週聯盟對決分數勾選。
+                    </p>
+                </div>
+
+                <div>
+                    <strong>2. 冷卻規則</strong>
+
+                    <p>
+                        中獎後，接下來兩個週次不能參加抽選。
+                    </p>
+                </div>
+
+                <div>
+                    <strong>3. 權重規則</strong>
+
+                    <p>
+                        歷史中獎次數越少，抽選權重越高，最高為 5。
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Sunrise Alliance
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../train/config.js"></script>
+    <script src="eligibility.js"></script>
+</body>
+</html>
