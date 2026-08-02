@@ -2,25 +2,67 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sunrise 火車資格抽選</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="train.css">
+    <title data-i18n="train.pageTitle">
+        Sunrise 火車資格抽選
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="train.css"
+    >
 </head>
 
 <body>
     <header class="page-header">
-    <div>
-        <a class="back-link" href="../">
-            ← 返回管理中心
-        </a>
+        <div class="train-language-selector">
+            <select
+                data-language-select
+                aria-label="Language"
+                onchange="ChangeSunriseLanguage(this.value)"
+            >
+                <option value="zh-TW">
+                    繁體中文
+                </option>
 
-        <h1>🚂 Sunrise 火車資格抽選</h1>
-        <p>由當週值日 R4 勾選合格成員並進行正式抽選</p>
-    </div>
+                <option value="en">
+                    English
+                </option>
 
-        <div id="loginStatus" class="login-status">
+                <option value="vi">
+                    Tiếng Việt
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <a
+                class="back-link"
+                href="../"
+                data-i18n="train.backHome"
+            >
+                ← 返回管理中心
+            </a>
+
+            <h1 data-i18n="train.title">
+                🚂 Sunrise 火車資格抽選
+            </h1>
+
+            <p data-i18n="train.subtitle">
+                由當週值日 R4 勾選合格成員並進行正式抽選
+            </p>
+        </div>
+
+        <div
+            id="loginStatus"
+            class="login-status"
+            data-i18n="train.notLoggedIn"
+        >
             尚未登入
         </div>
     </header>
@@ -29,65 +71,94 @@
         <!-- R4 登入 -->
         <section class="card">
             <div class="section-title">
-                <h2>R4 登入</h2>
+                <h2 data-i18n="train.loginTitle">
+                    R4 登入
+                </h2>
             </div>
 
-            <div id="loginForm" class="login-form">
+            <div
+                id="loginForm"
+                class="login-form"
+            >
                 <label>
-    帳號
-    <input
-        id="emailInput"
-        type="text"
-        autocomplete="username"
-        autocapitalize="none"
-        spellcheck="false"
-        placeholder="例如：kindsun"
-    >
-</label>
+                    <span data-i18n="train.account">
+                        帳號
+                    </span>
+
+                    <input
+                        id="emailInput"
+                        type="text"
+                        autocomplete="username"
+                        autocapitalize="none"
+                        spellcheck="false"
+                        placeholder="例如：kindsun"
+                        data-i18n-placeholder="train.accountPlaceholder"
+                    >
+                </label>
 
                 <label>
-                    密碼
+                    <span data-i18n="train.password">
+                        密碼
+                    </span>
+
                     <input
                         id="passwordInput"
                         type="password"
                         autocomplete="current-password"
                         placeholder="請輸入密碼"
+                        data-i18n-placeholder="train.passwordPlaceholder"
                     >
                 </label>
 
                 <button
                     id="loginButton"
                     type="button"
+                    data-i18n="train.login"
                 >
                     登入
                 </button>
             </div>
 
-            <div id="logoutArea" class="hidden">
+            <div
+                id="logoutArea"
+                class="hidden"
+            >
                 <button
                     id="logoutButton"
                     type="button"
                     class="secondary-button"
+                    data-i18n="train.logout"
                 >
                     登出
                 </button>
             </div>
 
-            <p id="loginMessage" class="message"></p>
+            <p
+                id="loginMessage"
+                class="message"
+            ></p>
         </section>
 
         <!-- 本週抽選設定 -->
         <section class="card">
             <div class="section-title">
                 <div>
-                    <h2>本週抽選設定</h2>
-                    <p>建立或載入指定週次的火車抽選</p>
+                    <h2 data-i18n="train.weekSettingsTitle">
+                        本週抽選設定
+                    </h2>
+
+                    <p data-i18n="train.weekSettingsDescription">
+                        建立或載入指定週次的火車抽選
+                    </p>
                 </div>
             </div>
 
             <div class="draw-controls">
                 <label>
-                    週次開始日
+                    <span data-i18n="train.weekStart">
+                        週次開始日
+                    </span>
+
                     <input
                         id="weekStartInput"
                         type="date"
@@ -95,7 +166,10 @@
                 </label>
 
                 <label>
-                    抽選名額
+                    <span data-i18n="train.drawCount">
+                        抽選名額
+                    </span>
+
                     <input
                         id="weekDrawCountInput"
                         type="number"
@@ -107,6 +181,7 @@
                 <button
                     id="loadWeekButton"
                     type="button"
+                    data-i18n="train.loadWeek"
                 >
                     載入週次
                 </button>
@@ -115,22 +190,34 @@
                     id="saveWeekButton"
                     type="button"
                     class="secondary-button"
+                    data-i18n="train.saveEligibility"
                 >
                     儲存本週資格
                 </button>
             </div>
 
-            <p id="weekMessage" class="message"></p>
+            <p
+                id="weekMessage"
+                class="message"
+            ></p>
 
             <div class="summary">
-                目前週次：
+                <span data-i18n="train.currentWeek">
+                    目前週次：
+                </span>
+
                 <strong id="currentWeekText">
                     尚未載入
                 </strong>
 
-                <span class="separator">｜</span>
+                <span class="separator">
+                    ｜
+                </span>
 
-                狀態：
+                <span data-i18n="train.status">
+                    狀態：
+                </span>
+
                 <strong id="currentWeekStatus">
                     －
                 </strong>
@@ -141,14 +228,20 @@
         <section class="card">
             <div class="section-title">
                 <div>
-                    <h2>本週合格成員</h2>
-                    <p>請根據本週資格條件勾選合格成員</p>
+                    <h2 data-i18n="train.eligibleTitle">
+                        本週合格成員
+                    </h2>
+
+                    <p data-i18n="train.eligibleDescription">
+                        請根據本週資格條件勾選合格成員
+                    </p>
                 </div>
 
                 <button
                     id="reloadButton"
                     type="button"
                     class="secondary-button"
+                    data-i18n="train.reloadMembers"
                 >
                     重新載入成員
                 </button>
@@ -159,11 +252,13 @@
                     id="searchInput"
                     type="search"
                     placeholder="搜尋成員名稱"
+                    data-i18n-placeholder="train.searchPlaceholder"
                 >
 
                 <button
                     id="selectAllButton"
                     type="button"
+                    data-i18n="train.selectAll"
                 >
                     全選
                 </button>
@@ -172,30 +267,46 @@
                     id="clearAllButton"
                     type="button"
                     class="secondary-button"
+                    data-i18n="train.clearAll"
                 >
                     全部取消
                 </button>
             </div>
 
             <div class="summary">
-                聯盟成員：
+                <span data-i18n="train.allianceMembers">
+                    聯盟成員：
+                </span>
+
                 <strong id="memberCount">
                     0
                 </strong>
-                人
 
-                <span class="separator">｜</span>
+                <span data-i18n="train.people">
+                    人
+                </span>
 
-                已選合格：
+                <span class="separator">
+                    ｜
+                </span>
+
+                <span data-i18n="train.selectedEligible">
+                    已選合格：
+                </span>
+
                 <strong id="eligibleCount">
                     0
                 </strong>
-                人
+
+                <span data-i18n="train.people">
+                    人
+                </span>
             </div>
 
             <div
                 id="loadingMessage"
                 class="loading-message"
+                data-i18n="train.readingMembers"
             >
                 正在讀取成員名單……
             </div>
@@ -203,77 +314,106 @@
             <div
                 id="memberList"
                 class="member-list"
+                translate="no"
             ></div>
         </section>
 
-<!-- 抽獎池預覽 -->
-<section class="card">
-    <div class="section-title">
-        <div>
-            <h2>抽獎池預覽</h2>
-            <p>
-                查看冷卻狀態、歷史中獎次數與本週權重
-            </p>
-        </div>
+        <!-- 抽獎池預覽 -->
+        <section class="card">
+            <div class="section-title">
+                <div>
+                    <h2 data-i18n="train.previewTitle">
+                        抽獎池預覽
+                    </h2>
 
-        <button
-            id="previewPoolButton"
-            type="button"
-            class="secondary-button"
-        >
-            預覽抽獎池
-        </button>
-    </div>
+                    <p data-i18n="train.previewDescription">
+                        查看冷卻狀態、歷史中獎次數與本週權重
+                    </p>
+                </div>
 
-    <div
-        id="poolSummary"
-        class="pool-summary hidden"
-    >
-        <div>
-            <span>R4 勾選</span>
-            <strong id="previewSelectedCount">0</strong>
-        </div>
+                <button
+                    id="previewPoolButton"
+                    type="button"
+                    class="secondary-button"
+                    data-i18n="train.previewButton"
+                >
+                    預覽抽獎池
+                </button>
+            </div>
 
-        <div>
-            <span>冷卻中</span>
-            <strong id="previewCoolingCount">0</strong>
-        </div>
+            <div
+                id="poolSummary"
+                class="pool-summary hidden"
+            >
+                <div>
+                    <span data-i18n="train.selectedByR4">
+                        R4 勾選
+                    </span>
 
-        <div>
-            <span>實際可抽</span>
-            <strong id="previewAvailableCount">0</strong>
-        </div>
+                    <strong id="previewSelectedCount">
+                        0
+                    </strong>
+                </div>
 
-        <div>
-            <span>權重總和</span>
-            <strong id="previewWeightTotal">0</strong>
-        </div>
-    </div>
+                <div>
+                    <span data-i18n="train.cooling">
+                        冷卻中
+                    </span>
 
-    <p
-        id="previewMessage"
-        class="message"
-    ></p>
+                    <strong id="previewCoolingCount">
+                        0
+                    </strong>
+                </div>
 
-    <div
-        id="previewLoading"
-        class="loading-message hidden"
-    >
-        正在計算抽獎池……
-    </div>
+                <div>
+                    <span data-i18n="train.available">
+                        實際可抽
+                    </span>
 
-    <div
-        id="poolPreviewList"
-        class="pool-preview-list"
-    ></div>
-</section>
-        
+                    <strong id="previewAvailableCount">
+                        0
+                    </strong>
+                </div>
+
+                <div>
+                    <span data-i18n="train.totalWeight">
+                        權重總和
+                    </span>
+
+                    <strong id="previewWeightTotal">
+                        0
+                    </strong>
+                </div>
+            </div>
+
+            <p
+                id="previewMessage"
+                class="message"
+            ></p>
+
+            <div
+                id="previewLoading"
+                class="loading-message hidden"
+                data-i18n="train.calculatingPool"
+            >
+                正在計算抽獎池……
+            </div>
+
+            <div
+                id="poolPreviewList"
+                class="pool-preview-list"
+            ></div>
+        </section>
+
         <!-- 正式抽選 -->
         <section class="card">
             <div class="section-title">
                 <div>
-                    <h2>正式抽選</h2>
-                    <p>
+                    <h2 data-i18n="train.officialDrawTitle">
+                        正式抽選
+                    </h2>
+
+                    <p data-i18n="train.officialDrawDescription">
                         只會從已儲存的合格成員中抽選，完成後不能重抽
                     </p>
                 </div>
@@ -284,20 +424,29 @@
                     id="drawButton"
                     type="button"
                     class="draw-button"
+                    data-i18n="train.officialDrawButton"
                 >
                     正式抽選
                 </button>
             </div>
 
-            <p id="drawMessage" class="message"></p>
+            <p
+                id="drawMessage"
+                class="message"
+            ></p>
 
             <div
                 id="resultArea"
                 class="result-area hidden"
             >
-                <h3>🎉 本週抽選結果</h3>
+                <h3 data-i18n="train.resultTitle">
+                    🎉 本週抽選結果
+                </h3>
 
-                <ol id="resultList"></ol>
+                <ol
+                    id="resultList"
+                    translate="no"
+                ></ol>
 
                 <p
                     id="drawTime"
@@ -307,14 +456,23 @@
         </section>
     </main>
 
-    <footer>
-        Sunrise Alliance
+    <footer data-i18n="train.footer">
+        Sunrise 聯盟
     </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<script src="../shared/auth-helper.js"></script>
-<script src="train.js"></script>
-<script src="preview.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/i18next@26/i18next.min.js"
+    ></script>
+
+    <script src="../shared/i18n.js"></script>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <script src="config.js"></script>
+    <script src="../shared/auth-helper.js"></script>
+    <script src="train.js"></script>
+    <script src="preview.js"></script>
 </body>
 </html>
