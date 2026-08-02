@@ -248,14 +248,19 @@ function UpdateLoginDisplay() {
     if (!isLoggedIn) {
         LoginStatus.textContent =
             "尚未登入";
-    } else if (IsAdmin()) {
-        LoginStatus.textContent =
-            "Admin：" + CurrentUser.email;
-    } else {
-        LoginStatus.textContent =
-            CurrentUser.email +
-            "（無管理權限）";
-    }
+} else if (IsAdmin()) {
+    LoginStatus.textContent =
+        "Admin：" +
+        GetSunriseAccountDisplay(
+            CurrentUser.email
+        );
+} else {
+    LoginStatus.textContent =
+        GetSunriseAccountDisplay(
+            CurrentUser.email
+        ) +
+        "（無管理權限）";
+}
 
     AddMemberButton.disabled =
         !IsAdmin();
@@ -264,11 +269,13 @@ function UpdateLoginDisplay() {
 async function Login() {
     ClearMessage(LoginMessage);
 
-    const email =
-        EmailInput.value.trim();
+const email =
+    NormalizeSunriseAccount(
+        EmailInput.value
+    );
 
-    const password =
-        PasswordInput.value;
+const password =
+    PasswordInput.value;
 
     if (!email || !password) {
         ShowMessage(
