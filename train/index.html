@@ -200,6 +200,68 @@
             ></div>
         </section>
 
+<!-- 抽獎池預覽 -->
+<section class="card">
+    <div class="section-title">
+        <div>
+            <h2>抽獎池預覽</h2>
+            <p>
+                查看冷卻狀態、歷史中獎次數與本週權重
+            </p>
+        </div>
+
+        <button
+            id="previewPoolButton"
+            type="button"
+            class="secondary-button"
+        >
+            預覽抽獎池
+        </button>
+    </div>
+
+    <div
+        id="poolSummary"
+        class="pool-summary hidden"
+    >
+        <div>
+            <span>R4 勾選</span>
+            <strong id="previewSelectedCount">0</strong>
+        </div>
+
+        <div>
+            <span>冷卻中</span>
+            <strong id="previewCoolingCount">0</strong>
+        </div>
+
+        <div>
+            <span>實際可抽</span>
+            <strong id="previewAvailableCount">0</strong>
+        </div>
+
+        <div>
+            <span>權重總和</span>
+            <strong id="previewWeightTotal">0</strong>
+        </div>
+    </div>
+
+    <p
+        id="previewMessage"
+        class="message"
+    ></p>
+
+    <div
+        id="previewLoading"
+        class="loading-message hidden"
+    >
+        正在計算抽獎池……
+    </div>
+
+    <div
+        id="poolPreviewList"
+        class="pool-preview-list"
+    ></div>
+</section>
+        
         <!-- 正式抽選 -->
         <section class="card">
             <div class="section-title">
