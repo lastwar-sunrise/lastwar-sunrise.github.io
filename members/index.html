@@ -57,16 +57,18 @@
                 id="loginForm"
                 class="login-form"
             >
-                <label>
-                    Email
+<label>
+    帳號
 
-                    <input
-                        id="emailInput"
-                        type="email"
-                        autocomplete="username"
-                        placeholder="請輸入 Email"
-                    >
-                </label>
+    <input
+        id="emailInput"
+        type="text"
+        autocomplete="username"
+        autocapitalize="none"
+        spellcheck="false"
+        placeholder="例如：kindsun"
+    >
+</label>
 
                 <label>
                     密碼
@@ -272,10 +274,12 @@
         Sunrise Alliance
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script src="../train/config.js"></script>
+<script src="../train/config.js"></script>
 
-    <script src="members.js"></script>
+<script src="../shared/auth-helper.js"></script>
+
+<script src="members.js"></script>
 </body>
 </html>
