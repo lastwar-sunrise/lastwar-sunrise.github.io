@@ -469,3 +469,53 @@ footer {
 .back-link:hover {
     text-decoration: underline;
 }
+
+
+.train-language-selector {
+    position: absolute;
+    top: 24px;
+    right: max(
+        20px,
+        calc((100% - 1000px) / 2)
+    );
+}
+
+.train-language-selector select {
+    min-height: 38px;
+    border: 1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.4
+        );
+    border-radius: 9px;
+    padding: 6px 10px;
+    color: #ffffff;
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.16
+        );
+    font: inherit;
+    cursor: pointer;
+}
+
+.train-language-selector option {
+    color: #1f2937;
+    background: #ffffff;
+}
+
+@media (max-width: 760px) {
+    .train-language-selector {
+        position: static;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .train-language-selector select {
+        width: 100%;
+    }
+}
