@@ -378,7 +378,10 @@ function RenderMembers() {
 
         name.textContent =
             member.game_name;
-
+name.setAttribute(
+    "translate",
+    "no"
+);
         label.appendChild(checkbox);
         label.appendChild(name);
 
