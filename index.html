@@ -2,12 +2,15 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Sunrise 管理中心</title>
+    <title data-i18n="home.pageTitle">
+        Sunrise 管理中心
+    </title>
 
     <style>
         * {
@@ -21,16 +24,17 @@
                 Arial,
                 "Microsoft JhengHei",
                 sans-serif;
+            color: #31260f;
             background:
                 linear-gradient(
                     135deg,
                     #fff7df,
                     #ffe6a7
                 );
-            color: #31260f;
         }
 
         .page-header {
+            position: relative;
             padding: 48px 20px 30px;
             text-align: center;
         }
@@ -45,25 +49,67 @@
             color: #74633d;
         }
 
+        .language-selector {
+            position: absolute;
+            top: 18px;
+            right: max(
+                16px,
+                calc((100% - 900px) / 2)
+            );
+        }
+
+        .language-selector select {
+            min-height: 40px;
+            border: 1px solid #d5bd7d;
+            border-radius: 10px;
+            padding: 7px 11px;
+            background: rgba(
+                255,
+                255,
+                255,
+                0.9
+            );
+            font: inherit;
+            cursor: pointer;
+        }
+
         .menu {
-            width: min(900px, calc(100% - 32px));
-            margin: 0 auto;
             display: grid;
             grid-template-columns:
-                repeat(auto-fit, minmax(240px, 1fr));
+                repeat(
+                    auto-fit,
+                    minmax(240px, 1fr)
+                );
             gap: 20px;
+            width: min(
+                900px,
+                calc(100% - 32px)
+            );
+            margin: 0 auto;
             padding-bottom: 50px;
         }
 
         .menu-card {
             display: block;
-            padding: 28px;
             border-radius: 18px;
-            background: rgba(255, 255, 255, 0.92);
+            padding: 28px;
             color: inherit;
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.92
+                );
             text-decoration: none;
             box-shadow:
-                0 10px 30px rgba(105, 77, 13, 0.12);
+                0 10px 30px
+                rgba(
+                    105,
+                    77,
+                    13,
+                    0.12
+                );
             transition:
                 transform 0.2s,
                 box-shadow 0.2s;
@@ -72,7 +118,13 @@
         .menu-card:hover {
             transform: translateY(-4px);
             box-shadow:
-                0 14px 36px rgba(105, 77, 13, 0.18);
+                0 14px 36px
+                rgba(
+                    105,
+                    77,
+                    13,
+                    0.18
+                );
         }
 
         .menu-icon {
@@ -88,8 +140,8 @@
 
         .menu-card p {
             margin: 0;
-            line-height: 1.6;
             color: #74633d;
+            line-height: 1.6;
         }
 
         .coming-soon {
@@ -99,40 +151,101 @@
 
         footer {
             padding: 20px;
-            text-align: center;
             color: #8b7953;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .page-header {
+                padding-top: 78px;
+            }
+
+            .language-selector {
+                top: 20px;
+                right: 16px;
+                left: 16px;
+            }
+
+            .language-selector select {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
 <body>
     <header class="page-header">
-        <h1>☀️ Sunrise 管理中心</h1>
-        <p>Sunrise Alliance Management Tools</p>
+        <div class="language-selector">
+            <select
+                data-language-select
+                aria-label="Language"
+                onchange="ChangeSunriseLanguage(this.value)"
+            >
+                <option value="zh-TW">
+                    繁體中文
+                </option>
+
+                <option value="en">
+                    English
+                </option>
+
+                <option value="vi">
+                    Tiếng Việt
+                </option>
+            </select>
+        </div>
+
+        <h1 data-i18n="home.title">
+            ☀️ Sunrise 管理中心
+        </h1>
+
+        <p data-i18n="home.subtitle">
+            Sunrise 聯盟管理工具
+        </p>
     </header>
 
     <main class="menu">
         <a
-    class="menu-card"
-    href="new_sunrisers.html"
->
-    <span class="menu-icon">☀️</span>
+            class="menu-card"
+            href="new_sunrisers.html"
+        >
+            <span class="menu-icon">
+                ☀️
+            </span>
 
-    <h2>Sunrise 聯盟資訊</h2>
+            <h2
+                data-i18n=
+                    "home.allianceInfoTitle"
+            >
+                Sunrise 聯盟資訊
+            </h2>
 
-    <p>
-        查看值日生、火車駕駛、盟內公告、紅星戰區與近七日策略。
-    </p>
-</a>
+            <p
+                data-i18n=
+                    "home.allianceInfoDescription"
+            >
+                查看值日生、火車駕駛、盟內公告、紅星戰區與近七日策略。
+            </p>
+        </a>
+
         <a
             class="menu-card"
             href="train/"
         >
-            <span class="menu-icon">🚂</span>
+            <span class="menu-icon">
+                🚂
+            </span>
 
-            <h2>火車資格抽選</h2>
+            <h2
+                data-i18n="home.trainTitle"
+            >
+                火車資格抽選
+            </h2>
 
-            <p>
+            <p
+                data-i18n=
+                    "home.trainDescription"
+            >
                 建立每週資格名單並進行正式抽選。
             </p>
         </a>
@@ -141,52 +254,101 @@
             class="menu-card"
             href="members/"
         >
-            <span class="menu-icon">👥</span>
+            <span class="menu-icon">
+                👥
+            </span>
 
-            <h2>成員管理</h2>
+            <h2
+                data-i18n="home.membersTitle"
+            >
+                成員管理
+            </h2>
 
-            <p>
+            <p
+                data-i18n=
+                    "home.membersDescription"
+            >
                 新增、修改、啟用或停用聯盟成員。
             </p>
         </a>
 
-<a
-    class="menu-card"
-    href="history/"
->
-    <span class="menu-icon">📜</span>
+        <a
+            class="menu-card"
+            href="history/"
+        >
+            <span class="menu-icon">
+                📜
+            </span>
 
-    <h2>抽選歷史</h2>
+            <h2
+                data-i18n="home.historyTitle"
+            >
+                抽選歷史
+            </h2>
 
-    <p>
-        查看過去每一週的火車資格抽選結果。
-    </p>
-</a>
-<a
-    class="menu-card"
-    href="eligibility/"
->
-    <span class="menu-icon">🔍</span>
+            <p
+                data-i18n=
+                    "home.historyDescription"
+            >
+                查看過去每一週的火車資格抽選結果。
+            </p>
+        </a>
 
-    <h2>火車資格查詢</h2>
+        <a
+            class="menu-card"
+            href="eligibility/"
+        >
+            <span class="menu-icon">
+                🔍
+            </span>
 
-    <p>
-        查詢本週資格、冷卻狀態、歷史中獎次數與抽選權重。
-    </p>
-</a>
-        <div class="menu-card coming-soon">
-            <span class="menu-icon">⚙️</span>
+            <h2
+                data-i18n=
+                    "home.eligibilityTitle"
+            >
+                火車資格查詢
+            </h2>
 
-            <h2>系統設定</h2>
+            <p
+                data-i18n=
+                    "home.eligibilityDescription"
+            >
+                查詢本週資格、冷卻狀態、歷史中獎次數與抽選權重。
+            </p>
+        </a>
 
-            <p>
+        <div
+            class=
+                "menu-card coming-soon"
+        >
+            <span class="menu-icon">
+                ⚙️
+            </span>
+
+            <h2
+                data-i18n=
+                    "home.settingsTitle"
+            >
+                系統設定
+            </h2>
+
+            <p
+                data-i18n=
+                    "home.settingsDescription"
+            >
                 帳號、角色與系統設定，即將推出。
             </p>
         </div>
     </main>
 
-    <footer>
-        Sunrise Alliance
+    <footer data-i18n="home.footer">
+        Sunrise 聯盟
     </footer>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/i18next@26/i18next.min.js"
+    ></script>
+
+    <script src="shared/i18n.js"></script>
 </body>
 </html>
