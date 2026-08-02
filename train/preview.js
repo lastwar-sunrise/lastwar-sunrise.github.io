@@ -199,7 +199,11 @@ function CreatePoolPreviewRow(row) {
 
     memberName.textContent =
         row.preview_member_name;
-
+    
+memberName.setAttribute(
+    "translate",
+    "no"
+);
     const lastWinText =
         document.createElement("span");
 
