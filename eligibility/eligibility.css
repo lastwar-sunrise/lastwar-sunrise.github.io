@@ -1,0 +1,298 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family:
+        Arial,
+        "Microsoft JhengHei",
+        sans-serif;
+    color: #2f2718;
+    background:
+        linear-gradient(
+            135deg,
+            #fff8e8,
+            #fff1c7
+        );
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    min-height: 44px;
+    border: 0;
+    border-radius: 10px;
+    padding: 10px 20px;
+    color: #ffffff;
+    background: #d59100;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+    filter: brightness(0.94);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+input {
+    min-height: 44px;
+    border: 1px solid #d8c79f;
+    border-radius: 9px;
+    padding: 10px 12px;
+    background: #ffffff;
+}
+
+input:focus {
+    border-color: #d59100;
+    outline: 3px solid rgba(213, 145, 0, 0.15);
+}
+
+label {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 7px;
+    font-weight: bold;
+}
+
+.page-header {
+    padding:
+        28px
+        max(
+            20px,
+            calc((100% - 900px) / 2)
+        );
+    background:
+        linear-gradient(
+            135deg,
+            #ffcb45,
+            #f3a400
+        );
+}
+
+.header-content h1 {
+    margin: 10px 0 6px;
+}
+
+.header-content p {
+    margin: 0;
+}
+
+.back-link {
+    color: #4f3900;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.page-content {
+    width: min(
+        900px,
+        calc(100% - 30px)
+    );
+    margin: 24px auto;
+}
+
+.card {
+    margin-bottom: 22px;
+    border-radius: 16px;
+    padding: 24px;
+    background: #ffffff;
+    box-shadow:
+        0 8px 24px
+        rgba(83, 58, 0, 0.09);
+}
+
+.search-area {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.search-help {
+    margin: 10px 0 0;
+    color: #75684d;
+    font-size: 14px;
+}
+
+.week-information {
+    margin: 20px 0;
+    border-radius: 10px;
+    padding: 13px 15px;
+    background: #fff5d9;
+}
+
+.week-information span {
+    margin: 0 8px;
+    color: #a18d60;
+}
+
+.result-list {
+    display: grid;
+    gap: 14px;
+}
+
+.result-card {
+    overflow: hidden;
+    border: 1px solid #eadbb6;
+    border-radius: 14px;
+    background: #fffdf8;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 17px 19px;
+    background: #fff3cf;
+}
+
+.member-name {
+    margin: 0;
+    overflow-wrap: anywhere;
+    font-size: 21px;
+}
+
+.status-badge {
+    flex-shrink: 0;
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.status-available {
+    color: #047857;
+    background: #d1fae5;
+}
+
+.status-cooling {
+    color: #b45309;
+    background: #fef3c7;
+}
+
+.status-not-selected {
+    color: #4b5563;
+    background: #e5e7eb;
+}
+
+.status-winner {
+    color: #7c3aed;
+    background: #ede9fe;
+}
+
+.information-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: #eee5d0;
+}
+
+.information-item {
+    min-height: 88px;
+    padding: 15px 18px;
+    background: #ffffff;
+}
+
+.information-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #75684d;
+    font-size: 13px;
+}
+
+.information-value {
+    overflow-wrap: anywhere;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.information-note {
+    display: block;
+    margin-top: 5px;
+    color: #75684d;
+    font-size: 13px;
+}
+
+.rule-card h2 {
+    margin-top: 0;
+}
+
+.rule-list {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.rule-list > div {
+    border-radius: 12px;
+    padding: 16px;
+    background: #fff8e8;
+}
+
+.rule-list p {
+    margin: 7px 0 0;
+    color: #75684d;
+    line-height: 1.6;
+}
+
+.message {
+    min-height: 22px;
+    margin: 14px 0;
+}
+
+.message.error {
+    color: #b42318;
+}
+
+.message.success {
+    color: #16763a;
+}
+
+.loading-message {
+    padding: 30px 20px;
+    color: #75684d;
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+footer {
+    padding: 22px;
+    color: #8e805f;
+    text-align: center;
+}
+
+@media (max-width: 680px) {
+    .search-area {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .search-area button {
+        width: 100%;
+    }
+
+    .result-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .information-grid,
+    .rule-list {
+        grid-template-columns: 1fr;
+    }
+}
