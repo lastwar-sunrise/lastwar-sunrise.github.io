@@ -312,3 +312,148 @@ footer {
         width: 100%;
     }
 }
+.pool-summary {
+    display: grid;
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.pool-summary > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    background: #fff7ed;
+}
+
+.pool-summary span {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.pool-summary strong {
+    color: #92400e;
+    font-size: 24px;
+}
+
+.pool-preview-list {
+    display: grid;
+    gap: 10px;
+}
+
+.pool-preview-row {
+    display: grid;
+    grid-template-columns:
+        minmax(180px, 1fr)
+        110px
+        110px
+        130px;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px;
+    background: #ffffff;
+}
+
+.pool-preview-cooling {
+    background: #f9fafb;
+    opacity: 0.75;
+}
+
+.pool-member-area {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.pool-member-name {
+    overflow-wrap: anywhere;
+    font-size: 16px;
+}
+
+.pool-last-win {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.pool-value {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+}
+
+.pool-value span {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.pool-value strong {
+    font-size: 18px;
+}
+
+.pool-status-area {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.pool-status-area small {
+    color: #6b7280;
+}
+
+.pool-status {
+    border-radius: 999px;
+    padding: 6px 11px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.pool-status-available {
+    color: #047857;
+    background: #d1fae5;
+}
+
+.pool-status-cooling {
+    color: #b45309;
+    background: #fef3c7;
+}
+
+@media (max-width: 760px) {
+    .pool-summary {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .pool-preview-row {
+        grid-template-columns:
+            minmax(0, 1fr)
+            auto;
+    }
+
+    .pool-member-area {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 480px) {
+    .pool-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .pool-preview-row {
+        grid-template-columns: 1fr;
+    }
+
+    .pool-value,
+    .pool-status-area {
+        align-items: flex-start;
+        text-align: left;
+    }
+}
