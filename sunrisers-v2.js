@@ -40,10 +40,7 @@ async function LoadDuty(){
     }catch(error){console.error("LoadDuty failed:",error);dutyElement.textContent="讀取失敗";}
 }
 
-function FormatTrainDate(date){
-    const weekday=date.toLocaleDateString(GetV2Language(),{weekday:"long"});
-    return (date.getMonth()+1)+"/"+date.getDate()+"（"+weekday+"）";
-}
+function FormatTrainDate(date){const weekday=date.toLocaleDateString(GetV2Language(),{weekday:"long"});return (date.getMonth()+1)+"/"+date.getDate()+"（"+weekday+"）";}
 
 async function LoadTrain(){
     const trainElement=document.getElementById("trainDriver");
@@ -51,30 +48,31 @@ async function LoadTrain(){
         const now=GetTaiwanNow(),currentWeek=ToDateKey(GetDutyWeekStart(now)),logicDate=new Date(now);
         if(now.getHours()<10)logicDate.setDate(logicDate.getDate()-1);
         const dayOfWeek=logicDate.getDay(),slotIndex=dayOfWeek===0?6:dayOfWeek-1,dateLabel=FormatTrainDate(logicDate);
-
-        const overrideResult=await V2Supabase.from("train_schedule_overrides").select("member_ids, mvp_member_id").eq("week_start",currentWeek).maybeSingle();
+        const overrideResult=await V2Supabase.from("train_schedule_overrides").select("member_ids,mvp_member_id,mvp_position").eq("week_start",currentWeek).maybeSingle();
         if(overrideResult.error)throw overrideResult.error;
         const override=overrideResult.data||null;
         let schedule=override&&Array.isArray(override.member_ids)?override.member_ids.map(Number):null;
-        const mvpMemberId=override&&override.mvp_member_id?Number(override.mvp_member_id):null;
+        const mvpMemberId=override&&override.mvp_member_id!==null?Number(override.mvp_member_id):null;
+        let mvpPosition=override&&Number.isInteger(override.mvp_position)?override.mvp_position:null;
+        if(mvpPosition===null&&mvpMemberId!==null&&schedule&&schedule.length===7)mvpPosition=schedule.lastIndexOf(mvpMemberId);
 
         if(!schedule||![6,7].includes(schedule.length)){
             const weekResult=await V2Supabase.from("train_weeks").select("id").eq("week_start",currentWeek).eq("status","completed").maybeSingle();
             if(weekResult.error)throw weekResult.error;
             if(!weekResult.data){trainElement.textContent="-";return;}
-            const result=await V2Supabase.from("train_draw_results").select("member_id, draw_order").eq("train_week_id",weekResult.data.id).order("draw_order",{ascending:true});
+            const result=await V2Supabase.from("train_draw_results").select("member_id,draw_order").eq("train_week_id",weekResult.data.id).order("draw_order",{ascending:true});
             if(result.error)throw result.error;
             schedule=(result.data||[]).map(row=>Number(row.member_id));
+            mvpPosition=null;
         }
 
         if(slotIndex===6&&schedule.length===6){trainElement.textContent="MVP　"+dateLabel;return;}
         if(schedule.length<slotIndex+1){trainElement.textContent="-";return;}
-
         const memberId=Number(schedule[slotIndex]);
         const memberResult=await V2Supabase.from("members").select("game_name").eq("id",memberId).maybeSingle();
         if(memberResult.error)throw memberResult.error;
         if(!memberResult.data){trainElement.textContent="-";return;}
-        const suffix=mvpMemberId&&memberId===mvpMemberId?" (MVP)":"";
+        const suffix=mvpPosition===slotIndex?" (MVP)":"";
         trainElement.textContent=memberResult.data.game_name+suffix+"　"+dateLabel;
     }catch(error){console.error("LoadTrain failed:",error);trainElement.textContent="讀取失敗";}
 }
