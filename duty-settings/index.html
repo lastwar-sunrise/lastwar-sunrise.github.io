@@ -1,1 +1,97 @@
-<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Duty Settings</title><style>*{box-sizing:border-box}body{font-family:Arial,"Microsoft JhengHei",sans-serif;background:#fff7df;margin:0;color:#31260f}.wrap{width:min(900px,calc(100% - 24px));margin:auto;padding:20px}.box{background:#fff;padding:18px;border-radius:16px;margin:12px 0;box-shadow:0 8px 24px #69500d18}input,button,select{padding:9px;border:1px solid #ccb878;border-radius:9px}button{cursor:pointer}.member{display:inline-flex;gap:5px;margin:4px;padding:7px;background:#fff7df;border-radius:8px}.group{border:1px solid #ead79f;padding:10px;border-radius:10px;margin:8px 0}.hidden{display:none}.train-row{display:grid;grid-template-columns:90px 1fr;gap:10px;align-items:center;margin:8px 0}.train-row select{width:100%}</style></head><body><main class="wrap"><a href="../sunrisers-v2.html">← Sunrise V2</a><div class="box"><h2>值日生 / 火車設定</h2><div id="login"><input id="account" placeholder="帳號"><input id="password" type="password" placeholder="密碼"><button id="loginBtn">登入</button></div><div id="status"></div></div><div id="editor" class="hidden"><div class="box"><h3>值日生輪替群組（每組可多人）</h3><label>基準週 <input id="anchor" type="date"></label><div id="groups"></div><button id="addGroup">＋新增一週群組</button><button id="save">儲存輪替</button></div><div class="box"><h3>本週值日生 override</h3><div id="overrideMembers"></div><button id="saveOverride">儲存本週調整</button><button id="clearOverride">恢復自動輪替</button></div><div class="box"><h3>本週火車順序</h3><p>原始抽選結果不會被修改；這裡只調整本週週一到週六的顯示順序。週日固定顯示 MVP。</p><div id="trainSchedule"></div><button id="saveTrainOverride">儲存火車順序</button><button id="clearTrainOverride">恢復原始抽選順序</button></div></div></main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../train/config.js"></script><script src="../shared/auth-helper.js"></script><script src="duty-settings.js?v=20261004-0210"></script></body></html>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>內務名單設定</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:Arial,"Microsoft JhengHei",sans-serif;background:#fff7df;margin:0;color:#31260f}
+.wrap{width:min(900px,calc(100% - 24px));margin:auto;padding:20px}
+.box{background:#fff;padding:18px;border-radius:16px;margin:12px 0;box-shadow:0 8px 24px #69500d18}
+a{color:#8a6500;text-decoration:none;font-weight:700}
+input,button,select{padding:9px;border:1px solid #ccb878;border-radius:9px;font:inherit}
+button{cursor:pointer}
+button:disabled,select:disabled,input:disabled{cursor:not-allowed;opacity:.65}
+.member{display:inline-flex;gap:5px;margin:4px;padding:7px;background:#fff7df;border-radius:8px}
+.group{border:1px solid #ead79f;padding:10px;border-radius:10px;margin:8px 0}
+.hidden{display:none!important}
+.train-row{display:grid;grid-template-columns:90px 1fr;gap:10px;align-items:center;margin:8px 0}
+.train-row select{width:100%}
+.status-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.mode-badge{display:inline-block;padding:4px 9px;border-radius:999px;background:#f2ead0;font-size:12px;font-weight:700}
+.mode-edit{background:#dff3df;color:#246b24}
+.section-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+details.box{padding:0;overflow:hidden}
+details.box>summary{cursor:pointer;list-style:none;padding:18px;font-weight:700;font-size:1.05em}
+details.box>summary::-webkit-details-marker{display:none}
+details.box>summary:after{content:"＋";float:right}
+details.box[open]>summary:after{content:"－"}
+.detail-body{padding:0 18px 18px}
+.help{color:#74633d;line-height:1.6;margin-top:4px}
+.login-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.login-row input{min-width:160px;flex:1}
+@media(max-width:600px){.train-row{grid-template-columns:70px 1fr}.login-row{flex-direction:column}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<a href="../sunrisers-v2.html">← Sunrise V2</a>
+
+<div class="box">
+<h2 style="margin-top:0">內務名單設定</h2>
+<p class="help">所有成員都可以直接檢視目前排班；只有 R4 / admin 登入後可以修改。</p>
+<div class="status-bar">
+<span id="modeBadge" class="mode-badge">檢視模式</span>
+<span id="status"></span>
+</div>
+<div id="loginArea" class="login-row">
+<input id="account" placeholder="帳號">
+<input id="password" type="password" placeholder="密碼">
+<button id="loginBtn">R4 / Admin 登入</button>
+<button id="logoutBtn" class="hidden">登出</button>
+</div>
+</div>
+
+<div class="box">
+<h3 style="margin-top:0">本週火車順序</h3>
+<p class="help">週一到週六依本週正式抽選結果顯示；週日固定為 MVP。臨時交換只改本週排班，不會修改原始抽選紀錄。</p>
+<div id="trainSchedule">載入中...</div>
+<div id="trainActions" class="section-actions hidden">
+<button id="saveTrainOverride">儲存火車順序</button>
+<button id="clearTrainOverride">恢復原始抽選順序</button>
+</div>
+</div>
+
+<details class="box" id="dutyOverrideSection">
+<summary>本週值日生 override</summary>
+<div class="detail-body">
+<p class="help">用於臨時交換本週值日生；未設定 override 時會依輪替群組自動計算。</p>
+<div id="overrideMembers">載入中...</div>
+<div id="dutyOverrideActions" class="section-actions hidden">
+<button id="saveOverride">儲存本週調整</button>
+<button id="clearOverride">恢復自動輪替</button>
+</div>
+</div>
+</details>
+
+<details class="box" id="rotationSection">
+<summary>值日生輪替群組（每組可多人）</summary>
+<div class="detail-body">
+<p class="help">這是長期輪替設定，通常只需設定一次。</p>
+<label>基準週 <input id="anchor" type="date"></label>
+<div id="groups">載入中...</div>
+<div id="rotationActions" class="section-actions hidden">
+<button id="addGroup">＋新增一週群組</button>
+<button id="save">儲存輪替</button>
+</div>
+</div>
+</details>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../train/config.js"></script>
+<script src="../shared/auth-helper.js"></script>
+<script src="duty-settings.js?v=20261004-0220"></script>
+</body>
+</html>
