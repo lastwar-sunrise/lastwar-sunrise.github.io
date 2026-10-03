@@ -56,6 +56,10 @@
                 16px,
                 calc((100% - 900px) / 2)
             );
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
         }
 
         .language-selector select {
@@ -164,10 +168,12 @@
                 top: 20px;
                 right: 16px;
                 left: 16px;
+                justify-content: flex-end;
             }
 
             .language-selector select {
-                width: 100%;
+                min-width: 0;
+                flex: 1;
             }
         }
     </style>
@@ -176,6 +182,8 @@
 <body>
     <header class="page-header">
         <div class="language-selector">
+            <span data-i18n="common.language">語言</span>
+            <span>:</span>
             <select
                 data-language-select
                 aria-label="Language"
