@@ -11,7 +11,7 @@ body{font-family:Arial,"Microsoft JhengHei",sans-serif;background:#fff7df;margin
 .top-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}
 .box{background:#fff;padding:18px;border-radius:16px;margin:12px 0;box-shadow:0 8px 24px #69500d18}
 a{color:#8a6500;text-decoration:none;font-weight:700}
-input,button,select{padding:9px;border:1px solid #ccb878;border-radius:9px;font:inherit}
+input,button,select,textarea{padding:9px;border:1px solid #ccb878;border-radius:9px;font:inherit}
 button{cursor:pointer}
 button:disabled,select:disabled,input:disabled{cursor:not-allowed;opacity:.65}
 .member{display:inline-flex;gap:5px;margin:4px;padding:7px;background:#fff7df;border-radius:8px}
@@ -33,6 +33,7 @@ details.box[open]>summary:after{content:"－"}
 .login-row,.logged-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
 .login-row input{min-width:160px;flex:1}
 .language-selector select{min-width:130px;background:#fff}
+#announcementOutput{width:100%;min-height:270px;margin-top:10px;resize:vertical;white-space:pre-wrap}
 @media(max-width:600px){.train-row{grid-template-columns:70px 1fr}.login-row{flex-direction:column}.top-row{align-items:flex-start}.language-selector select{max-width:150px}}
 </style>
 </head>
@@ -45,10 +46,12 @@ details.box[open]>summary:after{content:"－"}
 <div class="status-bar"><span id="modeBadge" class="mode-badge">檢視模式</span><span id="status"></span></div>
 <div id="loginFormArea" class="login-row"><input id="account" data-duty-i18n-placeholder="accountPlaceholder" placeholder="帳號"><input id="password" type="password" data-duty-i18n-placeholder="passwordPlaceholder" placeholder="密碼"><button id="loginBtn" data-duty-i18n="login">R4 / Admin 登入</button></div>
 <div id="loggedArea" class="logged-row hidden"><span id="loggedAccount"></span><button id="logoutBtn" data-duty-i18n="logout">登出</button></div>
+<div class="section-actions"><button id="exportAnnouncement" data-duty-i18n="exportAnnouncement">匯出公告</button></div>
+<textarea id="announcementOutput" class="hidden" readonly></textarea>
 </div>
 <div class="box">
 <h3 style="margin-top:0" data-duty-i18n="trainTitle">本週火車順序</h3>
-<p class="help" data-duty-i18n="trainHelp">週一到週六來自本週正式抽選結果；週日可從成員名單指定 MVP。指定後，7 個位置可以互相交換，(MVP) 會跟著該成員移動，且不會修改原始抽選紀錄。</p>
+<p class="help" data-duty-i18n="trainHelp">週一到週六來自本週正式抽選結果；週日可從成員名單指定 MVP。MVP 可以與抽選名單重複，7 個位置可互相交換，且不會修改原始抽選紀錄。</p>
 <div id="trainSchedule">載入中...</div>
 <div id="trainActions" class="section-actions hidden"><button id="saveTrainOverride" data-duty-i18n="saveTrain">儲存火車順序</button><button id="clearTrainOverride" data-duty-i18n="restoreTrain">恢復原始抽選順序</button></div>
 </div>
@@ -60,6 +63,6 @@ details.box[open]>summary:after{content:"－"}
 <script src="../train/config.js"></script>
 <script src="../shared/auth-helper.js"></script>
 <script src="../shared/i18n.js"></script>
-<script src="duty-settings.js?v=20261004-0240"></script>
+<script src="duty-settings.js?v=20261004-0255"></script>
 </body>
 </html>
