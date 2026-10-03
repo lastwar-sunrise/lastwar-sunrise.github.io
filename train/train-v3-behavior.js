@@ -42,7 +42,8 @@
     function setMemberDisclosure(open){
         memberDisclosure.classList.toggle("hidden",!open);
         memberToggle.setAttribute("aria-expanded",open?"true":"false");
-        memberToggle.textContent=open?t("hide"):t("show");
+        const desired=open?t("hide"):t("show");
+        if(memberToggle.textContent!==desired)memberToggle.textContent=desired;
     }
 
     function syncDisclosureWithAuth(){
@@ -126,7 +127,9 @@
         };
         document.querySelectorAll("button").forEach(function(button){
             const key=mappings[button.textContent.trim()];
-            if(key)button.textContent=t(key);
+            if(!key)return;
+            const desired=t(key);
+            if(button.textContent!==desired)button.textContent=desired;
         });
     }
 
