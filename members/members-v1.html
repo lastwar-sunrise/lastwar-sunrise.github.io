@@ -9,7 +9,7 @@
 <body>
 <main class="app-shell">
     <div class="topbar">
-        <a class="back-link" href="../">← Back to Management Center</a>
+        <a class="back-link" href="../" data-v1-i18n="back">← Back to Management Center</a>
         <div class="topbar-center"><p class="topbar-title">Sunrise Operations</p><p class="topbar-subtitle">Member Management</p></div>
         <div class="topbar-actions">
             <div id="loginStatus" class="login-status">Not signed in</div>
@@ -20,23 +20,23 @@
     <section class="hero">
         <div class="hero-main">
             <div class="hero-kicker">Sunrise Alliance</div>
-            <h1>👥 Sunrise Member Management</h1>
-            <p>Add, edit, activate, or deactivate alliance members.</p>
+            <h1 data-v1-i18n="heroTitle">👥 Sunrise Member Management</h1>
+            <p data-v1-i18n="heroDesc">Add, edit, activate, or deactivate alliance members.</p>
         </div>
         <aside class="hero-side">
-            <span class="hero-side-label">Directory</span>
-            <strong>Search · Filter · Review · Manage</strong>
-            <span class="hero-side-note">A cleaner member directory with the same management logic as production.</span>
+            <span class="hero-side-label" data-v1-i18n="directory">Directory</span>
+            <strong data-v1-i18n="flow">Search · Filter · Review · Manage</strong>
+            <span class="hero-side-note" data-v1-i18n="heroNote">A cleaner member directory with the same management logic as production.</span>
         </aside>
     </section>
 
     <div class="workspace">
         <div class="stack narrow-stack">
             <section class="card">
-                <div class="section-title"><div><h2><span class="step-badge">1</span>Admin Sign In</h2><p>Only admin accounts can modify member data.</p></div></div>
+                <div class="section-title"><div><h2><span class="step-badge">1</span><span data-v1-i18n="adminLogin">Admin Sign In</span></h2><p data-v1-i18n="adminOnly">Only admin accounts can modify member data.</p></div></div>
                 <div id="loginForm" class="login-form">
-                    <label>Account<input id="emailInput" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Example: kindsun"></label>
-                    <label>Password<input id="passwordInput" type="password" autocomplete="current-password" placeholder="Enter your password"></label>
+                    <label><span data-v1-i18n="account">Account</span><input id="emailInput" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Example: kindsun" data-v1-placeholder="accountPlaceholder"></label>
+                    <label><span data-v1-i18n="password">Password</span><input id="passwordInput" type="password" autocomplete="current-password" placeholder="Enter your password" data-v1-placeholder="passwordPlaceholder"></label>
                     <button id="loginButton" type="button">Sign In</button>
                 </div>
                 <div id="logoutArea" class="hidden"><button id="logoutButton" type="button" class="secondary-button">Sign Out</button></div>
@@ -44,27 +44,27 @@
             </section>
 
             <section class="stats-card">
-                <div><span>Total members</span><strong id="totalCount">0</strong></div>
-                <div><span>Active</span><strong id="activeCount">0</strong></div>
-                <div><span>Inactive</span><strong id="inactiveCount">0</strong></div>
+                <div><span data-v1-i18n="totalMembers">Total members</span><strong id="totalCount">0</strong></div>
+                <div><span data-v1-i18n="active">Active</span><strong id="activeCount">0</strong></div>
+                <div><span data-v1-i18n="inactive">Inactive</span><strong id="inactiveCount">0</strong></div>
             </section>
         </div>
 
         <section class="card member-card">
             <div class="section-title member-heading">
-                <div><h2><span class="step-badge">2</span>Alliance Members</h2><p>Inactive members will not appear in train draw eligibility lists.</p></div>
+                <div><h2><span class="step-badge">2</span><span data-v1-i18n="allianceMembers">Alliance Members</span></h2><p data-v1-i18n="inactiveNote">Inactive members will not appear in train draw eligibility lists.</p></div>
                 <button id="addMemberButton" type="button">＋ Add Member</button>
             </div>
 
             <div class="toolbar">
-                <div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Search member name"></div>
-                <select id="statusFilter"><option value="all">All statuses</option><option value="active">Active only</option><option value="inactive">Inactive only</option></select>
+                <div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Search member name" data-v1-placeholder="searchPlaceholder"></div>
+                <select id="statusFilter"><option value="all" data-v1-i18n="allStatuses">All statuses</option><option value="active" data-v1-i18n="activeOnly">Active only</option><option value="inactive" data-v1-i18n="inactiveOnly">Inactive only</option></select>
                 <button id="reloadButton" type="button" class="secondary-button">Reload</button>
             </div>
 
             <div class="summary-strip">
-                <span>Member directory</span>
-                <strong>Use search and status filters to find members quickly.</strong>
+                <span data-v1-i18n="directoryLabel">Member directory</span>
+                <strong data-v1-i18n="directoryHint">Use search and status filters to find members quickly.</strong>
             </div>
             <p id="memberMessage" class="message"></p>
             <div id="loadingMessage" class="loading-message">Loading members…</div>
@@ -75,11 +75,11 @@
 
 <div id="editorOverlay" class="overlay hidden">
     <section class="editor-dialog">
-        <div class="dialog-header"><div><span class="dialog-kicker">Member profile</span><h2 id="editorTitle">Edit Member</h2></div><button id="closeEditorButton" type="button" class="icon-button">×</button></div>
+        <div class="dialog-header"><div><span class="dialog-kicker" data-v1-i18n="memberProfile">Member profile</span><h2 id="editorTitle">Edit Member</h2></div><button id="closeEditorButton" type="button" class="icon-button">×</button></div>
         <input id="memberIdInput" type="hidden">
-        <label>Member Name<input id="gameNameInput" type="text" maxlength="100" placeholder="Enter game name"></label>
-        <label>Sort Order<input id="sortOrderInput" type="number" min="1" step="1"></label>
-        <label class="checkbox-label"><input id="isActiveInput" type="checkbox" checked><span>Active member</span></label>
+        <label><span data-v1-i18n="memberName">Member Name</span><input id="gameNameInput" type="text" maxlength="100" placeholder="Enter game name" data-v1-placeholder="gameNamePlaceholder"></label>
+        <label><span data-v1-i18n="sortOrder">Sort Order</span><input id="sortOrderInput" type="number" min="1" step="1"></label>
+        <label class="checkbox-label"><input id="isActiveInput" type="checkbox" checked><span data-v1-i18n="activeMember">Active member</span></label>
         <p id="editorMessage" class="message"></p>
         <div class="dialog-actions"><button id="cancelEditorButton" type="button" class="secondary-button">Cancel</button><button id="saveMemberButton" type="button">Save</button></div>
     </section>
@@ -93,6 +93,6 @@
 <script src="../shared/language-ui.js"></script>
 <script src="../shared/i18n.js"></script>
 <script src="members.js"></script>
-<script src="members-v1-i18n.js?v=20261004-0556"></script>
+<script src="members-v1-i18n.js?v=20261004-0602"></script>
 </body>
 </html>
