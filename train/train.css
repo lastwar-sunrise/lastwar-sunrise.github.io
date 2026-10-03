@@ -479,6 +479,14 @@ footer {
         20px,
         calc((100% - 1000px) / 2)
     );
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+}
+
+.train-language-selector::before {
+    content: "Language:";
 }
 
 .train-language-selector select {
@@ -517,6 +525,7 @@ footer {
     }
 
     .train-language-selector select {
-        width: 100%;
+        flex: 1;
+        width: auto;
     }
 }
