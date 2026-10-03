@@ -10,8 +10,14 @@
         localStorage.setItem("sunriseLanguageChosen","0");
     }
 
+    function FindSelector(){
+        const select=document.querySelector("[data-language-select],#languageSelect");
+        if(select&&!select.hasAttribute("data-language-select"))select.setAttribute("data-language-select","");
+        return select;
+    }
+
     function CreateSelector(){
-        let select=document.querySelector("[data-language-select]");
+        let select=FindSelector();
         if(select)return select;
         const wrap=document.createElement("div");
         wrap.className="sunrise-global-language";
@@ -33,12 +39,17 @@
         Object.keys(options).forEach(function(value){if(!select.querySelector('option[value="'+value+'"]')){const option=document.createElement("option");option.value=value;option.textContent=options[value];select.appendChild(option);}});
     }
 
+    function HideLegacyLabel(select){
+        if(!select||!select.parentElement)return;
+        Array.from(select.parentElement.children).forEach(function(el){if(el!==select&&el.tagName==="SPAN")el.style.display="none";});
+    }
+
     function SyncSelector(){
         const chosen=localStorage.getItem("sunriseLanguageChosen")==="1";
-        document.querySelectorAll("[data-language-select]").forEach(function(select){EnsureOptions(select);select.value=chosen?localStorage.getItem("sunriseLanguage"):"";});
+        document.querySelectorAll("[data-language-select],#languageSelect").forEach(function(select){if(!select.hasAttribute("data-language-select"))select.setAttribute("data-language-select","");EnsureOptions(select);HideLegacyLabel(select);select.value=chosen?localStorage.getItem("sunriseLanguage"):"";});
     }
 
     document.addEventListener("change",function(event){const select=event.target.closest&&event.target.closest("[data-language-select]");if(select&&Supported.includes(select.value))localStorage.setItem("sunriseLanguageChosen","1");},true);
-    document.addEventListener("DOMContentLoaded",function(){CreateSelector();SyncSelector();setTimeout(SyncSelector,100);});
+    document.addEventListener("DOMContentLoaded",function(){CreateSelector();SyncSelector();setTimeout(SyncSelector,150);});
     document.addEventListener("sunriseLanguageChanged",function(){SyncSelector();});
 })();
