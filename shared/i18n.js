@@ -506,6 +506,12 @@ const SunriseTranslations = {
     }
 };
 
+
+// Sunrise V2
+Object.assign(SunriseTranslations["zh-TW"].translation,{sunV2:{back:"← 返回管理中心",settings:"值日生設定",internal:"🏠 Sunrise 內務",duty:"值日生：",train:"駕駛火車：",zoneTitle:"🔴 紅星戰區資訊 (當前)",strategyTitle:"📅 近七日策略",noDuty:"暫無設定"}});
+Object.assign(SunriseTranslations.en.translation,{sunV2:{back:"← Back to Management",settings:"Duty Settings",internal:"🏠 Sunrise Internal",duty:"On Duty:",train:"Train Driver:",zoneTitle:"🔴 Red Star Zone Info",strategyTitle:"📅 7-Day Strategy",noDuty:"Not configured"}});
+Object.assign(SunriseTranslations.vi.translation,{sunV2:{back:"← Quay lại trung tâm",settings:"Cài đặt trực nhật",internal:"🏠 Nội vụ Sunrise",duty:"Trực nhật:",train:"Lái tàu:",zoneTitle:"🔴 Thông tin Chiến khu",strategyTitle:"📅 Chiến thuật 7 ngày",noDuty:"Chưa thiết lập"}});
+
 const SunriseDynamicTextRules = [
     {
         pattern: /^已登入：(.*)$/,
