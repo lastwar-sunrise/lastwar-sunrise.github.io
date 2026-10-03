@@ -40,9 +40,14 @@
     }
 
     function EnsureBackButton(){
+        const existingGlobal=document.getElementById("sunriseGlobalBack");
+        if(document.body&&document.body.hasAttribute("data-no-global-back")){
+            if(existingGlobal)existingGlobal.remove();
+            return;
+        }
         if(IsRootIndex())return;
         const existing=FindExistingBackLinks();
-        let back=document.getElementById("sunriseGlobalBack");
+        let back=existingGlobal;
         if(!back&&existing.length){
             back=existing[0];
             back.id="sunriseGlobalBack";
