@@ -66,14 +66,14 @@ async function LoadTrain(){
             mvpPosition=null;
         }
 
-        if(slotIndex===6&&schedule.length===6){trainElement.textContent="MVP　"+dateLabel;return;}
+        if(slotIndex===6&&schedule.length===6){trainElement.textContent="MVP\n"+dateLabel;return;}
         if(schedule.length<slotIndex+1){trainElement.textContent="-";return;}
         const memberId=Number(schedule[slotIndex]);
         const memberResult=await V2Supabase.from("members").select("game_name").eq("id",memberId).maybeSingle();
         if(memberResult.error)throw memberResult.error;
         if(!memberResult.data){trainElement.textContent="-";return;}
         const suffix=mvpPosition===slotIndex?" (MVP)":"";
-        trainElement.textContent=memberResult.data.game_name+suffix+"　"+dateLabel;
+        trainElement.textContent=memberResult.data.game_name+suffix+"\n"+dateLabel;
     }catch(error){console.error("LoadTrain failed:",error);trainElement.textContent="讀取失敗";}
 }
 
