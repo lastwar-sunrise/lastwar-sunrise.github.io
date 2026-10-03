@@ -10,24 +10,39 @@ const PreviewMessage = document.getElementById("previewMessage");
 const PreviewLoading = document.getElementById("previewLoading");
 const PoolPreviewList = document.getElementById("poolPreviewList");
 
+function V3PreviewLang(){
+    const lang=(window.i18next&&i18next.language)||localStorage.getItem("sunriseLanguage")||"en";
+    return lang==="zh-TW"||lang==="vi"?lang:"en";
+}
+
+function V3PreviewText(key){
+    const text={
+        en:{loadFirst:"Please load a week first.",calculating:"Calculating…",done:"Draw pool preview is ready.",failed:"Preview failed: ",empty:"No eligible members have been saved for this week.",lastWin:"Last win: ",never:"Never won",winCount:"Previous wins",weight:"Weight",cooling:"Cooling",available:"Available",restore:"Available: ",preview:"Preview Draw Pool"},
+        "zh-TW":{loadFirst:"請先載入週次。",calculating:"計算中……",done:"抽獎池預覽已完成。",failed:"預覽失敗：",empty:"本週尚未儲存任何合格成員。",lastWin:"上次中獎：",never:"從未中獎",winCount:"中獎次數",weight:"本週權重",cooling:"冷卻中",available:"可抽選",restore:"恢復：",preview:"預覽抽獎池"},
+        vi:{loadFirst:"Vui lòng tải tuần trước.",calculating:"Đang tính…",done:"Đã hoàn tất xem trước nhóm quay.",failed:"Xem trước thất bại: ",empty:"Tuần này chưa lưu thành viên đủ điều kiện.",lastWin:"Lần trúng gần nhất: ",never:"Chưa từng trúng",winCount:"Số lần trúng",weight:"Trọng số tuần này",cooling:"Đang chờ",available:"Có thể quay",restore:"Có lại từ: ",preview:"Xem trước nhóm quay"}
+    };
+    return text[V3PreviewLang()][key];
+}
+
 PreviewPoolButton.addEventListener("click", LoadPoolPreview);
 
 async function LoadPoolPreview() {
     ClearPreviewMessage();
 
     if (!CurrentTrainWeek) {
-        ShowPreviewMessage("請先載入週次。", true);
+        ShowPreviewMessage(V3PreviewText("loadFirst"), true);
         return;
     }
 
     PreviewPoolButton.disabled = true;
-    PreviewPoolButton.textContent = "計算中……";
+    PreviewPoolButton.textContent = V3PreviewText("calculating");
     PreviewLoading.classList.remove("hidden");
+    PreviewLoading.textContent = V3PreviewText("calculating");
     PoolSummary.classList.add("hidden");
     PoolPreviewList.innerHTML = "";
 
     try {
-        const result = await SupabaseClient.rpc("get_train_pool_preview", {
+        const result = await SupabaseClient.rpc("get_train_pool_preview_public", {
             p_train_week_id: CurrentTrainWeek.id
         });
 
@@ -35,13 +50,13 @@ async function LoadPoolPreview() {
 
         const rows = result.data || [];
         RenderPoolPreview(rows);
-        ShowPreviewMessage("抽獎池預覽已完成。", false);
+        ShowPreviewMessage(V3PreviewText("done"), false);
     } catch (error) {
-        ShowPreviewMessage("預覽失敗：" + GetPreviewErrorMessage(error), true);
+        ShowPreviewMessage(V3PreviewText("failed") + GetPreviewErrorMessage(error), true);
     } finally {
         PreviewLoading.classList.add("hidden");
         PreviewPoolButton.disabled = false;
-        PreviewPoolButton.textContent = "預覽抽獎池";
+        PreviewPoolButton.textContent = V3PreviewText("preview");
     }
 }
 
@@ -62,7 +77,7 @@ function RenderPoolPreview(rows) {
 
     if (rows.length === 0) {
         PreviewLoading.classList.remove("hidden");
-        PreviewLoading.textContent = "本週尚未儲存任何合格成員。";
+        PreviewLoading.textContent = V3PreviewText("empty");
         return;
     }
 
@@ -87,14 +102,14 @@ function CreatePoolPreviewRow(row) {
     const lastWinText = document.createElement("span");
     lastWinText.className = "pool-last-win";
     lastWinText.textContent = row.preview_last_win_week
-        ? "上次中獎：" + FormatPreviewDate(row.preview_last_win_week)
-        : "從未中獎";
+        ? V3PreviewText("lastWin") + FormatPreviewDate(row.preview_last_win_week)
+        : V3PreviewText("never");
 
     memberArea.appendChild(memberName);
     memberArea.appendChild(lastWinText);
 
-    const winCount = CreatePreviewValue("中獎次數", String(row.preview_previous_win_count));
-    const weight = CreatePreviewValue("本週權重", row.preview_is_cooling ? "—" : String(row.preview_draw_weight));
+    const winCount = CreatePreviewValue(V3PreviewText("winCount"), String(row.preview_previous_win_count));
+    const weight = CreatePreviewValue(V3PreviewText("weight"), row.preview_is_cooling ? "—" : String(row.preview_draw_weight));
 
     const statusArea = document.createElement("div");
     statusArea.className = "pool-status-area";
@@ -103,12 +118,12 @@ function CreatePoolPreviewRow(row) {
     statusBadge.className = row.preview_is_cooling
         ? "pool-status pool-status-cooling"
         : "pool-status pool-status-available";
-    statusBadge.textContent = row.preview_is_cooling ? "冷卻中" : "可抽選";
+    statusBadge.textContent = row.preview_is_cooling ? V3PreviewText("cooling") : V3PreviewText("available");
     statusArea.appendChild(statusBadge);
 
     if (row.preview_is_cooling && row.preview_available_again_week) {
         const availableDate = document.createElement("small");
-        availableDate.textContent = "恢復：" + FormatPreviewDate(row.preview_available_again_week);
+        availableDate.textContent = V3PreviewText("restore") + FormatPreviewDate(row.preview_available_again_week);
         statusArea.appendChild(availableDate);
     }
 
