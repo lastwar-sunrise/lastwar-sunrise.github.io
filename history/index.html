@@ -1,5 +1,13 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Sunrise Train Draw History</title><link rel="stylesheet" href="history.css"></head><body>
-<header class="page-header"><div class="header-content"><a class="back-link" href="../">← 返回管理中心</a><h1>📜 火車抽選歷史</h1><p>查看 Sunrise 歷次火車資格抽選結果</p></div></header>
-<main class="page-content"><section class="card"><div class="toolbar"><div><h2>歷史紀錄</h2><p id="summaryText">正在載入抽選紀錄……</p></div><button id="reloadButton" type="button">重新整理</button></div><div class="filter-area"><label>搜尋中獎成員<input id="searchInput" type="search" placeholder="輸入成員名稱"></label></div><p id="message" class="message"></p><div id="loadingMessage" class="loading-message">正在載入抽選紀錄……</div><div id="historyList" class="history-list"></div></section></main><footer>Sunrise Alliance</footer>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Sunrise Train Draw History</title><link rel="stylesheet" href="history.css">
+</head>
+<body>
+<main class="app-shell">
+<div class="topbar"><a class="back-link" href="../">← Back to Management Center</a><div class="topbar-center"><p class="topbar-title">Sunrise Operations</p><p class="topbar-subtitle">Train History</p></div><div class="language-selector"><select data-language-select aria-label="Language" onchange="ChangeSunriseLanguage(this.value)"><option value="">Language / 語言 / Ngôn ngữ</option><option value="zh-TW">繁體中文</option><option value="en">English</option><option value="vi">Tiếng Việt</option></select></div></div>
+<section class="hero"><div class="hero-main"><div class="hero-kicker">Sunrise Alliance</div><h1>📜 火車抽選歷史</h1><p>查看 Sunrise 歷次火車資格抽選結果</p></div><aside class="hero-side"><span class="hero-side-label">Archive</span><strong>Review past weekly draws</strong><span class="hero-side-note">Search previous winners and inspect each completed draw at a glance.</span></aside></section>
+<section class="card"><div class="section-title"><div><h2><span class="step-badge">1</span>歷史紀錄</h2><p id="summaryText">正在載入抽選紀錄……</p></div><button id="reloadButton" type="button">重新整理</button></div><div class="toolbar"><div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="輸入成員名稱"></div></div><p id="message" class="message"></p><div id="loadingMessage" class="loading-message">正在載入抽選紀錄……</div><div id="historyList" class="history-list"></div></section>
+</main><footer>Sunrise Alliance</footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdn.jsdelivr.net/npm/i18next@26/i18next.min.js"></script><script src="../train/config.js"></script><script src="../shared/language-ui.js"></script><script src="../shared/i18n.js"></script><script src="../shared/legacy-page-i18n.js"></script><script src="history.js"></script>
 </body></html>
