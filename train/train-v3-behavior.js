@@ -80,9 +80,7 @@
             UpdateWeekDisplay();
             await LoadEligibleMembers();
 
-            if(CurrentTrainWeek.status==="completed"){
-                await LoadDrawResults();
-            }
+            if(CurrentTrainWeek.status==="completed")await LoadDrawResults();
 
             ShowMessage(
                 WeekMessage,
@@ -134,16 +132,17 @@
         }
     }
 
-    function replaceActionButton(id,handler){
-        const oldButton=document.getElementById(id);
-        const newButton=oldButton.cloneNode(true);
-        oldButton.parentNode.replaceChild(newButton,oldButton);
-        newButton.addEventListener("click",handler);
-        return newButton;
-    }
+    document.addEventListener("click",function(event){
+        const button=event.target.closest&&event.target.closest("#previewPoolButton");
+        if(!button)return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        previewPoolPublic();
+    },true);
 
     document.addEventListener("DOMContentLoaded",function(){
         drawCountInput.value="6";
+
         weekInput.addEventListener("change",function(){
             const monday=normalizeToMonday(this.value);
             if(monday)this.value=monday;
@@ -154,8 +153,12 @@
             setMemberDisclosure(memberDisclosure.classList.contains("hidden"));
         });
 
-        replaceActionButton("loadWeekButton",loadWeekPublic);
-        replaceActionButton("previewPoolButton",previewPoolPublic);
+        const loadButton=document.getElementById("loadWeekButton");
+        loadButton.addEventListener("click",function(event){
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            loadWeekPublic();
+        },true);
 
         setMemberDisclosure(false);
         setTimeout(function(){
