@@ -16,10 +16,10 @@
         style.id="sunrise-global-ui-style";
         style.textContent=`
             .language-selector>span,.language-wrap>span,.train-language-selector>span{display:none!important}
-            .sunrise-back-button{position:fixed;top:10px;left:10px;z-index:9500;display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:7px 13px;border-radius:11px;background:#1a73e8;color:#fff!important;text-decoration:none!important;font:700 13px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;box-shadow:0 2px 7px rgba(0,0,0,.16);white-space:nowrap;transition:transform .15s ease,box-shadow .15s ease}
-            .sunrise-back-button:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.2)}
-            .sunrise-legacy-back{display:none!important}
-            @media(max-width:600px){.sunrise-back-button{top:7px;left:6px;min-height:34px;padding:6px 9px;font-size:12px}}
+            .sunrise-back-button{display:inline-flex!important;align-items:center;justify-content:center;min-height:36px;padding:7px 13px!important;border:0!important;border-radius:11px!important;background:#1a73e8!important;color:#fff!important;text-decoration:none!important;font:700 13px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif!important;box-shadow:0 2px 7px rgba(0,0,0,.16);white-space:nowrap;transition:transform .15s ease,box-shadow .15s ease}
+            .sunrise-back-button:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.2);text-decoration:none!important}
+            .sunrise-extra-back{margin:8px 0 8px 8px}
+            @media(max-width:600px){.sunrise-back-button{min-height:33px;padding:6px 9px!important;font-size:12px!important}.sunrise-extra-back{margin:6px 0 6px 6px}}
         `;
         document.head.appendChild(style);
     }
@@ -35,22 +35,28 @@
         return texts[lang]||texts.en;
     }
 
-    function HideExistingBackLinks(){
-        document.querySelectorAll('.back-link,.home-link,[data-i18n="sunV2.back"],[data-duty-i18n="back"]').forEach(function(el){el.classList.add("sunrise-legacy-back");});
+    function FindExistingBackLinks(){
+        return Array.from(document.querySelectorAll('.back-link,.home-link,[data-i18n="sunV2.back"],[data-duty-i18n="back"]'));
     }
 
     function EnsureBackButton(){
         if(IsRootIndex())return;
-        HideExistingBackLinks();
+        const existing=FindExistingBackLinks();
         let back=document.getElementById("sunriseGlobalBack");
+        if(!back&&existing.length){
+            back=existing[0];
+            back.id="sunriseGlobalBack";
+            existing.slice(1).forEach(function(el){el.style.display="none";});
+        }
         if(!back){
             back=document.createElement("a");
             back.id="sunriseGlobalBack";
-            back.className="sunrise-back-button";
-            back.href="/";
-            back.setAttribute("aria-label","Back to Management");
-            document.body.appendChild(back);
+            back.className="sunrise-extra-back";
+            document.body.insertBefore(back,document.body.firstChild);
         }
+        back.classList.add("sunrise-back-button");
+        back.href="/";
+        back.setAttribute("aria-label","Back to Management");
         back.textContent=BackText();
     }
 
@@ -68,6 +74,6 @@
     function SyncSelector(){const chosen=localStorage.getItem("sunriseLanguageChosen")==="1";document.querySelectorAll("[data-language-select],#languageSelect").forEach(function(select){if(!select.hasAttribute("data-language-select"))select.setAttribute("data-language-select","");EnsureOptions(select);HideLegacyLabel(select);select.value=chosen?localStorage.getItem("sunriseLanguage"):"";});}
 
     document.addEventListener("change",function(event){const select=event.target.closest&&event.target.closest("[data-language-select]");if(select&&Supported.includes(select.value))localStorage.setItem("sunriseLanguageChosen","1");},true);
-    document.addEventListener("DOMContentLoaded",function(){AddGlobalStyle();CreateSelector();SyncSelector();EnsureBackButton();[100,300,700,1200].forEach(function(ms){setTimeout(function(){SyncSelector();HideExistingBackLinks();},ms);});});
+    document.addEventListener("DOMContentLoaded",function(){AddGlobalStyle();CreateSelector();SyncSelector();EnsureBackButton();[100,300,700,1200].forEach(function(ms){setTimeout(function(){SyncSelector();EnsureBackButton();},ms);});});
     document.addEventListener("sunriseLanguageChanged",function(){SyncSelector();EnsureBackButton();});
 })();
