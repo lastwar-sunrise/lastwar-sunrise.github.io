@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Activity Announcement Settings V1</title>
+<link rel="stylesheet" href="activity-settings-v1.css">
+</head>
+<body data-no-global-back>
+<main class="shell">
+<div class="topbar"><a class="back-link" href="sunrisers-v5.html">‹‹ Sunrise Preview</a><div class="language-selector"><select data-language-select aria-label="Language" onchange="ChangeSunriseLanguage(this.value)"><option value="">Language / 語言 / Ngôn ngữ</option><option value="zh-TW">繁體中文</option><option value="en">English</option><option value="vi">Tiếng Việt</option></select></div></div>
+<section class="hero"><div class="hero-main"><div class="eyebrow">Sunrise Operations · R4 Tool</div><h1 data-act-i18n="title">Activity Announcement Settings</h1><p data-act-i18n="intro">R4 / admin only. Save the last template for each event and reuse it next time.</p></div><aside class="hero-side"><span>ANNOUNCEMENT BUILDER</span><strong>Template → Time conversion → 500-character announcement</strong></aside></section>
+<section class="card auth-card"><div class="section-title"><div><h2>R4 Access</h2><p id="status" class="status"></p></div></div><div id="loginArea" class="auth-row"><input id="account" data-act-placeholder="account" placeholder="Account" autocomplete="username" autocapitalize="none"><input id="password" type="password" data-act-placeholder="password" placeholder="Password" autocomplete="current-password"><button id="loginButton" type="button" data-act-i18n="login">R4 / Admin Sign In</button></div><div id="loggedArea" class="auth-row hidden"><strong id="loggedAccount"></strong><button id="logoutButton" type="button" class="secondary" data-act-i18n="logout">Sign Out</button></div></section>
+<div class="workspace">
+<section class="card"><div class="section-title"><div><h2>1. Template</h2><p>Choose an event, adjust details, then save it as the default for next time.</p></div></div><div id="editorArea" class="login-only"><div class="field-grid">
+<label class="field full"><span data-act-i18n="event">Event</span><select id="eventSelect"></select></label>
+<label id="customNameField" class="field full hidden"><span data-act-i18n="customName">Custom event name</span><input id="customName" maxlength="80"></label>
+<label id="levelField" class="field"><span data-act-i18n="level">Level / Stage</span><input id="levelText" maxlength="30" placeholder="Lv.10 / Stage 9"></label>
+<label class="field"><span data-act-i18n="time">Time (UTC+8)</span><input id="startTime" type="time" value="21:00"></label>
+<label class="field full"><span data-act-i18n="notes">Notes</span><textarea id="notes" maxlength="320"></textarea></label>
+<label class="field full"><span data-act-i18n="language">Announcement language</span><select id="announcementLanguage"><option value="en">English</option><option value="zh-TW">繁體中文</option><option value="vi">Tiếng Việt</option></select></label>
+</div><div class="template-note" data-act-i18n="source">Initial presets are based on recurring alliance/event modes seen from S4 onward; fields remain flexible so R4 can adapt them.</div><div class="actions"><button id="saveButton" type="button" data-act-i18n="save">Save Template</button></div></div></section>
+<section class="card"><div class="section-title"><div><h2 data-act-i18n="announcement">Announcement Preview</h2><p data-act-i18n="timezones">Automatic time conversion</p></div></div><div id="timezonePreview" class="timezone-preview"></div><textarea id="announcementOutput" class="announcement" readonly></textarea><div id="counter" class="counter"></div><div class="actions"><button id="copyButton" type="button" data-act-i18n="copy">Copy Announcement</button></div></section>
+</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdn.jsdelivr.net/npm/i18next@26/i18next.min.js"></script><script src="train/config.js"></script><script src="shared/auth-helper.js"></script><script src="shared/language-ui.js?v=20261004-0710"></script><script src="shared/i18n.js"></script><script src="activity-settings-v1.js?v=20261004-0710"></script>
+</body></html>
