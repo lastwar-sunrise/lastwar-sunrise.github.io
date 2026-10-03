@@ -14,11 +14,13 @@ a{color:#8a6500;text-decoration:none;font-weight:700}
 input,button,select,textarea{padding:9px;border:1px solid #ccb878;border-radius:9px;font:inherit}
 button{cursor:pointer}
 button:disabled,select:disabled,input:disabled{cursor:not-allowed;opacity:.65}
-.member{display:inline-flex;gap:5px;margin:4px;padding:7px;background:#fff7df;border-radius:8px}
+.member{display:inline-flex;gap:5px;margin:4px;padding:7px;background:#fff7df;border-radius:8px;max-width:100%}
+.member span{overflow-wrap:anywhere}
 .group{border:1px solid #ead79f;padding:10px;border-radius:10px;margin:8px 0}
 .hidden{display:none!important}
-.train-row{display:grid;grid-template-columns:90px 1fr;gap:10px;align-items:center;margin:8px 0}
-.train-row select{width:100%}
+.train-row{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px;align-items:center;margin:8px 0}
+.train-row strong{white-space:nowrap}
+.train-row select{width:100%;min-width:0}
 .status-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
 .mode-badge{display:inline-block;padding:4px 9px;border-radius:999px;background:#f2ead0;font-size:12px;font-weight:700}
 .mode-edit{background:#dff3df;color:#246b24}
@@ -34,7 +36,25 @@ details.box[open]>summary:after{content:"－"}
 .login-row input{min-width:160px;flex:1}
 .language-selector select{min-width:130px;background:#fff}
 #announcementOutput{width:100%;min-height:270px;margin-top:10px;resize:vertical;white-space:pre-wrap}
-@media(max-width:600px){.train-row{grid-template-columns:70px 1fr}.login-row{flex-direction:column}.top-row{align-items:flex-start}.language-selector select{max-width:150px}}
+@media(max-width:600px){
+ body{font-size:14px}
+ .wrap{width:calc(100% - 8px);padding:8px 0}
+ .top-row{align-items:center;gap:6px;padding:0 4px}
+ .box{padding:12px;border-radius:12px;margin:8px 0}
+ details.box>summary{padding:12px}
+ .detail-body{padding:0 12px 12px}
+ .train-row{grid-template-columns:max-content minmax(0,1fr);gap:5px;margin:6px 0}
+ .train-row select{font-size:13px;padding:7px 5px}
+ .login-row{flex-direction:column;align-items:stretch}
+ .login-row input{min-width:0;width:100%}
+ .language-selector select{min-width:0;max-width:140px;padding:7px 5px}
+ .member{margin:3px 2px;padding:6px 5px}
+ .group{padding:8px;margin:6px 0}
+ .section-actions{gap:6px}
+ .section-actions button{padding:8px 7px}
+ .help{line-height:1.45}
+ #announcementOutput{min-height:240px;font-size:13px}
+}
 </style>
 </head>
 <body>
@@ -63,6 +83,25 @@ details.box[open]>summary:after{content:"－"}
 <script src="../train/config.js"></script>
 <script src="../shared/auth-helper.js"></script>
 <script src="../shared/i18n.js"></script>
-<script src="duty-settings.js?v=20261004-0255"></script>
+<script src="duty-settings.js?v=20261004-0310"></script>
+<script>
+(function(){
+  var armed=false;
+  var button=document.getElementById('exportAnnouncement');
+  var status=document.getElementById('status');
+  if(!button||!status)return;
+  button.addEventListener('click',function(){armed=true;});
+  new MutationObserver(function(){
+    if(!armed)return;
+    var text=status.textContent||'';
+    if(text.indexOf('已產生並複製')>=0||text.indexOf('generated and copied')>=0||text.indexOf('Đã tạo và sao chép')>=0){
+      armed=false;
+      alert('已自動複製文字');
+    }else if(text.indexOf('請手動複製')>=0||text.indexOf('copy it manually')>=0||text.indexOf('sao chép thủ công')>=0){
+      armed=false;
+    }
+  }).observe(status,{childList:true,subtree:true,characterData:true});
+})();
+</script>
 </body>
 </html>
