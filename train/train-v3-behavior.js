@@ -5,6 +5,7 @@
     const drawCountInput=document.getElementById("weekDrawCountInput");
     const memberToggle=document.getElementById("memberToggleButton");
     const memberDisclosure=document.getElementById("memberDisclosure");
+    const reloadButton=document.getElementById("reloadButton");
     let lastAuthState=null;
 
     function lang(){
@@ -48,6 +49,7 @@
 
     function syncDisclosureWithAuth(){
         const loggedIn=typeof CurrentUser!=="undefined"&&CurrentUser!==null;
+        if(reloadButton)reloadButton.classList.toggle("hidden",!loggedIn);
         if(lastAuthState===loggedIn)return;
         lastAuthState=loggedIn;
         setMemberDisclosure(loggedIn);
@@ -116,6 +118,7 @@
             liveButton.textContent=t("load");
             UpdateManagementEnabled();
             liveButton.disabled=false;
+            syncDisclosureWithAuth();
         }
     }
 
@@ -156,6 +159,7 @@
         const observer=new MutationObserver(translateDynamicButtons);
         observer.observe(document.body,{subtree:true,childList:true,characterData:true});
 
+        if(reloadButton)reloadButton.classList.add("hidden");
         setMemberDisclosure(false);
         setTimeout(function(){
             syncDisclosureWithAuth();
