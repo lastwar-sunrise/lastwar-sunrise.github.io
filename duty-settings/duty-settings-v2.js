@@ -1,14 +1,6 @@
 "use strict";
 
 (function(){
-    const BaseOffsets=[
-        {label:"TW/HK/SG/PH",minutes:0},
-        {label:"VN/TH/ID",minutes:-60},
-        {label:"IN",minutes:-150},
-        {label:"PK",minutes:-180},
-        {label:"TR",minutes:-300}
-    ];
-
     const Text={
         en:{button:"Time Converter",title:"Announcement Time Converter",time:"Time (UTC+8)",copy:"Copy Time Text",copied:"Copied",note:"Choose the UTC+8 activity time. The text below can be pasted directly into a game announcement."},
         "zh-TW":{button:"時間換算",title:"公告時間換算",time:"時間（UTC+8）",copy:"複製時間文字",copied:"已複製",note:"選擇 UTC+8 的活動時間，下方文字可直接貼進遊戲公告。"},
@@ -33,7 +25,16 @@
     function BuildText(){
         const input=document.getElementById("timezoneTimeInput");
         const time=input&&input.value?input.value:"21:00";
-        return ["Time:"].concat(BaseOffsets.map(x=>x.label+" "+ShiftTime(time,x.minutes))).join("\n");
+        const utc8=ShiftTime(time,0);
+        const utc7=ShiftTime(time,-60);
+        const india=ShiftTime(time,-150);
+        const pakistan=ShiftTime(time,-180);
+        return [
+            "Time:",
+            "TW/HK/SG/PH "+utc8,
+            "VN/TH/ID "+utc7,
+            "IN "+india+" / PK "+pakistan
+        ].join("\n");
     }
 
     function Render(){
