@@ -22,6 +22,20 @@
         return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0");
     }
 
+    function GetTaipeiDateParts(){
+        const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
+        const map={};
+        parts.forEach(p=>{if(p.type!=="literal")map[p.type]=p.value;});
+        return map;
+    }
+
+    function GetUkTime(time){
+        if(!time)return"--:--";
+        const d=GetTaipeiDateParts();
+        const instant=new Date(d.year+"-"+d.month+"-"+d.day+"T"+time+":00+08:00");
+        return new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/London",hour:"2-digit",minute:"2-digit",hour12:false}).format(instant);
+    }
+
     function BuildText(){
         const input=document.getElementById("timezoneTimeInput");
         const time=input&&input.value?input.value:"21:00";
@@ -29,11 +43,13 @@
         const utc7=ShiftTime(time,-60);
         const india=ShiftTime(time,-150);
         const pakistan=ShiftTime(time,-180);
+        const uk=GetUkTime(time);
         return [
             "Time:",
             "TW/HK/SG/PH "+utc8,
             "VN/TH/ID "+utc7,
-            "IN "+india+" / PK "+pakistan
+            "IN "+india+" / PK "+pakistan,
+            "UK "+uk
         ].join("\n");
     }
 
