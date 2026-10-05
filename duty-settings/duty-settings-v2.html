@@ -5,13 +5,13 @@
 <script>
 (async function(){
     try{
-        const response=await fetch('index.html?v=20261005-2246',{cache:'no-store'});
+        const response=await fetch('index.html?v=20261005-2253',{cache:'no-store'});
         let html=await response.text();
         html=html.replace('<title>Internal Roster Settings</title>','<title>Internal Roster Settings V2 Preview</title>');
-        html=html.replace('</style>','</style><link rel="stylesheet" href="duty-settings-v2.css?v=20261005-2246">');
+        html=html.replace('</style>','</style><link rel="stylesheet" href="duty-settings-v2.css?v=20261005-2253">');
         html=html.replace('<button id="exportAnnouncement" data-duty-i18n="exportAnnouncement">Export Announcement</button>','<button id="exportAnnouncement" data-duty-i18n="exportAnnouncement">Export Announcement</button><button id="timezoneToggleButton" class="time-converter-btn" type="button">Time Converter</button>');
         html=html.replace('<textarea id="announcementOutput" class="hidden" readonly></textarea>','<div id="timezoneTool" class="time-tool hidden"><div class="time-tool-head"><strong id="timezoneToolTitle">Announcement Time Converter</strong></div><div class="time-tool-grid"><div><label><span id="timezoneTimeLabel">Time (UTC+8)</span><input id="timezoneTimeInput" type="time" value="21:00"></label><p id="timezoneToolNote" class="time-note">Choose the UTC+8 activity time. The text below can be pasted directly into a game announcement.</p></div><div><textarea id="timezoneOutput" class="time-output" readonly></textarea><div class="time-tool-actions"><button id="timezoneCopyButton" class="time-copy-btn" type="button">Copy Time Text</button><span id="timezoneCopyStatus" class="time-copy-status"></span></div></div></div></div><textarea id="announcementOutput" class="hidden" readonly></textarea>');
-        html=html.replace('</body>','<script src="duty-settings-v2.js?v=20261005-2246"><\/script></body>');
+        html=html.replace('</body>','<script src="duty-settings-v2.js?v=20261005-2253"><\/script></body>');
         document.open();document.write(html);document.close();
     }catch(error){
         document.body.innerHTML='<p style="font-family:sans-serif;padding:20px">Preview failed to load.</p>';
