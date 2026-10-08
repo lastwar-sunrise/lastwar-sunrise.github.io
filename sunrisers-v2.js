@@ -79,7 +79,7 @@ async function LoadTrain(){
 
 function RenderStrategy(){
     const text=GetV2Text(),logicZero=GetLogicDate();
-    const zones=[["1769","1772","1775","1776","1783","1789","1790","1793","1796","1824"],["1765","1770","1771","1777","1778","1779","1784","1785","1791","1797","1798","1822"],["1766","1767","1768","1773","1774","1780","1781","1782","1786","1787","1788","1792","1794","1795"]];
+    const zones=[["1769","1772","1775","1776","1783","1789","1790","1793","1796","1824"],["1765","1770","1771","1777","1778","1779","1784","1785","1791","1797","1798","1814","1822"],["1766","1767","1768","1773","1774","1780","1781","1782","1786","1787","1788","1792","1794","1795"]];
     const baseRotation=new Date(2026,2,20);let zoneIndex=Math.floor((logicZero-baseRotation)/86400000)%3;if(zoneIndex<0)zoneIndex+=3;
     const displayHour=GetV2Language()==="vi"?9:10,displayEnd=new Date(logicZero.getTime()+86400000);
     document.getElementById("zone").innerHTML="<strong>"+text.period+"：</strong>"+(logicZero.getMonth()+1)+"/"+logicZero.getDate()+" "+displayHour+":00 AM ~ "+(displayEnd.getMonth()+1)+"/"+displayEnd.getDate()+" "+displayHour+":00 AM "+(GetV2Language()==="vi"?"(GMT+7)":"(GMT+8)")+"<br><strong>"+text.zone+"：</strong>"+zones[zoneIndex].join(", ");
