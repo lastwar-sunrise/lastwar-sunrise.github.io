@@ -5,7 +5,7 @@
 <script>
 (async function(){
   try{
-    const response=await fetch('sunrisers-v4.html?v=20261004-0710',{cache:'no-store'});
+    const response=await fetch('sunrisers-v4.html?v=20261025-0101',{cache:'no-store'});
     let html=await response.text();
     const activityLink='<a class="quick-link" href="activity-settings-v1.html"><span class="icon">◆</span><strong data-dashboard-i18n="activitySettingsLink">Activity Settings</strong><span data-dashboard-i18n="activitySettingsHint">templates & announcements</span></a>';
     html=html.replace('</nav>',activityLink+'</nav>');
@@ -13,6 +13,7 @@
     html=html.replace('settingsHint:\'duty & train setup\'',"settingsHint:'duty & train setup',activitySettingsLink:'Activity Settings',activitySettingsHint:'templates & announcements'");
     html=html.replace("settingsHint:'值日與火車排程'","settingsHint:'值日與火車排程',activitySettingsLink:'活動設定',activitySettingsHint:'樣板與公告'");
     html=html.replace("settingsHint:'trực & lịch tàu'","settingsHint:'trực & lịch tàu',activitySettingsLink:'Cài đặt sự kiện',activitySettingsHint:'mẫu & thông báo'");
+    html=html.replace("settingsHint:'当番と列車担当'","settingsHint:'当番と列車担当',activitySettingsLink:'イベント設定',activitySettingsHint:'テンプレートと告知'");
     document.open();document.write(html);document.close();
   }catch(error){document.body.innerHTML='<p style="font-family:sans-serif;padding:20px">Preview failed to load.</p>';}
 })();
