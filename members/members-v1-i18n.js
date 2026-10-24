@@ -22,6 +22,9 @@
         }
     };
 
+
+    Texts.ja={back:"← 管理画面に戻る",heroTitle:"👥 Sunrise メンバー管理",heroDesc:"同盟メンバーの追加・編集・有効化・無効化を行います。",directory:"メンバー一覧",flow:"検索 · 絞り込み · 確認 · 管理",heroNote:"正式版と同じ管理ロジックで、見やすくメンバーを管理します。",adminLogin:"管理者ログイン",adminOnly:"メンバー情報を変更できるのは admin のみです。",account:"アカウント",password:"パスワード",totalMembers:"全メンバー",active:"有効",inactive:"無効",allianceMembers:"同盟メンバー",inactiveNote:"無効なメンバーは列車抽選の資格リストに表示されません。",allStatuses:"すべて",activeOnly:"有効のみ",inactiveOnly:"無効のみ",directoryLabel:"メンバー一覧",directoryHint:"検索と状態フィルターで素早くメンバーを探せます。",memberProfile:"メンバー情報",memberName:"メンバー名",sortOrder:"表示順",activeMember:"このメンバーを有効化",accountPlaceholder:"例：kindsun",passwordPlaceholder:"パスワードを入力",searchPlaceholder:"メンバー名を検索",gameNamePlaceholder:"ゲーム内名を入力",signIn:"ログイン",signOut:"ログアウト",addMember:"＋ メンバー追加",reload:"再読み込み",cancel:"キャンセル",save:"保存",notSignedIn:"未ログイン",noPermission:"管理権限なし",adminPrefix:"Admin: ",loggingIn:"ログイン中…",loginSuccess:"管理者としてログインしました。",loginNonAdmin:"ログインしましたが、このアカウントは admin ではありません。",loginFailed:"ログイン失敗：",logoutSuccess:"ログアウトしました。",logoutFailed:"ログアウト失敗：",initFailed:"初期化失敗：",enterCredentials:"アカウントとパスワードを入力してください。",readingMembers:"メンバーを読み込み中…",loadFailed:"読み込み失敗：",noMatch:"条件に一致するメンバーがいません。",enabled:"有効",disabled:"無効",edit:"編集",view:"表示",addMemberTitle:"メンバー追加",editMember:"メンバー編集",viewMember:"メンバー表示",adminAddOnly:"メンバーを追加できるのは admin のみです。",adminEditOnly:"メンバーを編集できるのは admin のみです。",enterName:"メンバー名を入力してください。",invalidOrder:"表示順は1以上の整数にしてください。",duplicateName:"同じ名前のメンバーが既に存在します。",saving:"保存中…",updated:"メンバー情報を更新しました。",created:"新しいメンバーを作成しました。",saveFailed:"保存失敗：",reloadBusy:"再読み込み中…"};
+
     const SourceKeys = {
         "尚未登入":"notSignedIn","登入中……":"loggingIn","登入":"signIn","登出":"signOut","管理員登入成功。":"loginSuccess","登入成功，但此帳號不是 admin。":"loginNonAdmin","已登出。":"logoutSuccess","正在讀取成員……":"readingMembers","找不到符合條件的成員。":"noMatch","啟用":"enabled","停用":"disabled","編輯":"edit","查看":"view","新增成員":"addMemberTitle","編輯成員":"editMember","查看成員":"viewMember","取消":"cancel","儲存":"save","儲存中……":"saving","成員資料已更新。":"updated","新成員已建立。":"created","重新載入":"reload",
         "Not signed in":"notSignedIn","Sign In":"signIn","Sign Out":"signOut","Active":"enabled","Inactive":"disabled","Edit":"edit","View":"view","Add Member":"addMemberTitle","Edit Member":"editMember","View Member":"viewMember","Cancel":"cancel","Save":"save","Reload":"reload"
@@ -29,7 +32,7 @@
 
     function Lang() {
         const value = window.i18next && i18next.language ? i18next.language : (localStorage.getItem("sunriseLanguage") || "en");
-        return value === "zh-TW" || value === "vi" ? value : "en";
+        return value === "zh-TW" || value === "vi" || value === "ja" ? value : "en";
     }
 
     function T(key) { return Texts[Lang()][key] || Texts.en[key] || key; }
