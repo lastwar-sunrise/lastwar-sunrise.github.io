@@ -3,7 +3,8 @@
 const SunriseSupportedLanguages = [
     "zh-TW",
     "en",
-    "vi"
+    "vi",
+    "ja"
 ];
 
 const SunriseTranslations = {
@@ -583,6 +584,14 @@ const SunriseDynamicTextRules = [
         suffixGroup: 1
     }
 ];
+
+
+// Japanese
+SunriseTranslations.ja={translation:{
+common:{...SunriseTranslations.en.translation.common,language:"言語",japanese:"日本語",home:"管理画面に戻る",loading:"読み込み中……",unknownError:"不明なエラーが発生しました"},
+home:{...SunriseTranslations.en.translation.home,pageTitle:"Sunrise 管理センター",title:"☀️ Sunrise 管理センター",subtitle:"Sunrise 同盟管理ツール",allianceInfoTitle:"Sunrise 同盟情報",allianceInfoDescription:"当番、列車担当、同盟のお知らせ、レッドスター戦区、直近7日間の戦略を確認します。",trainTitle:"列車資格抽選",trainDescription:"毎週の資格者リストを作成し、正式抽選を行います。",membersTitle:"メンバー管理",membersDescription:"同盟メンバーの追加・編集・有効化・無効化を行います。",historyTitle:"抽選履歴",historyDescription:"過去の列車資格抽選結果を確認します。",eligibilityTitle:"列車資格確認",eligibilityDescription:"今週の資格、クールダウン、過去の当選回数、抽選ウェイトを確認します。",settingsTitle:"システム設定",settingsDescription:"アカウント、権限、システム設定。",footer:"Sunrise 同盟"},
+train:{...SunriseTranslations.en.translation.train,pageTitle:"Sunrise 列車資格抽選",backHome:"← 管理画面に戻る",title:"🚂 Sunrise 列車資格抽選",subtitle:"当番のR4が今週の資格者を選び、正式抽選を行います",notLoggedIn:"未ログイン",loggedIn:"ログイン中：{{account}}",loginTitle:"R4 ログイン",account:"アカウント",accountPlaceholder:"例：kindsun",password:"パスワード",passwordPlaceholder:"パスワードを入力",login:"ログイン",loggingIn:"ログイン中……",logout:"ログアウト",weekSettingsTitle:"今週の抽選設定",weekSettingsDescription:"指定した週の列車抽選を作成または読み込みます",weekStart:"週の開始日",drawCount:"当選人数",loadWeek:"週を読み込む",loadingWeek:"読み込み中……",saveEligibility:"今週の資格を保存",saving:"保存中……",currentWeek:"現在の週：",notLoaded:"未読み込み",status:"状態：",editing:"編集中",completed:"完了",eligibleTitle:"今週の資格者",eligibleDescription:"今週の条件を満たすメンバーを選択してください",reloadMembers:"メンバー再読み込み",searchPlaceholder:"メンバー名を検索",selectAll:"すべて選択",clearAll:"すべて解除",allianceMembers:"同盟メンバー：",selectedEligible:"資格者として選択：",people:"人",readingMembers:"メンバー一覧を読み込み中……",noMembers:"表示できるメンバーがいません。",previewTitle:"抽選プレビュー",previewDescription:"クールダウン、過去の当選回数、今週のウェイトを確認",previewButton:"抽選プレビュー",calculating:"計算中……",selectedByR4:"R4 選択",cooling:"クールダウン中",available:"抽選可能",totalWeight:"ウェイト合計",calculatingPool:"抽選プールを計算中……",availableStatus:"抽選可能",previousWins:"当選回数",currentWeight:"今週のウェイト",neverWon:"未当選",lastWon:"前回当選：",availableAgain:"復帰：",officialDrawTitle:"正式抽選",officialDrawDescription:"保存済みの資格者のみが対象です。完了後は再抽選できません。",officialDrawButton:"正式抽選",drawing:"抽選中……",resultTitle:"🎉 今週の抽選結果",drawTime:"抽選時刻：",initializeFailed:"初期化失敗：",enterAccountPassword:"アカウントとパスワードを入力してください。",loginSuccess:"ログインしました。",loginFailed:"ログイン失敗：",logoutSuccess:"ログアウトしました。",logoutFailed:"ログアウト失敗：",readMembersFailed:"メンバー読み込み失敗：",selectWeekStart:"週の開始日を選択してください。",weekLoadedEditable:"週を読み込みました。資格者リストを編集できます。",weekCompleted:"この週の正式抽選は完了しています。",loadWeekFailed:"週の読み込み失敗：",loginFirst:"先にログインしてください。",loadWeekFirst:"先に週を読み込んでください。",completedCannotModify:"この週は完了済みのため変更できません。",selectOneMember:"資格者を1人以上選択してください。",drawCountExceeds:"当選人数は資格者数を超えられません。",saveFailed:"保存失敗：",eligibilitySaved:"今週の資格を保存しました。{{count}}人。",r4LoginFirst:"R4アカウントでログインしてください。",alreadyDrawn:"この週の正式抽選は完了済みで、再抽選できません。",drawConfirmation:"正式抽選後は再抽選できません。続行しますか？",drawSuccess:"正式抽選が完了し、結果を保存しました。",drawFailed:"正式抽選失敗：",previewLoginFirst:"R4アカウントでログインしてください。",previewCompleted:"抽選プレビューが完了しました。",previewFailed:"プレビュー失敗：",noSavedCandidates:"今週は資格者がまだ保存されていません。",footer:"Sunrise 同盟"}
+}};
 
 let SunriseI18nReady = false;
 let SunriseTranslationObserver = null;
