@@ -4,7 +4,8 @@
     const Text={
         en:{button:"Time Converter",title:"Announcement Time Converter",time:"Time (UTC+8)",copy:"Copy Time Text",copied:"Copied",note:"Choose the UTC+8 activity time. The text below can be pasted directly into a game announcement."},
         "zh-TW":{button:"時間換算",title:"公告時間換算",time:"時間（UTC+8）",copy:"複製時間文字",copied:"已複製",note:"選擇 UTC+8 的活動時間，下方文字可直接貼進遊戲公告。"},
-        vi:{button:"Đổi giờ",title:"Đổi giờ thông báo",time:"Thời gian (UTC+8)",copy:"Sao chép thời gian",copied:"Đã sao chép",note:"Chọn giờ hoạt động theo UTC+8. Phần bên dưới có thể dán trực tiếp vào thông báo trong game."},\n        ja:{button:"時刻変換",title:"お知らせ用時刻変換",time:"時刻（UTC+8）",copy:"時刻テキストをコピー",copied:"コピーしました",note:"UTC+8 のイベント時刻を選ぶと、ゲームのお知らせに貼れる時刻表を自動生成します。"}
+        vi:{button:"Đổi giờ",title:"Đổi giờ thông báo",time:"Thời gian (UTC+8)",copy:"Sao chép thời gian",copied:"Đã sao chép",note:"Chọn giờ hoạt động theo UTC+8. Phần bên dưới có thể dán trực tiếp vào thông báo trong game."},
+        ja:{button:"時刻変換",title:"お知らせ用時刻変換",time:"時刻（UTC+8）",copy:"時刻テキストをコピー",copied:"コピーしました",note:"UTC+8 のイベント時刻を選ぶと、ゲームのお知らせに貼れる時刻表を自動生成します。"}
     };
 
     function Lang(){
