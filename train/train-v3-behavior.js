@@ -10,14 +10,15 @@
 
     function lang(){
         const value=(window.i18next&&i18next.language)||localStorage.getItem("sunriseLanguage")||"en";
-        return value==="zh-TW"||value==="vi"?value:"en";
+        return value==="zh-TW"||value==="vi"||value==="ja"?value:"en";
     }
 
     function t(key){
         const texts={
             en:{show:"＋ Show member list",hide:"－ Hide member list",chooseWeek:"Please select a week start date.",loading:"Loading…",load:"Load Week",missing:"No draw data exists for this week. Sign in as R4 to create it.",editable:"Week loaded. You can edit the eligible list.",completed:"This week’s official draw is complete.",readonly:"Week loaded. Sign in as R4 to make changes.",loadFailed:"Failed to load week: ",signing:"Signing in…",signIn:"Sign In",saving:"Saving…",save:"Save Weekly Eligibility",drawing:"Drawing…",draw:"Official Draw",reloading:"Reloading…",reload:"Reload Members"},
             "zh-TW":{show:"＋ 展開成員名單",hide:"－ 收合成員名單",chooseWeek:"請選擇週次開始日。",loading:"載入中……",load:"載入週次",missing:"此週尚未建立抽選資料。R4 登入後可建立新週次。",editable:"週次已載入，可以編輯合格名單。",completed:"此週已完成正式抽選。",readonly:"週次已載入。登入 R4 後可進行修改。",loadFailed:"載入週次失敗：",signing:"登入中……",signIn:"登入",saving:"儲存中……",save:"儲存合格名單",drawing:"抽選中……",draw:"正式抽選",reloading:"重新載入中……",reload:"重新載入成員"},
-            vi:{show:"＋ Hiện danh sách thành viên",hide:"－ Ẩn danh sách thành viên",chooseWeek:"Vui lòng chọn ngày bắt đầu tuần.",loading:"Đang tải…",load:"Tải tuần",missing:"Tuần này chưa có dữ liệu quay. Đăng nhập R4 để tạo tuần mới.",editable:"Đã tải tuần. Bạn có thể chỉnh sửa danh sách đủ điều kiện.",completed:"Tuần này đã hoàn tất quay chính thức.",readonly:"Đã tải tuần. Đăng nhập R4 để chỉnh sửa.",loadFailed:"Tải tuần thất bại: ",signing:"Đang đăng nhập…",signIn:"Đăng nhập",saving:"Đang lưu…",save:"Lưu danh sách đủ điều kiện",drawing:"Đang quay…",draw:"Quay chính thức",reloading:"Đang tải lại…",reload:"Tải lại thành viên"}
+            vi:{show:"＋ Hiện danh sách thành viên",hide:"－ Ẩn danh sách thành viên",chooseWeek:"Vui lòng chọn ngày bắt đầu tuần.",loading:"Đang tải…",load:"Tải tuần",missing:"Tuần này chưa có dữ liệu quay. Đăng nhập R4 để tạo tuần mới.",editable:"Đã tải tuần. Bạn có thể chỉnh sửa danh sách đủ điều kiện.",completed:"Tuần này đã hoàn tất quay chính thức.",readonly:"Đã tải tuần. Đăng nhập R4 để chỉnh sửa.",loadFailed:"Tải tuần thất bại: ",signing:"Đang đăng nhập…",signIn:"Đăng nhập",saving:"Đang lưu…",save:"Lưu danh sách đủ điều kiện",drawing:"Đang quay…",draw:"Quay chính thức",reloading:"Đang tải lại…",reload:"Tải lại thành viên"},
+            ja:{show:"＋ メンバー一覧を表示",hide:"－ メンバー一覧を隠す",chooseWeek:"週の開始日を選択してください。",loading:"読み込み中…",load:"週を読み込む",missing:"この週の抽選データはまだありません。R4でログインすると新しい週を作成できます。",editable:"週を読み込みました。資格者リストを編集できます。",completed:"この週の正式抽選は完了しています。",readonly:"週を読み込みました。変更するにはR4でログインしてください。",loadFailed:"週の読み込み失敗：",signing:"ログイン中…",signIn:"ログイン",saving:"保存中…",save:"資格者リストを保存",drawing:"抽選中…",draw:"正式抽選",reloading:"再読み込み中…",reload:"メンバー再読み込み"}
         };
         return texts[lang()][key];
     }
