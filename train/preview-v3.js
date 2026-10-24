@@ -12,14 +12,15 @@ const PoolPreviewList = document.getElementById("poolPreviewList");
 
 function V3PreviewLang(){
     const lang=(window.i18next&&i18next.language)||localStorage.getItem("sunriseLanguage")||"en";
-    return lang==="zh-TW"||lang==="vi"?lang:"en";
+    return lang==="zh-TW"||lang==="vi"||lang==="ja"?lang:"en";
 }
 
 function V3PreviewText(key){
     const text={
         en:{loadFirst:"Please load a week first.",calculating:"Calculating…",done:"Draw pool preview is ready.",failed:"Preview failed: ",empty:"No eligible members have been saved for this week.",lastWin:"Last win: ",never:"Never won",winCount:"Previous wins",weight:"Weight",cooling:"Cooling",available:"Available",restore:"Available: ",preview:"Preview Draw Pool"},
         "zh-TW":{loadFirst:"請先載入週次。",calculating:"計算中……",done:"抽獎池預覽已完成。",failed:"預覽失敗：",empty:"本週尚未儲存任何合格成員。",lastWin:"上次中獎：",never:"從未中獎",winCount:"中獎次數",weight:"本週權重",cooling:"冷卻中",available:"可抽選",restore:"恢復：",preview:"預覽抽獎池"},
-        vi:{loadFirst:"Vui lòng tải tuần trước.",calculating:"Đang tính…",done:"Đã hoàn tất xem trước nhóm quay.",failed:"Xem trước thất bại: ",empty:"Tuần này chưa lưu thành viên đủ điều kiện.",lastWin:"Lần trúng gần nhất: ",never:"Chưa từng trúng",winCount:"Số lần trúng",weight:"Trọng số tuần này",cooling:"Đang chờ",available:"Có thể quay",restore:"Có lại từ: ",preview:"Xem trước nhóm quay"}
+        vi:{loadFirst:"Vui lòng tải tuần trước.",calculating:"Đang tính…",done:"Đã hoàn tất xem trước nhóm quay.",failed:"Xem trước thất bại: ",empty:"Tuần này chưa lưu thành viên đủ điều kiện.",lastWin:"Lần trúng gần nhất: ",never:"Chưa từng trúng",winCount:"Số lần trúng",weight:"Trọng số tuần này",cooling:"Đang chờ",available:"Có thể quay",restore:"Có lại từ: ",preview:"Xem trước nhóm quay"},
+        ja:{loadFirst:"先に週を読み込んでください。",calculating:"計算中…",done:"抽選プレビューが完了しました。",failed:"プレビュー失敗：",empty:"今週は資格者がまだ保存されていません。",lastWin:"前回当選：",never:"未当選",winCount:"当選回数",weight:"今週のウェイト",cooling:"クールダウン中",available:"抽選可能",restore:"復帰：",preview:"抽選プレビュー"}
     };
     return text[V3PreviewLang()][key];
 }
