@@ -17,6 +17,11 @@ BuildAnnouncement=function(){
         timeTitle="■ 活動時間";
         noteTitle="■ 注意事項";
         closing="※ 到時候見，Sunrisers。一起輕鬆參加、一起拿獎勵。";
+    }else if(lang==="ja"){
+        intro="Sunrisers、次の "+name+" がまもなく始まります。時間が合えば、みんなで気軽に参加しましょう。開催時刻はこちらです：";
+        timeTitle="■ 開催時刻";
+        noteTitle="■ 注意事項";
+        closing="※ それでは会場で、Sunrisers。楽しく参加して報酬も一緒に取りましょう。";
     }else if(lang==="vi"){
         intro="Sunrisers, sự kiện "+name+" sắp bắt đầu. Nếu có thời gian, hãy cùng tham gia với mọi người nhé. Thời gian như sau:";
         timeTitle="■ Thời gian";
