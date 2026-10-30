@@ -2,7 +2,8 @@
 window.SunriseGuideContent={
 "base-upgrade":{
  title:"基地升級優先順序",category:"新手與成長",scope:"通用／HQ 1–35",confidence:"高",
- quick:`<h2>⚡ 照著做</h2>
+ va:`<h2>⚡ 照著 VA 做</h2><div class="do-box"><strong>VA 版本準備中</strong><p>這一區會放 VA 依照 Sunrisers 成員實際進度、活動節奏與資源狀況給出的建議。你提供內容後，我會直接替換這個區塊。</p></div>`,
+ quick:`<h2>🌐 照著網路攻略做</h2>
  <div class="do-box"><strong>核心原則：HQ → 科技中心 → 下一級 HQ 前置建築。</strong>
  <ol><li>HQ 能升就優先準備 HQ。</li><li>科技中心盡量跟緊 HQ，它幾乎一路都是主要前置。</li><li>提前看後面 1–2 級 HQ 的前置需求，在 HQ 升級期間先做。</li><li>兵營、演兵場與你的主兵種中心保持在實用等級；城牆等建築以 HQ 前置需求為主。</li><li>大型建築完工與加速，盡量配合聯盟對決／軍備競賽的建造時段。</li></ol></div>
  <div class="avoid-box"><strong>先不要做</strong><ul><li>不要為了戰力數字平均升所有建築。</li><li>不要讓科技中心落後太多，之後通常會卡 HQ。</li><li>鑽石不要直接拿來秒建築，通常有更好的用途。</li></ul></div>`,
@@ -18,7 +19,8 @@ window.SunriseGuideContent={
 },
 "hero-squad":{
  title:"英雄與主力隊伍怎麼投資",category:"英雄與隊伍",scope:"通用；英雄 meta 會隨賽季改變",confidence:"中高",
- quick:`<h2>⚡ 照著做</h2>
+ va:`<h2>⚡ 照著 VA 做</h2><div class="do-box"><strong>VA 版本尚未整理</strong><p>這一區會優先放 Sunrisers 實際可執行的建議；目前先保留位置，等 VA 逐篇補充。</p></div>`,
+ quick:`<h2>🌐 照著網路攻略做</h2>
  <div class="do-box"><ol><li><strong>先完成第一隊，再養第二隊。</strong>不要把通用碎片平均撒在三隊。</li><li>前排通常放防禦型英雄，後排放輸出／輔助；標準陣型是 2 前 + 3 後。</li><li>同兵種五人隊是目前後期常見方向；新帳號通常先以容易成形的主隊為主。</li><li>升星資源優先給「你確定會長期留在第一隊」的核心英雄，尤其主輸出與關鍵前排。</li><li>每次出現專武、覺醒或 SSR→UR 升階後，重新檢查隊伍，不要把舊 tier list 當永久答案。</li></ol></div>
  <div class="avoid-box"><strong>不要做</strong><ul><li>不要只看總戰力，把輸出英雄塞前排。</li><li>不要因為第二隊看起來弱，就提早分散第一隊資源。</li><li>不要把任何固定「英雄排名」當成跨賽季永久真理。</li></ul></div>`,
  detail:`<h2>📖 看詳細</h2>
@@ -33,7 +35,8 @@ window.SunriseGuideContent={
 },
 "research":{
  title:"科技研究優先順序",category:"科技與研究",scope:"通用；依 HQ 階段調整",confidence:"中高",
- quick:`<h2>⚡ 照著做</h2>
+ va:`<h2>⚡ 照著 VA 做</h2><div class="do-box"><strong>VA 版本尚未整理</strong><p>這一區會優先放 Sunrisers 實際可執行的建議；目前先保留位置，等 VA 逐篇補充。</p></div>`,
+ quick:`<h2>🌐 照著網路攻略做</h2>
  <div class="do-box"><ol><li><strong>研究佇列不要空著。</strong></li><li>前期：建造速度、研究速度、必要經濟科技與下一階兵種。</li><li>中期：兵種階級、行軍容量、主兵種戰鬥科技。</li><li>後期：主力戰鬥科技、Special Forces／賽季科技、解鎖性研究。</li><li>Valor Badges 與大量研究加速，優先配合聯盟對決「科技」日。</li></ol></div>
  <div class="avoid-box"><strong>避免</strong><ul><li>研究中心長時間閒置。</li><li>很早就把大量資源丟進低影響的戰鬥支線，卻讓成長速度研究停滯。</li><li>只看「戰力增加」選研究，不看解鎖兵種、HQ 與賽季門檻。</li></ul></div>`,
  detail:`<h2>📖 看詳細</h2>
@@ -47,7 +50,8 @@ window.SunriseGuideContent={
 },
 "alliance-duel":{
  title:"聯盟對決 VS：一週怎麼存資源",category:"聯盟玩法",scope:"通用；每日項目以你伺服器遊戲內畫面為準",confidence:"中高",
- quick:`<h2>⚡ 照著做</h2>
+ va:`<h2>⚡ 照著 VA 做</h2><div class="do-box"><strong>VA 版本尚未整理</strong><p>這一區會優先放 Sunrisers 實際可執行的建議；目前先保留位置，等 VA 逐篇補充。</p></div>`,
+ quick:`<h2>🌐 照著網路攻略做</h2>
  <div class="do-box"><strong>核心：平常存，對的日子再開。</strong>
  <ul><li><strong>週日：</strong>存雷達，派採集讓它跨 reset 回來。</li><li><strong>建造日：</strong>開建築完成、用建造加速。</li><li><strong>科技日：</strong>研究加速、Valor Badges、無人機組件箱。</li><li><strong>英雄日：</strong>英雄 EXP、碎片、技能勳章、招募票。</li><li><strong>動員／訓練日：</strong>訓練與升階部隊，大量加速集中用。</li><li><strong>殺敵日：</strong>弱戰力玩家以護盾與避免損兵為優先。</li></ul></div>
  <div class="avoid-box"><strong>不要提前開</strong><p>雷達、英雄碎片、無人機箱、Valor Badges、各類加速如果不急，先看下一個 VS 主題再決定。</p></div>`,
@@ -62,7 +66,8 @@ window.SunriseGuideContent={
 },
 "rally":{
  title:"軍演與集結：怎麼讓全盟打得更有效率",category:"活動攻略",scope:"聯盟活動／集結通用",confidence:"中",
- quick:`<h2>⚡ 照著做</h2>
+ va:`<h2>⚡ 照著 VA 做</h2><div class="do-box"><strong>VA 版本尚未整理</strong><p>這一區會優先放 Sunrisers 實際可執行的建議；目前先保留位置，等 VA 逐篇補充。</p></div>`,
+ quick:`<h2>🌐 照著網路攻略做</h2>
  <div class="do-box"><ol><li>活動前先把採集隊伍召回，確保主力隊可用。</li><li>指定 2–3 位主要集結手，避免現場才決定誰開。</li><li>若活動允許大量並行集結：<strong>弱隊／單英雄負責開集結，最強隊拿去加入別人的集結</strong>，提高整體出手頻率。</li><li>加入集結時用高階兵與最強可用隊伍，不要塞低階兵拖整體效果。</li><li>PvP 集結先偵察，再看兵種剋制與目標是否已增援。</li></ol></div>`,
  detail:`<h2>📖 看詳細</h2>
  <p>集結不是單純把多人戰力相加。近期攻略普遍指出，集結手的研究、英雄與其他加成會影響整體集結，因此「誰開」本身就是戰術。</p>
@@ -76,7 +81,8 @@ window.SunriseGuideContent={
 },
 "season2":{
  title:"S2 極地世界：最先要懂的事",category:"賽季系統",scope:"Season 2 Polar World",confidence:"中高",
- quick:`<h2>⚡ 照著做</h2>
+ va:`<h2>⚡ 照著 VA 做</h2><div class="do-box"><strong>VA 版本尚未整理</strong><p>這一區會優先放 Sunrisers 實際可執行的建議；目前先保留位置，等 VA 逐篇補充。</p></div>`,
+ quick:`<h2>🌐 照著網路攻略做</h2>
  <div class="do-box"><ol><li><strong>溫度優先於往中心硬推。</strong>太冷會讓基地凍結並限制行動。</li><li>煤先保命與維持必要生產，再考慮長時間高耗能操作。</li><li>基地盡量待在聯盟火爐有效範圍內，聯盟蜂巢要排整齊。</li><li>越往中心越冷，先確認自己的熱量能力再搬。</li><li>Rare Soil 戰是聯盟層級機制，R4 要提前規劃宣戰、防守與火爐保護。</li></ol></div>
  <div class="avoid-box"><strong>常見錯誤</strong><ul><li>過載一直開著燒煤。</li><li>只升最高級工廠，忽略整體季節建築。</li><li>戰力夠就往中心搬，卻忽略溫度。</li></ul></div>`,
  detail:`<h2>📖 看詳細</h2>
@@ -91,7 +97,8 @@ window.SunriseGuideContent={
 },
 "combat":{
  title:"戰鬥編成：前後排與兵種剋制",category:"戰鬥機制",scope:"通用；完整陣容依賽季 meta 調整",confidence:"中高",
- quick:`<h2>⚡ 照著做</h2>
+ va:`<h2>⚡ 照著 VA 做</h2><div class="do-box"><strong>VA 版本尚未整理</strong><p>這一區會優先放 Sunrisers 實際可執行的建議；目前先保留位置，等 VA 逐篇補充。</p></div>`,
+ quick:`<h2>🌐 照著網路攻略做</h2>
  <div class="do-box"><ol><li>標準五人隊：<strong>2 前排 + 3 後排</strong>。</li><li>防禦型／承傷英雄放前排；主輸出與輔助通常放後排。</li><li>不要因為某英雄戰力數字高，就把輸出手丟前排。</li><li>常見剋制：Aircraft → Tank、Missile → Aircraft、Tank → Missile。</li><li>PvP 先看對手兵種再換隊；PvE 則常常是你最成熟的主隊更實際。</li></ol></div>`,
  detail:`<h2>📖 看詳細</h2>
  <p>Last War 的隊伍不是五個英雄戰力相加而已，位置會決定誰先承傷。前排如果放脆弱輸出，很可能還沒把技能循環打完就先倒下，因此標準思路是防禦型英雄在前、攻擊與輔助在後。</p>
@@ -104,7 +111,8 @@ window.SunriseGuideContent={
 },
 "diamonds":{
  title:"鑽石與商店：哪些東西值得買",category:"資源與商店",scope:"通用；F2P／小課尤其適用",confidence:"中高",
- quick:`<h2>⚡ 照著做</h2>
+ va:`<h2>⚡ 照著 VA 做</h2><div class="do-box"><strong>VA 版本尚未整理</strong><p>這一區會優先放 Sunrisers 實際可執行的建議；目前先保留位置，等 VA 逐篇補充。</p></div>`,
+ quick:`<h2>🌐 照著網路攻略做</h2>
  <div class="do-box"><ol><li><strong>先確保 30 天 VIP。</strong>常見價格約 10,000 鑽。</li><li>VIP Store 再依需求買耐力、傳送、通用裝飾材料、UR 碎片／無人機相關資源等高價值項目。</li><li>保留一筆鑽石，不要每週花到 0；活動有時會出現鑽石換高價值道具的窗口。</li><li>直接用鑽石秒建築／研究通常不是好交易；優先用加速道具並配合活動得分。</li></ol></div>
  <div class="avoid-box"><strong>通常不划算</strong><ul><li>直接買基本食物／鐵／金幣。</li><li>無目的反覆補耐力，因為成本會上升。</li><li>為了立刻完成建築直接燒大量鑽石。</li></ul></div>`,
  detail:`<h2>📖 看詳細</h2>
