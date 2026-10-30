@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Sunrisers Dashboard V6 Preview</title>
+<script>
+(async function(){
+  try{
+    const response=await fetch('new_sunrisers.html?v=20261031-guide-v1',{cache:'no-store'});
+    let html=await response.text();
+    const guideLink='<a class="quick-link" href="guide/guide-v1.html"><span class="icon">📖</span><strong data-dashboard-i18n="guideLink">Game Guides</strong><span data-dashboard-i18n="guideHint">systems & play guides</span></a>';
+    html=html.replace('</nav>',guideLink+'</nav>');
+    html=html.replace('<title>The Sunrisers</title>','<title>The Sunrisers Dashboard V6 Preview</title>');
+    html=html.replace("settingsHint:'duty & train setup'","settingsHint:'duty & train setup',guideLink:'Game Guides',guideHint:'systems & play guides'");
+    html=html.replace("settingsHint:'值日與火車排程'","settingsHint:'值日與火車排程',guideLink:'遊戲攻略',guideHint:'Last War 系統與玩法指南'");
+    html=html.replace("settingsHint:'trực & lịch tàu'","settingsHint:'trực & lịch tàu',guideLink:'Hướng dẫn game',guideHint:'hệ thống & cách chơi Last War'");
+    html=html.replace("settingsHint:'当番と列車担当'","settingsHint:'当番と列車担当',guideLink:'ゲーム攻略',guideHint:'Last War システム・攻略ガイド'");
+    document.open();document.write(html);document.close();
+  }catch(error){document.body.innerHTML='<p style="font-family:sans-serif;padding:20px">Preview failed to load.</p>';}
+})();
+</script>
+</head><body></body></html>
