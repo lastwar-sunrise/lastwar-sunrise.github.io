@@ -157,20 +157,23 @@ window.SunriseGuideContent={
  ["Last War Vault — Rally Guide","https://www.lastwarvault.com/guides/general/rally-guide/"]
  ]
 },
-"season2":{
- title:"S2 極地世界：最先要懂的事",category:"賽季系統",scope:"Season 2 Polar World",confidence:"中高",
- va:`<h2>⚡ 照著 VA 做</h2><div class="do-box"><strong>VA 版本尚未整理</strong><p>這一區會優先放 Sunrisers 實際可執行的建議；目前先保留位置，等 VA 逐篇補充。</p></div>`,
+"season4":{
+ title:"S4 永夜島：最先要懂的事",category:"賽季系統",scope:"Season 4: Evernight Isle",confidence:"中高",
+ va:`<h2>⚡ 照著 VA 做</h2><div class="do-box"><strong>此主題尚未完成</strong><p>S4 的 Sunrisers 實戰版本會等賽季實際進行後再補充；目前先提供已核對的公開機制，避免把未實戰內容寫成聯盟建議。</p></div>`,
  quick:`<h2>🌐 照著網路攻略做</h2>
- <div class="do-box"><ol><li><strong>溫度優先於往中心硬推。</strong>太冷會讓基地凍結並限制行動。</li><li>煤先保命與維持必要生產，再考慮長時間高耗能操作。</li><li>基地盡量待在聯盟火爐有效範圍內，聯盟蜂巢要排整齊。</li><li>越往中心越冷，先確認自己的熱量能力再搬。</li><li>Rare Soil 戰是聯盟層級機制，R4 要提前規劃宣戰、防守與火爐保護。</li></ol></div>
- <div class="avoid-box"><strong>常見錯誤</strong><ul><li>過載一直開著燒煤。</li><li>只升最高級工廠，忽略整體季節建築。</li><li>戰力夠就往中心搬，卻忽略溫度。</li></ul></div>`,
+ <div class="do-box"><ol><li><strong>先顧光源。</strong>S4 的核心是 Lighthouse（燈塔）與 Generator（發電機）；處於黑暗會受到生產與行軍等懲罰。</li><li><strong>優先提升 Virus Resistance（病毒抗性）。</strong>主要來自 Optoelectronic Lab（光電實驗室），也是推進季節內容的重要門檻。</li><li><strong>注意 Blood Night（血夜）。</strong>它會在固定時段帶來高壓事件，聯盟需要事先安排在線與防守。</li><li><strong>Tactics Cards（戰術卡）是 S4 新戰鬥系統。</strong>不要只看單張戰力，要依 PvE / PvP 與隊伍類型準備卡組。</li><li><strong>Week 4 起 Copper War / Copper Conquest 成為排名重點。</strong>城市產 Copper，Stronghold 產 Stone；R4 需要提前做宣戰與防守規劃。</li><li><strong>T11 不要誤認為 S4 一開始就能用。</strong>公開資料顯示它是在 S4 後的 off-season 透過 Armament Institute 進一步解鎖。</li></ol></div>
+ <div class="avoid-box"><strong>先避免</strong><ul><li>離開光照範圍太久。</li><li>忽略 Optoelectronic Lab，只顧一般戰力。</li><li>把 T11 當成 S4 週初就能直接完成的目標。</li><li>只靠個人戰力參與 Copper War，不配合同盟目標。</li></ul></div>`,
  detail:`<h2>📖 看詳細</h2>
- <p>S2 的核心不是單純換一張雪地圖，而是加入「溫度」這個行動門檻。近期整理指出，地圖越接近中央越冷；低於安全線一段時間後基地會 Frozen，會限制遷移與集結等操作。你的高熱火爐、聯盟火爐與城市／核能火爐共同決定活動空間。</p>
- <h3>煤怎麼花？</h3><p>煤同時關係到熱量與季節生產，因此應保留暴風雪與緊急升溫所需的安全庫存。過載能快速升溫，但長時間維持會非常燒煤。</p>
- <h3>Rare Soil War</h3><p>從賽季中段開始，Rare Soil 會變成聯盟競爭核心。宣戰、配對與掠奪比例等細節可能因版本調整；R4 應以當期遊戲內規則頁為準。此攻略頁主要告訴一般成員：保溫、跟著蜂巢與火爐、不要獨自亂搬，會比只看個人戰力重要。</p>`,
+ <p>S4 的正式主題是 <strong>Evernight Isle</strong>。整個賽季圍繞黑暗與光源展開：Lighthouse 與 Generators 提供照明，Optoelectronic Lab 提供 Virus Resistance，Blood Night 則迫使玩家與同盟配合固定時段。</p>
+ <h3>Lighthouse 與黑暗</h3><p>黑暗不是純視覺效果。近期攻略整理指出，離開有效照明範圍會承受生產、行軍等懲罰，而敵人也更難處理。因此 S4 的移動與蜂巢位置要把照明納入考量。</p>
+ <h3>Tactics Cards</h3><p>S4 新增 Tactics Cards。Core Cards 為永久系統的一部分，而 Battle / Resource 類卡片帶有賽季性。卡組會影響 PvE、PvP 與混合編成，因此後續值得獨立做一篇。</p>
+ <h3>Copper War</h3><p>從約第 4 週開始，Copper War / Copper Conquest 會成為同盟排名核心。城市提供 Copper、Stronghold 提供 Stone；攻守方的目標不是只看擊殺，而是倉庫、Alliance Center 等戰略建築。</p>
+ <h3>T11 時點</h3><p>目前較新的 2026 資料一致提醒：T11 是 S4 結束後 off-season 的重要內容，會透過 Armament Institute 與 Lv.35 Barracks 等條件推進。因此 S4 本身應視為準備期，而不是把 T11 當作週初即可完成的季內解鎖。</p>`,
  sources:[
- ["Last War Codex — Season 2 Temperature & Rare Soil","https://lastwarcodex.com/a/season-2-temperature-furnaces-rare-soil-war"],
- ["Last War Codex — Season 2 Overview","https://lastwarcodex.com/a/season-2-overview-polar-storm"],
- ["Reddit — Season 2 Checklist","https://www.reddit.com/r/LastWarMobileGame/comments/1u0j2ph/season_2_checklist/"]
+ ["Last War Codex — Season 4 Overview: Evernight Isle","https://lastwarcodex.com/a/season-4-overview-evernight-isle"],
+ ["Last War Codex — Lighthouse, Blood Night & Copper War","https://lastwarcodex.com/a/season-4-lighthouse-blood-night-copper-war"],
+ ["Last War Vault — Season 4: Evernight Isle","https://www.lastwarvault.com/guides/season-4/"],
+ ["Last War Vault — F2P Season 4 Guide","https://www.lastwarvault.com/guides/free-2-play/season-4/"]
  ]
 },
 "combat":{
